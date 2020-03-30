@@ -1,11 +1,15 @@
 <template>
     <div>
-        <HeroComponent/>
+      <div>
+        <HeroComponent class="mb-8"/>
+        <LevelSelector/>
+      </div>
     </div>
 </template>
 
 <script>
 import HeroComponent from '@/components/LevelSelect/HeroComponent'
+import LevelSelector from '@/components/LevelSelect/LevelSelectorComponent'
 export default {
   data () {
     return {
@@ -13,7 +17,8 @@ export default {
     }
   },
   components:{
-    HeroComponent
+    HeroComponent,
+    LevelSelector
   }
 }
 </script>
