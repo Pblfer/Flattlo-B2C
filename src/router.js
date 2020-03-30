@@ -55,6 +55,11 @@ const router = new Router({
           path: '/login',
           name: 'page-login',
           component: () => import('@/views/pages/login/Login.vue')
+        },
+        {
+          path: "/terms-and-conditions",
+          name: "terms",
+          component: () => import("@/views/pages/terms.vue")
         }
       ]
     },
