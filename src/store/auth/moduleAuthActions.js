@@ -168,7 +168,7 @@ export default {
 
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
-        router.push(router.currentRoute.query.to || '/')
+        router.push(router.currentRoute.query.to || '/developer')
         commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
       }).catch((err) => {
         payload.notify({
