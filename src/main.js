@@ -103,6 +103,7 @@ Vue.use(VueHammer)
 // PrismJS
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'
+import { createProvider } from './vue-apollo'
 
 
 // Feather font icon
@@ -120,5 +121,6 @@ new Vue({
   router,
   store,
   i18n,
+  apolloProvider: createProvider(),
   render: h => h(App)
 }).$mount('#app')

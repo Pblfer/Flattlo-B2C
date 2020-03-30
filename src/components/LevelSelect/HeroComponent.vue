@@ -1,39 +1,29 @@
 <template>
-    <div class="carousel-example">
-        <swiper :options="swiperOption" :dir="$vs.rtl ? 'rtl' : 'ltr'" :key="$vs.rtl">
-            <swiper-slide>
-              <img class="responsive" src="@/assets/images/pages/carousel/banner-16.jpg" alt="banner">
-            </swiper-slide>
-            <swiper-slide>
-              <img class="responsive" src="@/assets/images/pages/carousel/banner-13.jpg" alt="banner">
-            </swiper-slide>
-            <swiper-slide>
-              <img class="responsive" src="@/assets/images/pages/carousel/banner-4.jpg" alt="banner">
-            </swiper-slide>
-            <swiper-slide>
-              <img class="responsive" src="@/assets/images/pages/carousel/banner-2.jpg" alt="banner">
-            </swiper-slide>
-            <div class="swiper-pagination" slot="pagination"></div>
-            <div class="swiper-button-prev" slot="button-prev"></div>
-            <div class="swiper-button-next" slot="button-next"></div>
-        </swiper>
-    </div>
+  <div>
+    <swiper :options="swiperOption">
+      <swiper-slide :key="index" v-for="(img, index) in getProyect.gallery">
+        <img class="slider" :src="img.img_url" alt="banner" />
+      </swiper-slide>
+
+      <div class="swiper-pagination swiper-pagination-white" slot="pagination"></div>
+      <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+      <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+    </swiper>
+  </div>
 </template>
 
 <script>
+import gql from 'graphql-tag'
 import 'swiper/dist/css/swiper.min.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
   data () {
     return {
+      getProyect: [],
       swiperOption: {
         spaceBetween: 30,
-        centeredSlides: true,
-        autoplay: {
-          delay: 4500,
-          disableOnInteraction: false
-        },
+        effect: 'fade',
         pagination: {
           el: '.swiper-pagination',
           clickable: true
@@ -45,9 +35,41 @@ export default {
       }
     }
   },
-  components:{
+  components: {
     swiper,
     swiperSlide
+  },
+  apollo: {
+    getProyect: {
+      query: gql`
+        query($proyectID: String!) {
+          getProyect(proyectID: $proyectID) {
+            gallery {
+              _id
+              image_name
+              gallery_type
+              img_url
+            }
+          }
+        }
+      `,
+      variables () {
+        return {
+          proyectID: '5e7aba5eafe9ae00247ccefa'
+        }
+      },
+      pollInterval: 700
+    }
   }
 }
 </script>
+
+
+<style lang="scss">
+.slider {
+  display: block;
+  height: 72vh;
+  width: 100%;
+  object-fit: cover;
+}
+</style>
