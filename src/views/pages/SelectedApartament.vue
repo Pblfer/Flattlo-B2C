@@ -1,6 +1,7 @@
 <template>
 <div>
-    <div class="p-4 mb-4">
+  <div>
+<div class="p-4 mb-4">
                 <h4>🚪Apartamento: {{getApartament.number}}</h4>
                 <h5 class="mt-3">En esta sección encontraras todos los detalles de tu proximo apartamento.</h5>
                 <vs-divider></vs-divider>
@@ -66,13 +67,22 @@
             <vs-list-item
        
               icon="monetization_on"
-              :title="`Precio sin IVA: Q.${getApartament.price}`"
+              :title="`Precio sin IVA: Q.${getApartament.price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`"
             ></vs-list-item>
           </div>
         </vx-card>
          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-   <vs-button class="mt-8 mb-8 quoteBtn" icon-pack="feather" size="large"  text-color="#000" color="#fbdc11" >Cotizar</vs-button>
-  </vs-col>
+   <vs-button class="mt-8 mb-8 quoteBtn" :to="{name: 'quote-generator'}" icon-pack="feather" size="large"  text-color="#000" color="#fbdc11" >Cotizar</vs-button>
+  </vs-col> 
+  <br/> 
+  <br/> 
+  <br/> 
+  <br/> 
+  <br/> 
+  <br/> 
+
+  </div>
+    
 </div>
     
 </template>
@@ -117,6 +127,11 @@ import Hero from "@/components/Apartament/HeroApartamentComponent"
   },
   components:{
       Hero
+  },
+  computed:{
+    saveApartamentToQuote(apt) {
+      localStorage.selectedApartament = apt;
+    },
   }
     }
 </script>

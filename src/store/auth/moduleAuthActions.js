@@ -156,12 +156,13 @@ export default {
   loginWithFacebook ({commit, state}, payload) {
     if (state.isUserLoggedIn()) {
       payload.notify({
-        title: 'Login Attempt',
-        text: 'You are already logged in!',
+        title: 'Ya haz iniciado sessión',
+        text: 'Te estamos redireccionado...',
         iconPack: 'feather',
         icon: 'icon-alert-circle',
-        color: 'warning'
+        color: 'success'
       })
+      router.push(router.currentRoute.query.to || '/level-selection')
       return false
     }
     const provider = new firebase.auth.FacebookAuthProvider()

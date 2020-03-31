@@ -1,61 +1,77 @@
 <template>
   <div>
-    
-            <div class="p-4">
-                <h4>🥳 Estas en el nivel: {{getLevel.number_of_level}}</h4>
-                <h5 class="mt-3">Puedes cotizar cualquier apartamento, si deseas conocer más detalle de cada apartamento pulsa en ver más detalles.</h5>
-                <vs-divider></vs-divider>
-            </div>
-    
-        <div class="flex flex-wrap sm:full lg:w-full mt-4" v-if="checkData">
-            
-            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-3/2 xl:w-3/2 mt-3 p-2" v-for="apartament in mostrarDisponibles" :key="apartament._id">
-            <vx-card class="mb-base mb-4 " >
-                    <div>
-                        <img  :src="apartament.plane_img" alt="content-img" class="responsive rounded-lg">
-                    </div>
-                    <vs-list-header icon-pack="feather" icon="icon-codepen" :title="`Apartamento: ${apartament.number}`" color="primary"></vs-list-header>
-    <vs-list-item  icon="texture" :title="`Metraje: ${apartament.living_square_mts} m2`"></vs-list-item>
-    <vs-list-item  icon="local_hotel" :title="`Dormitorios: ${apartament.bedrooms}`"></vs-list-item>
-    <vs-list-item  icon="bathtub" :title="`Baños: ${apartament.bathrooms}`"></vs-list-item>
+    <div class="p-4">
+      <h4>🥳 Estas en el nivel: {{getLevel.number_of_level}}</h4>
+      <h5
+        class="mt-3"
+      >Puedes cotizar cualquier apartamento, si deseas conocer más detalle de cada apartamento pulsa en ver más detalles.</h5>
+      <vs-divider></vs-divider>
+    </div>
 
-    <vs-row>
-  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-   <vs-button @click.native="saveApartament(apartament._id)" :to="{name: 'selected-apartament'}" class="mt-8 mb-8 quoteBtn" icon-pack="feather" size="large"  text-color="#000" color="#fbdc11" >Cotizar</vs-button>
-  </vs-col>
-  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="mb-2">
-   <vs-button @click.native="saveApartament(apartament._id)" :to="{name: 'selected-apartament'}" type="flat" line-origin="left" color="primary">Ver más detalles</vs-button>
-  </vs-col>
-</vs-row>
-                    
-                </vx-card>
+    <div class="flex flex-wrap sm:full lg:w-full mt-4" v-if="checkData">
+      <div
+        class="w-full sm:w-1/2 md:w-1/3 lg:w-3/2 xl:w-3/2 mt-3 p-2"
+        v-for="apartament in mostrarDisponibles"
+        :key="apartament._id"
+      >
+        <vx-card class="mb-base mb-4">
+          <div>
+            <img :src="apartament.plane_img" alt="content-img" class="responsive rounded-lg" />
           </div>
-        </div>
-
-        <div class="vx-col w-full mb-base">
-        </div>
-      </vs-col>
-    </vs-row>
+          <vs-list-header
+            icon-pack="feather"
+            icon="icon-codepen"
+            :title="`Apartamento: ${apartament.number}`"
+            color="primary"
+          ></vs-list-header>
+          <vs-list-item icon="texture" :title="`Metraje: ${apartament.living_square_mts} m2`"></vs-list-item>
+          <vs-list-item icon="local_hotel" :title="`Dormitorios: ${apartament.bedrooms}`"></vs-list-item>
+          <vs-list-item icon="bathtub" :title="`Baños: ${apartament.bathrooms}`"></vs-list-item>
+          <vs-list-item icon="monetization_on" :title="`Precio sin IVA: Q. ${apartament.price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`"></vs-list-item>
+          <vs-row>
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+              <vs-button
+                @click.native="saveApartament(apartament._id)"
+                :to="{name: 'selected-apartament'}"
+                class="mt-8 mb-8 quoteBtn"
+                icon-pack="feather"
+                size="large"
+                text-color="#000"
+                color="#fbdc11"
+              >Cotizar</vs-button>
+            </vs-col>
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="mb-2">
+              <vs-button
+                @click.native="saveApartament(apartament._id)"
+                :to="{name: 'selected-apartament'}"
+                type="flat"
+                line-origin="left"
+                color="primary"
+              >Ver más detalles</vs-button>
+            </vs-col>
+          </vs-row>
+        </vx-card>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import gql from 'graphql-tag'
-import vSelect from 'vue-select'
-import router from '../../router'
+import gql from "graphql-tag";
+import vSelect from "vue-select";
+import router from "../../router";
 
 export default {
-  data () {
+  data() {
     return {
       getProyect: [],
-      selectedLevel: '5e7abad0afe9ae00247ccefb',
+      selectedLevel: "5e7abad0afe9ae00247ccefb",
       numberOfLevel: 1,
       selected: []
-    }
+    };
   },
   components: {
-    'v-select': vSelect
+    "v-select": vSelect
   },
   apollo: {
     getLevel: {
@@ -82,114 +98,114 @@ export default {
           }
         }
       `,
-      variables () {
+      variables() {
         return {
           levelID: localStorage.selectedLevel
-        }
+        };
       },
       pollInterval: 350
     }
   },
 
   methods: {
-      saveApartament(apt){
-          localStorage.selectedApartament = apt
-      },
-    openLoadingInDiv () {
+    saveApartament(apt) {
+      localStorage.selectedApartament = apt;
+    },
+    openLoadingInDiv() {
       this.$vs.loading({
-        container: '#div-with-loading',
+        container: "#div-with-loading",
         scale: 1,
-        type: 'sound',
-        background: 'transparent',
-        color: 'success',
-        text: 'Cargando...'
-      })
+        type: "sound",
+        background: "transparent",
+        color: "success",
+        text: "Cargando..."
+      });
     },
-    getFirstLevel () {
-      this.selectedLevel = this.getProyect.levels[0]._id
+    getFirstLevel() {
+      this.selectedLevel = this.getProyect.levels[0]._id;
     },
-    getSecondLevel () {
-      this.selectedLevel = this.getProyect.levels[1]._id
+    getSecondLevel() {
+      this.selectedLevel = this.getProyect.levels[1]._id;
     },
-    selectedColor (level) {
+    selectedColor(level) {
       if (this.selectedLevel == level) {
-        return 'success'
+        return "success";
       }
-      return '#10173b'
+      return "#10173b";
     },
-    LevelInfo (ID, number) {
-      localStorage.selectedLevel = ID
-      localStorage.level = number
+    LevelInfo(ID, number) {
+      localStorage.selectedLevel = ID;
+      localStorage.level = number;
     },
-    statusColor (status) {
-      if (status == 'disponible') return 'success'
-      if (status == 'reservado') return 'danger'
-      if (status == 'bloqueado') return 'grey'
+    statusColor(status) {
+      if (status == "disponible") return "success";
+      if (status == "reservado") return "danger";
+      if (status == "bloqueado") return "grey";
     },
-    sendToCompare (data) {
-      this.$store.dispatch('enviar_a_comparador', data)
+    sendToCompare(data) {
+      this.$store.dispatch("enviar_a_comparador", data);
       this.$vs.notify({
-        time:8000,
-        title:`${this.selected.length} enviado al Comparador.`,
-        text:'☝ Puede visitar el comparador pulsando aquí.',
-        color:'success',
-        iconPack: 'feather',
-        icon:'icon-copy',
-        click:() => {
-          router.push('/comparador')
+        time: 8000,
+        title: `${this.selected.length} enviado al Comparador.`,
+        text: "☝ Puede visitar el comparador pulsando aquí.",
+        color: "success",
+        iconPack: "feather",
+        icon: "icon-copy",
+        click: () => {
+          router.push("/comparador");
         }
-      })
-      this.selected = []
+      });
+      this.selected = [];
     },
-    selectApartament (aptID, aptNumber) {
-      localStorage.apartamentID = aptID
-      localStorage.apartamentNumber = aptNumber
+    selectApartament(aptID, aptNumber) {
+      localStorage.apartamentID = aptID;
+      localStorage.apartamentNumber = aptNumber;
     }
   },
   computed: {
-    levelNumber () {
-      return this.$store.state.ui.level
+    levelNumber() {
+      return this.$store.state.ui.level;
     },
-    checkData () {
+    checkData() {
       if (this.getLevel == undefined) {
-        return false
+        return false;
       } else {
-        return true
+        return true;
       }
     },
-    disponibles () {
+    disponibles() {
       const apartamentosDisponibles = this.getLevel.inventory.filter(
-        item => item.actual_state == 'Disponible'
-      )
-      return apartamentosDisponibles.length
+        item => item.actual_state == "Disponible"
+      );
+      return apartamentosDisponibles.length;
     },
-    reservados () {
+    reservados() {
       const apartamentosReservados = this.getLevel.inventory.filter(
-        item => item.actual_state == 'Reservado'
-      )
-      return apartamentosReservados.length
+        item => item.actual_state == "Reservado"
+      );
+      return apartamentosReservados.length;
     },
-    bloqueados () {
+    bloqueados() {
       const apartamentosBloqueados = this.getLevel.inventory.filter(
-        item => item.actual_state == 'Bloqueado'
-      )
-      return apartamentosBloqueados.length
+        item => item.actual_state == "Bloqueado"
+      );
+      return apartamentosBloqueados.length;
     },
-    mostrarDisponibles () {
+    mostrarDisponibles() {
       const apartamentosDisponibles = this.getLevel.inventory.filter(
-        item => item.actual_state == 'Disponible'
-      )
-      return apartamentosDisponibles
+        item => item.actual_state == "Disponible"
+      );
+      return apartamentosDisponibles;
     }
   },
-  mounted () {
-    this.openLoadingInDiv()
+  mounted() {
+    this.openLoadingInDiv();
     setTimeout(() => {
-      this.getFirstLevel()
-      this.$vs.loading.close('#div-with-loading > .con-vs-loading')
-    }, 1000)
+      this.getFirstLevel();
+      this.$vs.loading.close("#div-with-loading > .con-vs-loading");
+    }, 1000);
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -201,15 +217,14 @@ export default {
   height: 470px;
 }
 
-.quoteBtn{
-    border-radius: 30px;
-    width: 90%;
-    font-weight: 400;
-    -webkit-box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
--moz-box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
-box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
+.quoteBtn {
+  border-radius: 30px;
+  width: 90%;
+  font-weight: 400;
+  -webkit-box-shadow: -1px 10px 33px -4px rgba(0, 0, 0, 0.18);
+  -moz-box-shadow: -1px 10px 33px -4px rgba(0, 0, 0, 0.18);
+  box-shadow: -1px 10px 33px -4px rgba(0, 0, 0, 0.18);
 }
-
 
 @media (min-width: 320px) and (max-width: 480px) {
   .imgPlane {

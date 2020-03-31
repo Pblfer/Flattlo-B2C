@@ -50,9 +50,9 @@ const router = new Router({
           component: () => import('@/views/pages/SelectedApartament.vue')
         },
         {
-          path: '/selected-apartament',
-          name: 'selected-apartament',
-          component: () => import('@/views/pages/SelectedApartament.vue')
+          path: '/quote-generator',
+          name: 'quote-generator',
+          component: () => import('@/views/pages/quoteGenerator.vue')
         },
         {
           path: "",
