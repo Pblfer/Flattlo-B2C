@@ -3,7 +3,7 @@
 
     <div class="text-right leading-tight hidden sm:block">
       <p class="font-semibold">{{ activeUserInfo.displayName }}</p>
-      <small>Available</small>
+      <small>Nuestra estrella</small>
     </div>
 
     <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
@@ -19,35 +19,20 @@
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="$router.push('/pages/profile').catch(() => {})">
             <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Profile</span>
+            <span class="ml-2">Mi perfil</span>
           </li>
-
-          <li
-            class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="$router.push('/apps/email').catch(() => {})">
-            <feather-icon icon="MailIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Inbox</span>
-          </li>
-
-          <li
-            class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="$router.push('/apps/todo').catch(() => {})">
-            <feather-icon icon="CheckSquareIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Tasks</span>
-          </li>
-
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="$router.push('/apps/chat').catch(() => {})">
-            <feather-icon icon="MessageSquareIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Chat</span>
+            <feather-icon icon="FileTextIcon" svgClasses="w-4 h-4" />
+            <span class="ml-2">Cotizaciones</span>
           </li>
 
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="$router.push('/apps/eCommerce/wish-list').catch(() => {})">
             <feather-icon icon="HeartIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Wish List</span>
+            <span class="ml-2">Favoritos</span>
           </li>
 
           <vs-divider class="m-1" />
@@ -56,7 +41,7 @@
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="logout">
             <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Logout</span>
+            <span class="ml-2">Salir</span>
           </li>
         </ul>
       </vs-dropdown-menu>

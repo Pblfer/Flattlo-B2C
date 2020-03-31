@@ -10,7 +10,7 @@
 // MAIN COLORS - VUESAX THEME COLORS
 export const colors = {
   primary : '#1877f2',
-  success : '#28C76F',
+  success : '#4caf50',
   danger  : '#EA5455',
   warning : '#FF9F43',
   dark    : '#1E1E1E'

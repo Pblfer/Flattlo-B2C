@@ -25,7 +25,7 @@
         <h5>🧐🏢Disponibilidad de nivel {{numberOfLevel}}:</h5>
         <vs-divider></vs-divider>
         <div class="mb-8">
-          <vs-chip class="m-1" color="danger">Reservados: {{reservados}}</vs-chip>
+          <vs-chip class="m-1" color="danger">{{reservados}}</vs-chip>
           <vs-chip class="m-1" color="success">Disponibles: {{disponibles}}</vs-chip>
         </div>
       </div>
@@ -226,6 +226,11 @@ export default {
     -webkit-box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
 -moz-box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
 box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
+}
+
+.vuesax-app-is-ltr .vs-chip--text {
+    margin-left: 10px;
+    font-size: 12px;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {

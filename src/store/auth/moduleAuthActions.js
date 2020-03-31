@@ -173,8 +173,8 @@ export default {
         payload.notify({
           time: 15500,
           title: `🖐 Hola ${result.user.providerData[0].displayName}🎉🥳`,
-          text: 'Selecciona: 1️⃣El nivel, 2️⃣Tu apartamento, 3️⃣Cuotas. 4️⃣Envia tu coti a favoritos ❤ para ser contactado. 👨‍💼👩‍💼',
-          color: 'black'
+          text: 'Cotizar tu apartamento nunca fue tan fácil. ❤🥳🙌🎉',
+          color: 'success'
         })
       }).catch((err) => {
         payload.notify({
@@ -193,11 +193,13 @@ export default {
     if (state.isUserLoggedIn()) {
       payload.notify({
         title: 'Login Attempt',
-        text: 'You are already logged in!',
+        text: 'Ya te encuentras logueado',
         iconPack: 'feather',
         icon: 'icon-alert-circle',
-        color: 'warning'
-      })
+        color: 'success'
+      }).then(
+        router.push(router.currentRoute.query.to || '/level-selection')
+      )
       return false
     }
     const provider = new firebase.auth.TwitterAuthProvider()
