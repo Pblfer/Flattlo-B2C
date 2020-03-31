@@ -1,43 +1,16 @@
 <template>
   <div>
     
-   
-    <div v-if="checkData">
-      <vs-row>
-      <vs-col vs-lg="6" vs-sm="12">
-        <vx-card>
-          <div class="p-8">
-            <h5>🤩Estás en el nivel: {{numberOfLevel}}</h5>
-            <vs-divider></vs-divider>
-            <vs-chip class="m-1" color="danger">{{reservados}}</vs-chip>
-            <vs-chip class="m-1" color="grey">{{bloqueados}}</vs-chip>
-            <vs-chip class="m-1" color="success">Disponibles: {{disponibles}}</vs-chip>
-            <vs-row class="w-full">
-              <img class="imgPlane" :src="getLevel.plane_img_url" alt />
-            </vs-row>
-          </div>
-        </vx-card>
-      
-      </vs-col>
-
-      <vs-col vs-lg="6" vs-sm="12" >
-        <vs-row vs-type="flex">
-          <vs-col vs-lg="7" class="mt-6">
-            <h5>👇😉 Selecciona tu apartamento:</h5>
-          </vs-col>
-          <vs-col vs-lg="2" vs-justify="flex-end" v-if="false">
-            <vs-button
-              icon-pack="feather"
-              icon="icon-copy"
-              v-if="!(selected == '')"
-              color="success"
-              @click="sendToCompare(selected)"
-            >Comparar</vs-button>
-          </vs-col>
-        </vs-row>
-        <vs-divider></vs-divider>
-        <div class="vx-col w-full sm:w-full lg:w-2/4 mb-base">
-                <vx-card class="mb-4" v-for="apartament in getLevel.inventory" :key="apartament._id">
+            <div class="p-4">
+                <h4>🥳 Estas en el nivel: {{getLevel.number_of_level}}</h4>
+                <h5 class="mt-3">Puedes cotizar cualquier apartamento, si deseas conocer más detalle de cada apartamento pulsa en ver más detalles.</h5>
+                <vs-divider></vs-divider>
+            </div>
+    
+        <div class="flex flex-wrap sm:full lg:w-full mt-4" v-if="checkData">
+            
+            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-3/2 xl:w-3/2 mt-3 p-2" v-for="apartament in getLevel.inventory" :key="apartament._id">
+            <vx-card class="mb-base mb-4 " >
                     <div>
                         <img  :src="apartament.plane_img" alt="content-img" class="responsive rounded-lg">
                     </div>
@@ -48,11 +21,18 @@
 
     <vs-row>
   <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-   <vs-button class="mt-8 mb-8 nextStepButton" icon-pack="feather"  text-color="#000" color="#fbdc11" >Cotizar</vs-button>
+   <vs-button class="mt-8 mb-8 quoteBtn" icon-pack="feather" size="large"  text-color="#000" color="#fbdc11" >Cotizar</vs-button>
+  </vs-col>
+  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="mb-2">
+   <vs-button type="flat" line-origin="left" color="primary">Ver más detalles</vs-button>
   </vs-col>
 </vs-row>
                     
                 </vx-card>
+          </div>
+        </div>
+
+        <div class="vx-col w-full mb-base">
         </div>
       </vs-col>
     </vs-row>
@@ -82,7 +62,7 @@ export default {
       query: gql`
         query($levelID: String!) {
           getLevel(levelID: $levelID) {
-            plane_img_url
+            number_of_level
             inventory {
               _id
               plane_img
@@ -216,6 +196,15 @@ export default {
   margin-top: 5vh;
   margin-bottom: 6vh;
   height: 470px;
+}
+
+.quoteBtn{
+    border-radius: 30px;
+    width: 90%;
+    font-weight: 400;
+    -webkit-box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
+-moz-box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
+box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
 }
 
 
