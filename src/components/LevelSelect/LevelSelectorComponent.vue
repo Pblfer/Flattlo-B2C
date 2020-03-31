@@ -2,7 +2,7 @@
   <div>
     <vx-card>
       <div class="p-4">
-        <h5 class="mb-1">Jhon,</h5>
+        <h5 class="mb-1">{{getFirstName}},</h5>
         <h5>👇Por favor selecciona un nivel:</h5>
 
         <div class="mt-2">
@@ -33,7 +33,7 @@
     </vx-card>
     <vs-row>
   <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-     <vs-button  :to="{name: 'apartament-showcase'}"  class="mt-8 mb-8 nextStepButton" icon-pack="feather" icon="icon-arrow-right" icon-after size="large" text-color="#000" color="#fbdc11" >Continuar</vs-button>
+     <vs-button @click.native="saveLevel"  :to="{name: 'apartament-showcase'}"  class="mt-8 mb-8 nextStepButton" icon-pack="feather" icon="icon-arrow-right" icon-after size="large" text-color="#000" color="#fbdc11" >Continuar</vs-button>
   </vs-col>
 </vs-row>
     <br />
@@ -113,6 +113,9 @@ export default {
   },
 
   methods: {
+    saveLevel () {
+      localStorage.selectedLevel = this.selectedLevel
+    },
     openLoadingInDiv () {
       this.$vs.loading({
         container: '#div-with-loading',
@@ -165,6 +168,9 @@ export default {
     }
   },
   computed: {
+    getFirstName(){
+      return localStorage.firstNameUser
+    },
     levelNumber () {
       return this.$store.state.ui.level
     },
@@ -237,5 +243,12 @@ box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
   .imgPlane {
     height: 300px;
   }
+}
+
+@media (min-width: 760px) and (max-width: 3066px) {
+  .nextStepButton{
+    width: 36.666%;
+
+}
 }
 </style>

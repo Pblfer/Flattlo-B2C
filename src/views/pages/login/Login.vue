@@ -114,18 +114,7 @@ export default {
       this.openLoadingContained()
     },
 
-    openLoadingContained() {
-      this.$vs.loading({
-        background: this.backgroundLoading,
-        color: this.colorLoading,
-        container: "#button-with-loading",
-        scale: 0.45
-      });
-      this.ingresarUsuario();
-      setTimeout(() => {
-        this.$vs.loading.close("#button-with-loading > .con-vs-loading");
-      }, 3000);
-    },
+    
     validarCorreoRecuperacion() {
       if (this.uMail === "") {
         this.v_rMail = false;

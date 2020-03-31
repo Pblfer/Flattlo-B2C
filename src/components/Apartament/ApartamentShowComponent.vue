@@ -84,7 +84,7 @@ export default {
       `,
       variables () {
         return {
-          levelID: this.selectedLevel
+          levelID: localStorage.selectedLevel
         }
       },
       pollInterval: 350

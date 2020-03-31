@@ -168,12 +168,15 @@ export default {
 
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
+        localStorage.firstNameUser = result.additionalUserInfo.profile.first_name
+        localStorage.lastNameUser = result.additionalUserInfo.profile.last_name
+        localStorage.emailUser = result.additionalUserInfo.profile.email
         router.push(router.currentRoute.query.to || '/level-selection')
         commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
         payload.notify({
-          time: 15500,
+          time: 8500,
           title: `🖐 Hola ${result.user.providerData[0].displayName}🎉🥳`,
-          text: 'Cotizar tu apartamento nunca fue tan fácil. ❤🥳🙌🎉',
+          text: 'Cotizar tu apartamento nunca fue tan fácil. 🥳🙌🎉',
           color: 'success'
         })
       }).catch((err) => {
