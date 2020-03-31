@@ -37,17 +37,22 @@ const router = new Router({
         {
           path: '/level-selection',
           name: 'level-selection',
-          component: () => import('@/views/pages/panel/Panel.vue')
+          component: () => import('@/views/pages/Panel.vue')
         },
         {
           path: '/apartament-showcase',
           name: 'apartament-showcase',
-          component: () => import('@/views/pages/Apartament/Apartament.vue')
+          component: () => import('@/views/pages/Apartament.vue')
         },
         {
           path: '/selected-apartament',
           name: 'selected-apartament',
-          component: () => import('@/views/pages/Apartament/SelectedApartament.vue')
+          component: () => import('@/views/pages/SelectedApartament.vue')
+        },
+        {
+          path: '/selected-apartament',
+          name: 'selected-apartament',
+          component: () => import('@/views/pages/SelectedApartament.vue')
         },
         {
           path: "",
@@ -68,7 +73,7 @@ const router = new Router({
         {
           path: '/login',
           name: 'page-login',
-          component: () => import('@/views/pages/login/Login.vue')
+          component: () => import('@/views/pages/Login.vue')
         },
         {
           path: '/terms-and-conditions',

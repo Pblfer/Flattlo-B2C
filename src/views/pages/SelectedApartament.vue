@@ -66,7 +66,7 @@
             <vs-list-item
        
               icon="monetization_on"
-              :title="`Precio: Q.${getApartament.price}`"
+              :title="`Precio sin IVA: Q.${getApartament.price}`"
             ></vs-list-item>
           </div>
         </vx-card>
@@ -80,7 +80,7 @@
 <script>
 
 import gql from "graphql-tag";
-import Hero from "@/components/LevelSelect/HeroComponent"    
+import Hero from "@/components/Apartament/HeroApartamentComponent"    
     export default {
         data(){
             return{
