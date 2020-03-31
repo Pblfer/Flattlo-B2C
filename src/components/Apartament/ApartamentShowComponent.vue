@@ -21,10 +21,10 @@
 
     <vs-row>
   <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-   <vs-button class="mt-8 mb-8 quoteBtn" icon-pack="feather" size="large"  text-color="#000" color="#fbdc11" >Cotizar</vs-button>
+   <vs-button @click.native="saveApartament(apartament._id)" :to="{name: 'selected-apartament'}" class="mt-8 mb-8 quoteBtn" icon-pack="feather" size="large"  text-color="#000" color="#fbdc11" >Cotizar</vs-button>
   </vs-col>
   <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="mb-2">
-   <vs-button type="flat" line-origin="left" color="primary">Ver más detalles</vs-button>
+   <vs-button @click.native="saveApartament(apartament._id)" :to="{name: 'selected-apartament'}" type="flat" line-origin="left" color="primary">Ver más detalles</vs-button>
   </vs-col>
 </vs-row>
                     
@@ -92,6 +92,9 @@ export default {
   },
 
   methods: {
+      saveApartament(apt){
+          localStorage.selectedApartament = apt
+      },
     openLoadingInDiv () {
       this.$vs.loading({
         container: '#div-with-loading',

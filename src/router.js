@@ -45,6 +45,11 @@ const router = new Router({
           component: () => import('@/views/pages/Apartament/Apartament.vue')
         },
         {
+          path: '/selected-apartament',
+          name: 'selected-apartament',
+          component: () => import('@/views/pages/Apartament/SelectedApartament.vue')
+        },
+        {
           path: "",
           redirect: "/login"
         },
