@@ -35,9 +35,14 @@ const router = new Router({
         // Theme Routes
         // =============================================================================
         {
-          path: '/developer',
-          name: 'dashboard-developer',
+          path: '/level-selection',
+          name: 'level-selection',
           component: () => import('@/views/pages/panel/Panel.vue')
+        },
+        {
+          path: '/apartament-showcase',
+          name: 'apartament-showcase',
+          component: () => import('@/views/pages/Apartament/Apartament.vue')
         }
       ]
     },

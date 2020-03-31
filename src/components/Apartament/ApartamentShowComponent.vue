@@ -1,44 +1,61 @@
 <template>
   <div>
-    <vx-card>
-      <div class="p-4">
-        <h5 class="mb-1">Jhon,</h5>
-        <h5>👇Por favor selecciona un nivel:</h5>
+    
+   
+    <div v-if="checkData">
+      <vs-row>
+      <vs-col vs-lg="6" vs-sm="12">
+        <vx-card>
+          <div class="p-8">
+            <h5>🤩Estás en el nivel: {{numberOfLevel}}</h5>
+            <vs-divider></vs-divider>
+            <vs-chip class="m-1" color="danger">{{reservados}}</vs-chip>
+            <vs-chip class="m-1" color="grey">{{bloqueados}}</vs-chip>
+            <vs-chip class="m-1" color="success">Disponibles: {{disponibles}}</vs-chip>
+            <vs-row class="w-full">
+              <img class="imgPlane" :src="getLevel.plane_img_url" alt />
+            </vs-row>
+          </div>
+        </vx-card>
+      
+      </vs-col>
 
-        <div class="mt-2">
-          <vs-divider class="mt-2"></vs-divider>
-        </div>
-        <vs-button
-          :color="selectedColor(level._id)"
-          @click="selectedLevel = level._id, 
-          numberOfLevel = level.number_of_level, 
-          LevelInfo(level._id, level.number_of_level)"
-          v-for="level in getProyect.levels"
-          class="m-1"
-          :key="level._id"
-        >{{level.number_of_level}}</vs-button>
-      </div>
-    </vx-card>
-    <br />
-    <vx-card>
-      <div v-if="checkData" class="mt-4">
-        <h5>🧐🏢Disponibilidad de nivel {{numberOfLevel}}:</h5>
+      <vs-col vs-lg="6" vs-sm="12" >
+        <vs-row vs-type="flex">
+          <vs-col vs-lg="7" class="mt-6">
+            <h5>👇😉 Selecciona tu apartamento:</h5>
+          </vs-col>
+          <vs-col vs-lg="2" vs-justify="flex-end" v-if="false">
+            <vs-button
+              icon-pack="feather"
+              icon="icon-copy"
+              v-if="!(selected == '')"
+              color="success"
+              @click="sendToCompare(selected)"
+            >Comparar</vs-button>
+          </vs-col>
+        </vs-row>
         <vs-divider></vs-divider>
-        <div class="mb-8">
-          <vs-chip class="m-1" color="danger">Reservados: {{reservados}}</vs-chip>
-          <vs-chip class="m-1" color="success">Disponibles: {{disponibles}}</vs-chip>
-        </div>
-      </div>
-      <br />
-    </vx-card>
+        <div class="vx-col w-full sm:w-full lg:w-2/4 mb-base">
+                <vx-card class="mb-4" v-for="apartament in getLevel.inventory" :key="apartament._id">
+                    <div>
+                        <img  :src="apartament.plane_img" alt="content-img" class="responsive rounded-lg">
+                    </div>
+                    <vs-list-header icon-pack="feather" icon="icon-codepen" :title="`Apartamento: ${apartament.number}`" color="primary"></vs-list-header>
+    <vs-list-item  icon="texture" :title="`Metraje: ${apartament.living_square_mts} m2`"></vs-list-item>
+    <vs-list-item  icon="local_hotel" :title="`Dormitorios: ${apartament.bedrooms}`"></vs-list-item>
+    <vs-list-item  icon="bathtub" :title="`Baños: ${apartament.bathrooms}`"></vs-list-item>
+
     <vs-row>
   <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-     <vs-button  :to="{name: 'apartament-showcase'}"  class="mt-8 mb-8 nextStepButton" icon-pack="feather" icon="icon-arrow-right" icon-after size="large" text-color="#000" color="#fbdc11" >Continuar</vs-button>
+   <vs-button class="mt-8 mb-8 nextStepButton" icon-pack="feather"  text-color="#000" color="#fbdc11" >Cotizar</vs-button>
   </vs-col>
 </vs-row>
-    <br />
-    <div class="contained-example-container" v-if="!checkData">
-      <div id="div-with-loading" class="vs-con-loading__container mt-4"></div>
+                    
+                </vx-card>
+        </div>
+      </vs-col>
+    </vs-row>
     </div>
   </div>
 </template>
@@ -52,7 +69,7 @@ export default {
   data () {
     return {
       getProyect: [],
-      selectedLevel: '5db1fe83790dc5220037f041',
+      selectedLevel: '5e7abad0afe9ae00247ccefb',
       numberOfLevel: 1,
       selected: []
     }
@@ -61,24 +78,6 @@ export default {
     'v-select': vSelect
   },
   apollo: {
-    getProyect: {
-      query: gql`
-        query($proyectID: String!) {
-          getProyect(proyectID: $proyectID) {
-            levels {
-              _id
-              number_of_level
-            }
-          }
-        }
-      `,
-      variables () {
-        return {
-          proyectID: '5e7aba5eafe9ae00247ccefa'
-        }
-      },
-      pollInterval: 350
-    },
     getLevel: {
       query: gql`
         query($levelID: String!) {
@@ -147,13 +146,13 @@ export default {
     sendToCompare (data) {
       this.$store.dispatch('enviar_a_comparador', data)
       this.$vs.notify({
-        time: 8000,
-        title: `${this.selected.length} enviado al Comparador.`,
-        text: '☝ Puede visitar el comparador pulsando aquí.',
-        color: 'success',
+        time:8000,
+        title:`${this.selected.length} enviado al Comparador.`,
+        text:'☝ Puede visitar el comparador pulsando aquí.',
+        color:'success',
         iconPack: 'feather',
-        icon: 'icon-copy',
-        click: () => {
+        icon:'icon-copy',
+        click:() => {
           router.push('/comparador')
         }
       })
@@ -177,19 +176,19 @@ export default {
     },
     disponibles () {
       const apartamentosDisponibles = this.getLevel.inventory.filter(
-        item => item.actual_state === 'Disponible'
+        item => item.actual_state == 'Disponible'
       )
       return apartamentosDisponibles.length
     },
     reservados () {
       const apartamentosReservados = this.getLevel.inventory.filter(
-        item => item.actual_state === 'Reservado'
+        item => item.actual_state == 'Reservado'
       )
       return apartamentosReservados.length
     },
     bloqueados () {
       const apartamentosBloqueados = this.getLevel.inventory.filter(
-        item => item.actual_state === 'Bloqueado'
+        item => item.actual_state == 'Bloqueado'
       )
       return apartamentosBloqueados.length
     },
@@ -219,14 +218,6 @@ export default {
   height: 470px;
 }
 
-.nextStepButton{
-    border-radius: 30px;
-    width: 90%;
-    font-weight: 400;
-    -webkit-box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
--moz-box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
-box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
-}
 
 @media (min-width: 320px) and (max-width: 480px) {
   .imgPlane {

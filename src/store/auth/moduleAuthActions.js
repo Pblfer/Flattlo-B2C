@@ -168,8 +168,14 @@ export default {
 
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
-        router.push(router.currentRoute.query.to || '/developer')
+        router.push(router.currentRoute.query.to || '/level-selection')
         commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
+        payload.notify({
+          time: 15500,
+          title: `🖐 Hola ${result.user.providerData[0].displayName}🎉🥳`,
+          text: 'Selecciona: 1️⃣El nivel, 2️⃣Tu apartamento, 3️⃣Cuotas. 4️⃣Envia tu coti a favoritos ❤ para ser contactado. 👨‍💼👩‍💼',
+          color: 'black'
+        })
       }).catch((err) => {
         payload.notify({
           time: 2500,
