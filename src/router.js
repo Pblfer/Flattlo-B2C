@@ -43,7 +43,11 @@ const router = new Router({
           path: '/apartament-showcase',
           name: 'apartament-showcase',
           component: () => import('@/views/pages/Apartament/Apartament.vue')
-        }
+        },
+        {
+          path: "",
+          redirect: "/login"
+        },
       ]
     },
     // =============================================================================
@@ -87,29 +91,19 @@ router.afterEach(() => {
 // router.beforeEach((to, from, next) => {
 //   firebase.auth().onAuthStateChanged(() => {
 
-//     // // get firebase current user
-//     // const firebaseCurrentUser = firebase.auth().currentUser
+//     // get firebase current user
+//     const firebaseCurrentUser = firebase.auth().currentUser
 
-//     // if (
-//     //     to.path === "/pages/login" ||
-//     //     to.path === "/pages/forgot-password" ||
-//     //     to.path === "/pages/error-404" ||
-//     //     to.path === "/pages/error-500" ||
-//     //     to.path === "/pages/register" ||
-//     //     to.path === "/callback" ||
-//     //     to.path === "/pages/comingsoon" ||
-//     //     ( firebaseCurrentUser)
-//     // ) {
-//     //     return next();
-//     // }
+//     if (
+//         to.path === "/level-selection"
+//         ( firebaseCurrentUser)
+//     ) {
+//         return next();
+//     }
 
-//     return next()
-//     // Specify the current path as the customState parameter, meaning it
-//     // will be returned to the application after auth
-//     // auth.login({ target: to.path });
 
 //   })
 
 // })
 
-export default router
+export default router;
