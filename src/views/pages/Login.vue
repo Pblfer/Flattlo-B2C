@@ -54,29 +54,29 @@
 </template>
 
 <script>
-import "swiper/dist/css/swiper.min.css";
-import { swiper, swiperSlide } from "vue-awesome-swiper";
+import 'swiper/dist/css/swiper.min.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
   data () {
     return {
-      colorx: "#1877f2",
-      login: "Continuar con Facebook",
+      colorx: '#1877f2',
+      login: 'Continuar con Facebook',
       FB: {},
       model: {},
       scope: {},
-      uMail: "",
-      uPass: "",
+      uMail: '',
+      uPass: '',
       recoverPass: true,
       v_uMail: false,
       v_uPass: false,
-      rMail: "",
+      rMail: '',
       v_rMail: false,
       emailVerificationMsg: false,
       checkbox_remember_me: false,
       checkBox1: null,
-      backgroundLoading: "primary",
-      colorLoading: "#ffffff",
+      backgroundLoading: 'primary',
+      colorLoading: '#ffffff',
       swiperOption: {
         centeredSlides: true,
         autoplay: {
@@ -84,95 +84,95 @@ export default {
           disableOnInteraction: false
         },
         pagination: {
-          el: ".swiper-pagination",
+          el: '.swiper-pagination',
           clickable: true
         }
       }
-    };
+    }
   },
   components: {
     swiper,
     swiperSlide
   },
   methods: {
-    openLoadingContained(){
+    openLoadingContained () {
       this.$vs.loading({
         background: this.backgroundLoading,
         color: this.colorLoading,
-        container: "#button-with-loading",
+        container: '#button-with-loading',
         scale: 0.45
       })
-      setTimeout( ()=> {
-        this.$vs.loading.close("#button-with-loading > .con-vs-loading")
-      }, 3000);
+      setTimeout(() => {
+        this.$vs.loading.close('#button-with-loading > .con-vs-loading')
+      }, 3000)
     },
     // Facebook login
-    loginWithFacebook() {
-      this.$store.dispatch("auth/loginWithFacebook", {
+    loginWithFacebook () {
+      this.$store.dispatch('auth/loginWithFacebook', {
         notify: this.$vs.notify
-      });
+      })
       this.openLoadingContained()
     },
 
     
-    validarCorreoRecuperacion() {
-      if (this.uMail === "") {
-        this.v_rMail = false;
+    validarCorreoRecuperacion () {
+      if (this.uMail === '') {
+        this.v_rMail = false
       } else {
-        this.v_rMail = true;
+        this.v_rMail = true
       }
     },
-    openLoadingContainedRestorePass() {
+    openLoadingContainedRestorePass () {
       this.$vs.loading({
         background: this.backgroundLoading,
         color: this.colorLoading,
-        container: "#button-with-loading2",
+        container: '#button-with-loading2',
         scale: 0.45
-      });
+      })
       setTimeout(() => {
-        this.$vs.loading.close("#button-with-loading2 > .con-vs-loading");
-      }, 4000);
-      this.restablecerContraseña();
+        this.$vs.loading.close('#button-with-loading2 > .con-vs-loading')
+      }, 4000)
+      this.restablecerContraseña()
     }
   },
   watch: {
-    uMail() {
-      this.$validator.validate("mail").then(result => {
+    uMail () {
+      this.$validator.validate('mail').then(result => {
         if (result) {
-          this.v_uMail = true;
+          this.v_uMail = true
         } else {
-          this.v_uMail = false;
+          this.v_uMail = false
         }
-      });
+      })
     },
-    uPass() {
-      this.$validator.validate("pass").then(result => {
+    uPass () {
+      this.$validator.validate('pass').then(result => {
         if (result) {
-          this.v_uPass = true;
+          this.v_uPass = true
         } else {
-          this.v_uPass = false;
+          this.v_uPass = false
         }
-      });
+      })
     },
-    rMail() {
-      this.$validator.validate("correo").then(result => {
+    rMail () {
+      this.$validator.validate('correo').then(result => {
         if (result) {
-          this.v_rMail = true;
+          this.v_rMail = true
         } else {
-          this.v_rMail = false;
+          this.v_rMail = false
         }
-      });
+      })
     }
   },
   computed: {
-    desabilitar() {
-      return this.v_uMail === true, this.v_uPass === true;
+    desabilitar () {
+      return this.v_uMail === true, this.v_uPass === true
     },
-    desabilitarRecuperacion() {
-      return this.v_rMail === true;
+    desabilitarRecuperacion () {
+      return this.v_rMail === true
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

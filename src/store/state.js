@@ -84,7 +84,27 @@ const state = {
   starredPages            : navbarSearchAndPinList['pages'].data.filter((page) => page.is_bookmarked),
   theme                   : themeConfig.theme || 'light',
   themePrimaryColor       : colors.primary,
-
+  quote_data:{
+    first_name:'---',
+    last_name: '---',
+    phone: '---',
+    email: '---',
+    id:'---',
+    discount_amount:0,
+    parkings:[],
+    warehouses:[],
+    depositValues:{
+        depositClient:0,
+        minDeposit:0,
+        monthDeposit:0
+    },
+    financingValues:{
+        entity:'',
+        interestEntity: 0,
+        yearsFinancingSelected: 0,
+        reservePrice:0
+    },
+  },
   // Can be used to get current window with
   // Note: Above breakpoint state is for internal use of sidebar & navbar component
   windowWidth: null

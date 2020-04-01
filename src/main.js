@@ -81,9 +81,10 @@ require('vue-tour/dist/vue-tour.css')
 
 
 // VeeValidate
-import VeeValidate from 'vee-validate'
+import es from 'vee-validate/dist/locale/es'
+import VeeValidate, { Validator } from 'vee-validate'
 Vue.use(VeeValidate)
-
+Validator.localize('es', es)
 
 // Google Maps
 import * as VueGoogleMaps from 'vue2-google-maps'

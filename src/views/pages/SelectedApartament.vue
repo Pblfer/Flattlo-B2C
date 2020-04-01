@@ -89,15 +89,15 @@
 
 <script>
 
-import gql from "graphql-tag";
-import Hero from "@/components/Apartament/HeroApartamentComponent"    
-    export default {
-        data(){
-            return{
-                getApartament: []
-            }
-        },
-        apollo: {
+import gql from 'graphql-tag'
+import Hero from '@/components/Apartament/HeroApartamentComponent'    
+export default {
+  data () {
+    return {
+      getApartament: []
+    }
+  },
+  apollo: {
     getApartament: {
       query: gql`
         query($apartamentID: String!) {
@@ -117,23 +117,23 @@ import Hero from "@/components/Apartament/HeroApartamentComponent"
           }
         }
       `,
-      variables() {
-          return{
-            apartamentID: localStorage.selectedApartament
-          }
+      variables () {
+        return {
+          apartamentID: localStorage.selectedApartament
+        }
       },
       pollInterval: 850
     }
   },
   components:{
-      Hero
+    Hero
   },
   computed:{
-    saveApartamentToQuote(apt) {
-      localStorage.selectedApartament = apt;
-    },
-  }
+    saveApartamentToQuote (apt) {
+      localStorage.selectedApartament = apt
     }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

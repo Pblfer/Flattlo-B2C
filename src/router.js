@@ -55,9 +55,9 @@ const router = new Router({
           component: () => import('@/views/pages/quoteGenerator.vue')
         },
         {
-          path: "",
-          redirect: "/login"
-        },
+          path: '',
+          redirect: '/login'
+        }
       ]
     },
     // =============================================================================
@@ -116,4 +116,4 @@ router.afterEach(() => {
 
 // })
 
-export default router;
+export default router

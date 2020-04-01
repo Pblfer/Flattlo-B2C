@@ -4,7 +4,7 @@
       <h4>🥳 Estas en el nivel: {{getLevel.number_of_level}}</h4>
       <h5
         class="mt-3"
-      >Puedes cotizar cualquier apartamento, si deseas conocer más detalle de cada apartamento pulsa en ver más detalles.</h5>
+      >Si deseas conocer más detalle de cada apartamento pulsa en ver más detalles.</h5>
       <vs-divider></vs-divider>
     </div>
 
@@ -32,7 +32,7 @@
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
               <vs-button
                 @click.native="saveApartament(apartament._id)"
-                :to="{name: 'selected-apartament'}"
+                :to="{name: 'quote-generator'}"
                 class="mt-8 mb-8 quoteBtn"
                 icon-pack="feather"
                 size="large"
@@ -57,21 +57,21 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import vSelect from "vue-select";
-import router from "../../router";
+import gql from 'graphql-tag'
+import vSelect from 'vue-select'
+import router from '../../router'
 
 export default {
-  data() {
+  data () {
     return {
       getProyect: [],
-      selectedLevel: "5e7abad0afe9ae00247ccefb",
+      selectedLevel: '5e7abad0afe9ae00247ccefb',
       numberOfLevel: 1,
       selected: []
-    };
+    }
   },
   components: {
-    "v-select": vSelect
+    'v-select': vSelect
   },
   apollo: {
     getLevel: {
@@ -98,114 +98,114 @@ export default {
           }
         }
       `,
-      variables() {
+      variables () {
         return {
           levelID: localStorage.selectedLevel
-        };
+        }
       },
       pollInterval: 350
     }
   },
 
   methods: {
-    saveApartament(apt) {
-      localStorage.selectedApartament = apt;
+    saveApartament (apt) {
+      localStorage.selectedApartament = apt
     },
-    openLoadingInDiv() {
+    openLoadingInDiv () {
       this.$vs.loading({
-        container: "#div-with-loading",
+        container: '#div-with-loading',
         scale: 1,
-        type: "sound",
-        background: "transparent",
-        color: "success",
-        text: "Cargando..."
-      });
+        type: 'sound',
+        background: 'transparent',
+        color: 'success',
+        text: 'Cargando...'
+      })
     },
-    getFirstLevel() {
-      this.selectedLevel = this.getProyect.levels[0]._id;
+    getFirstLevel () {
+      this.selectedLevel = this.getProyect.levels[0]._id
     },
-    getSecondLevel() {
-      this.selectedLevel = this.getProyect.levels[1]._id;
+    getSecondLevel () {
+      this.selectedLevel = this.getProyect.levels[1]._id
     },
-    selectedColor(level) {
+    selectedColor (level) {
       if (this.selectedLevel == level) {
-        return "success";
+        return 'success'
       }
-      return "#10173b";
+      return '#10173b'
     },
-    LevelInfo(ID, number) {
-      localStorage.selectedLevel = ID;
-      localStorage.level = number;
+    LevelInfo (ID, number) {
+      localStorage.selectedLevel = ID
+      localStorage.level = number
     },
-    statusColor(status) {
-      if (status == "disponible") return "success";
-      if (status == "reservado") return "danger";
-      if (status == "bloqueado") return "grey";
+    statusColor (status) {
+      if (status == 'disponible') return 'success'
+      if (status == 'reservado') return 'danger'
+      if (status == 'bloqueado') return 'grey'
     },
-    sendToCompare(data) {
-      this.$store.dispatch("enviar_a_comparador", data);
+    sendToCompare (data) {
+      this.$store.dispatch('enviar_a_comparador', data)
       this.$vs.notify({
         time: 8000,
         title: `${this.selected.length} enviado al Comparador.`,
-        text: "☝ Puede visitar el comparador pulsando aquí.",
-        color: "success",
-        iconPack: "feather",
-        icon: "icon-copy",
+        text: '☝ Puede visitar el comparador pulsando aquí.',
+        color: 'success',
+        iconPack: 'feather',
+        icon: 'icon-copy',
         click: () => {
-          router.push("/comparador");
+          router.push('/comparador')
         }
-      });
-      this.selected = [];
+      })
+      this.selected = []
     },
-    selectApartament(aptID, aptNumber) {
-      localStorage.apartamentID = aptID;
-      localStorage.apartamentNumber = aptNumber;
+    selectApartament (aptID, aptNumber) {
+      localStorage.apartamentID = aptID
+      localStorage.apartamentNumber = aptNumber
     }
   },
   computed: {
-    levelNumber() {
-      return this.$store.state.ui.level;
+    levelNumber () {
+      return this.$store.state.ui.level
     },
-    checkData() {
+    checkData () {
       if (this.getLevel == undefined) {
-        return false;
+        return false
       } else {
-        return true;
+        return true
       }
     },
-    disponibles() {
+    disponibles () {
       const apartamentosDisponibles = this.getLevel.inventory.filter(
-        item => item.actual_state == "Disponible"
-      );
-      return apartamentosDisponibles.length;
+        item => item.actual_state == 'Disponible'
+      )
+      return apartamentosDisponibles.length
     },
-    reservados() {
+    reservados () {
       const apartamentosReservados = this.getLevel.inventory.filter(
-        item => item.actual_state == "Reservado"
-      );
-      return apartamentosReservados.length;
+        item => item.actual_state == 'Reservado'
+      )
+      return apartamentosReservados.length
     },
-    bloqueados() {
+    bloqueados () {
       const apartamentosBloqueados = this.getLevel.inventory.filter(
-        item => item.actual_state == "Bloqueado"
-      );
-      return apartamentosBloqueados.length;
+        item => item.actual_state == 'Bloqueado'
+      )
+      return apartamentosBloqueados.length
     },
-    mostrarDisponibles() {
+    mostrarDisponibles () {
       const apartamentosDisponibles = this.getLevel.inventory.filter(
-        item => item.actual_state == "Disponible"
-      );
-      return apartamentosDisponibles;
+        item => item.actual_state == 'Disponible'
+      )
+      return apartamentosDisponibles
     }
   },
-  mounted() {
-    this.openLoadingInDiv();
+  mounted () {
+    this.openLoadingInDiv()
     setTimeout(() => {
-      this.getFirstLevel();
-      this.$vs.loading.close("#div-with-loading > .con-vs-loading");
-    }, 1000);
+      this.getFirstLevel()
+      this.$vs.loading.close('#div-with-loading > .con-vs-loading')
+    }, 1000)
   }
-};
+}
 </script>
 
 <style lang="scss">

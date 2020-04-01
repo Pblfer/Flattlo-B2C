@@ -9,6 +9,47 @@
 
 const actions = {
 
+  /////////////
+  // DATOS PARA COTIZACION 
+  ////////////
+
+  Cliente_Seleccionado({ commit }, payload) {
+    commit("CLIENTE_SELECCIONADO", payload)
+  },
+
+  Descuento_seleccionado({ commit }, payload) {
+    commit("DESCUENTO_SELECCIONADO", payload)
+  },
+
+  Parqueo_Seleccionado({ commit }, payload) {
+    commit("PARQUEO_SELECCIONADO", payload)
+  },
+
+  Bodega_Seleccionada({ commit }, payload) {
+    commit("BODEGA_SELECCIONADA", payload)
+  },
+
+  Enganche_Cliente({ commit }, payload) {
+    commit("ENGANCHE_CLIENTE", payload)
+  },
+
+  Meses_Enganche({ commit }, payload) {
+    commit("MESES_ENGANCHE", payload)
+  },
+
+  Financiamiento_Bancario({ commit }, payload) {
+    commit("FINANCIAMIENTO_BANCARIO", payload)
+  },
+
+  Años_Financiamiento_Bancario({ commit }, payload) {
+    commit("AÑOS_FINANCIAMIENTO_BANCARIO", payload)
+  },
+
+  reserva_establecida({ commit }, payload) {
+    commit("RESERVA_ESTABLECIDA", payload)
+  },
+
+
   // /////////////////////////////////////////////
   // COMPONENTS
   // /////////////////////////////////////////////

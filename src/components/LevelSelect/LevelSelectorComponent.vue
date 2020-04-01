@@ -168,7 +168,7 @@ export default {
     }
   },
   computed: {
-    getFirstName(){
+    getFirstName () {
       return localStorage.firstNameUser
     },
     levelNumber () {
