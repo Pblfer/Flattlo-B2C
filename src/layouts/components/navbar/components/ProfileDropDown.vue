@@ -23,14 +23,14 @@
           </li>
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="$router.push('/apps/chat').catch(() => {})">
+            @click="$router.push('/quotes').catch(() => {})">
             <feather-icon icon="FileTextIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Cotizaciones</span>
+            <span  class="ml-2">Cotizaciones</span>
           </li>
 
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="$router.push('/apps/eCommerce/wish-list').catch(() => {})">
+            @click="$router.push('/favorite-quotes').catch(() => {})">
             <feather-icon icon="HeartIcon" svgClasses="w-4 h-4" />
             <span class="ml-2">Favoritos</span>
           </li>

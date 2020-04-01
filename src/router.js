@@ -55,6 +55,16 @@ const router = new Router({
           component: () => import('@/views/pages/quoteGenerator.vue')
         },
         {
+          path: '/favorite-quotes',
+          name: 'favorite-quotes',
+          component: () => import('@/views/pages/Favorites.vue')
+        },
+        {
+          path: '/quotes',
+          name: 'quotes',
+          component: () => import('@/views/pages/Quotes.vue')
+        },
+        {
           path: '',
           redirect: '/login'
         }
