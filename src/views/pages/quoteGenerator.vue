@@ -9,12 +9,14 @@
     </vs-row>
     <ClientSection />
     <ProperySection />
+    <Resume />
   </div>
 </template>
 
 <script>
 import ClientSection from '@/components/Quote/ClientComponent'
 import ProperySection from '@/components/Quote/PropertyComponent'
+import Resume from '@/components/Quote/ResumeQuote'
 
 export default {
   data () {
@@ -27,7 +29,8 @@ export default {
   },
   components: {
     ClientSection,
-    ProperySection
+    ProperySection,
+    Resume
   }
 }
 </script>
