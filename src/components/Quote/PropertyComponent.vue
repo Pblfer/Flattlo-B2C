@@ -101,9 +101,7 @@
           />
         </vs-col>
       </vs-row>
-      <div class="mb-8" v-if="monthMax > 0">
-        <h6>🤓👉Tu cuota queda en Q. {{((minPorcent - getApartament.reserve_price) / monthMax).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}}</h6>
-      </div>
+     
       <br/>
       <div class="mb-8">
         <h5>🧾 Financiamiento:</h5>

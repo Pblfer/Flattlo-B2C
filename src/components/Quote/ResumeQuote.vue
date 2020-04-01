@@ -15,6 +15,12 @@
             class="valueText"
           >{{getRequestDate}}</p>
           <h5 class="mt-4 mb-1">
+            <strong>Fecha máxima de aceptación:</strong>
+          </h5>
+          <p
+            class="valueText"
+          >{{getLimitDate}}</p>
+          <h5 class="mt-4 mb-1">
             <strong>Tus Datos:</strong>
           </h5>
           <p class="valueText">{{ObtenerCliente.first_name}}</p>
@@ -36,278 +42,48 @@
           <p v-show="!(ObtenerParqueos.length == 0)" class="valueText">Parqueos: Q.{{sumP.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>
           <p v-show="!(ObtenerBodegas.length == 0)" class="valueText">Bodegas: Q. {{sumW.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>
           <p class="valueText">Impuestos: Q. {{ getImpuestos.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</p> 
-          <vs-divider class="specialDivider"></vs-divider>
           <p class="valueText"><strong>Total: Q. {{ totalValue.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</strong></p>   
-
-        </vx-card>
-    <vx-card>
-      <!-- INVOICE METADATA -->
-      <div class="vx-row leading-loose p-base">
-        <div class="vx-col w-full md:w-1/2 mt-base">
-          <img class="LogoProyectQuote" :src="getProyect.quote_logo" />
-        </div>
-        <div class="vx-col w-full md:w-1/2 text-right">
-          <div class="invoice__invoice-detail mt-6">
-            <h6>Cotización No.</h6>
-            <p>#{{ getRandomNumber }}</p>
-
-            <h6 class="mt-4">Fecha de solicitud:</h6>
-            <p>{{getRequestDate}}</p>
-          </div>
-        </div>
-        <div class="vx-col w-full md:w-1/2 mt-12">
-          <h5>Att.</h5>
-          <div class="invoice__recipient-info my-2">
-            <h6>{{ObtenerCliente.first_name}} {{ObtenerCliente.last_name}}</h6>
-          </div>
-          <div class="invoice__recipient-contact">
-            <p class="flex items-center">
-              <feather-icon icon="PhoneIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{ObtenerCliente.phone}}</span>
-            </p>
-            <p class="flex items-center">
-              <feather-icon icon="MailIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{ObtenerCliente.email}}</span>
-            </p>
-            <img class="planeOnQuote" :src="getApartament.plane_img" />
-          </div>
-        </div>
-        <div class="vx-col w-full md:w-1/2 mt-base text-right mt-12">
-          <h5>{{ getDeveloper.name }}</h5>
-          <div class="invoice__company-info my-2">
-            <p class="flex items-center justify-end">
-              <feather-icon icon="PhoneIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{ getDeveloper.phone }}</span>
-            </p>
-            <p class="flex items-center justify-end">
-              <feather-icon icon="GlobeIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{ getDeveloper.website }}</span>
-            </p>
-            <p class="flex items-center justify-end">
-              <feather-icon icon="MapPinIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{ getDeveloper.address }}</span>
-            </p>
-          </div>
-          <br />
-          <div class="invoice__company-contact">
-            <vs-avatar size="96px" :src="getUser.pic"></vs-avatar>
-            <h6>Asesor personal:</h6>
-            <h5 class="mt-1">{{getUser.first_name}} {{getUser.last_name}}</h5>
-            <p class="flex items-center justify-end my-1">
-              <feather-icon icon="MailIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{ getUser.email }}</span>
-            </p>
-
-            <p class="flex items-center justify-end">
-              <feather-icon icon="PhoneIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{ getUser.phone }}</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- INVOICE CONTENT -->
-      <div class="p-base">
-        <!-- INVOICE TASKS TABLE -->
-        <vs-table hoverFlat :data="getApartament">
-          <!-- HEADER -->
-          <template slot="thead">
-            <vs-th>OPCIÓN:</vs-th>
-            <vs-th>M2</vs-th>
-            <vs-th>HAB.</vs-th>
-            <vs-th>BAÑ.</vs-th>
-            <vs-th v-show="!(ObtenerParqueos.length == 0)">PARQUEOS</vs-th>
-            <vs-th v-show="!(ObtenerBodegas.length == 0)">BODEGAS</vs-th>
-          </template>
-
-          <!-- DATA -->
-          <template>
-            <vs-tr>
-              <vs-td>{{getApartament.number}}</vs-td>
-              <vs-td>{{getApartament.living_square_mts}}m2</vs-td>
-              <vs-td>{{getApartament.bedrooms}}</vs-td>
-              <vs-td>{{getApartament.bathrooms}}</vs-td>
-              <vs-td v-show="!(ObtenerParqueos.length == 0)">{{ObtenerParqueos.length}}</vs-td>
-              <vs-td v-show="!(ObtenerBodegas.length == 0)">{{ObtenerBodegas.length}}</vs-td>
-            </vs-tr>
-          </template>
-        </vs-table>
-
-        <!-- INVOICE SUMMARY TABLE -->
-        <vs-table class="w-full ml-auto mt-4" :data="getApartament">
-          <vs-tr>
-            <vs-th>VALOR PROPIEDAD</vs-th>
-            <vs-td>Q. {{ getApartament.price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</vs-td>
-          </vs-tr>
-          <vs-tr v-show="!(ObtenerParqueos.length == 0)">
-            <th>PARQUEOS</th>
-            <td>Q. {{ sumP.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
-          </vs-tr>
-          <vs-tr v-show="!(ObtenerBodegas.length == 0)">
-            <th>BODEGAS</th>
-            <td>Q. {{ sumW.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
-          </vs-tr>
-          <vs-tr>
-            <th>IMPUESTOS</th>
-            <td>Q. {{ getImpuestos.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
-          </vs-tr>
-          <vs-tr v-show="!(ObtenerDescuento == 0)">
-            <vs-th>DESCUENTO</vs-th>
-            <vs-td>Q.{{ ObtenerDescuento.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</vs-td>
-          </vs-tr>
-          <vs-tr>
-            <th>TOTAL</th>
-            <td>
-              <strong>Q. {{ totalValue.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</strong>
-            </td>
-          </vs-tr>
-        </vs-table>
-      </div>
-
-      <!-- INVOICE FOOTER -->
-      <div class="invoice__footer text-center">
-        <svg id="barcode" />
-        <p class="mt-4">
-          Esta cotización es válida
-          <strong>{{getProyect.max_days_limit_for_quote}} días</strong> hábiles despues de ser emitida.
-        </p>
-      </div>
-    </vx-card>
-    <br />
-    <vx-card>
-      <div class="vx-row leading-loose p-base">
-        <div class="vx-col w-full md:w-1/2 mt-base">
-          <img class="LogoProyectQuote" :src="getProyect.quote_logo" />
-        </div>
-        <div class="vx-col w-full md:w-1/2 text-right">
-          <div class="invoice__invoice-detail mt-6">
-            <h6>Cotización No.</h6>
-            <p>#{{ getRandomNumber }}</p>
-
-            <h6 class="mt-4">Fecha de solicitud:</h6>
-            <p>{{getRequestDate}}</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="vx-row leading-loose p-base">
-        <div class="vx-col w-full">
-          <vs-chip color="success" class="m-1">Paso 1</vs-chip>
-          <h6 class="mt-2">Reserva la unidad:</h6>
-          <vs-divider></vs-divider>
-        </div>
-        <vs-table class="w-full mt-2" :data="getApartament">
-          <vs-tr>
-            <vs-th>Monto ingresado:</vs-th>
-            <vs-td>Q. {{ObtenerEngacheEstablecido.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}.00</vs-td>
-          </vs-tr>
-        </vs-table>
-        <div class="vx-col w-full mt-base">
-          <vs-chip color="success" class="m-1">Paso 2</vs-chip>
-          <h6 class="mt-2">Firma de contra promesa:</h6>
-          <vs-divider></vs-divider>
-        </div>
-        <vs-table class="w-full mt-2" :data="getApartament">
-          <vs-tr v-show="!firmaPromesaCubierta">
-            <vs-th>Monto establecido:</vs-th>
-            <vs-td>Q. {{firmaPromesa.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
-          </vs-tr>
-          <vs-tr v-show="firmaPromesaCubierta">
-            <vs-th>Saldo pendiente:</vs-th>
-            <vs-td>Q. 0.00</vs-td>
-          </vs-tr>
-          <vs-tr v-show="firmaPromesaCubierta">
-            <vs-th>Restante:</vs-th>
-            <vs-td>Q. {{saldoFavorFirmaPromesa.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
-          </vs-tr>
-        </vs-table>
-        <div class="vx-col w-full mt-base">
-          <vs-chip color="success" class="m-1">Paso 3</vs-chip>
-          <h6 class="mt-2">Inicia enganche fraccionado:</h6>
-          <vs-divider></vs-divider>
-        </div>
-        <vs-table class="w-full mt-2" :data="getApartament">
-          <vs-tr v-show="engancheCubierto">
-            <vs-th>Saldo pendiente:</vs-th>
-            <vs-td>Q. 0.00</vs-td>
-          </vs-tr>
-          <vs-tr v-show="engancheCubierto">
-            <vs-th>Restante:</vs-th>
-            <vs-td>Q. {{saldoFavorEngancheFraccionado.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
-          </vs-tr>
-          <vs-tr v-show="!engancheCubierto">
-            <vs-th>Enganche:</vs-th>
-            <vs-td>Q. {{obtenerResultadoEnganche.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
-          </vs-tr>
-          <vs-tr v-show="!engancheCubierto">
-            <vs-th>Fraccionamiento:</vs-th>
-            <vs-td>{{obtenerMesesEnganche}} Meses</vs-td>
-          </vs-tr>
-          <vs-tr v-show="!engancheCubierto">
-            <vs-th>Cuota nivelada:</vs-th>
-            <vs-td>
-              <strong>Q. {{ObtenerCuotaEnganche.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</strong>
-            </vs-td>
-          </vs-tr>
-        </vs-table>
-        <div class="vx-col w-full mt-base">
-          <vs-chip color="success" class="m-1">Paso 4</vs-chip>
-          <h6 class="mt-2">Inicia financiamiento:</h6>
-          <vs-divider></vs-divider>
-        </div>
-        <vs-table class="w-full mt-2" :data="getApartament">
-          <vs-tr>
-            <vs-th>Monto a financiar:</vs-th>
-            <vs-td>Q. {{totalFinanciamiento.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
-          </vs-tr>
-          <vs-tr>
-            <vs-th>Entidad seleccionada:</vs-th>
-            <vs-td>{{obtenerValoreFinanciamiento.entity}}</vs-td>
-          </vs-tr>
-          <vs-tr>
-            <vs-th>Tasa de interés:</vs-th>
-            <vs-td>{{obtenerValoreFinanciamiento.interestEntity}}%</vs-td>
-          </vs-tr>
-          <vs-tr>
-            <vs-th>Fraccionamiento:</vs-th>
-            <vs-td>{{obtenerValoreFinanciamiento.yearsFinancingSelected}} Años</vs-td>
-          </vs-tr>
-          <vs-tr>
-            <vs-th>Cuota nivelada:</vs-th>
-            <vs-td>
-              <strong>Q. {{ObtenerCuotaNivelada.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</strong>
-            </vs-td>
-          </vs-tr>
-        </vs-table>
-      </div>
-
-      <!-- INVOICE FOOTER -->
-      <div class="invoice__footer text-center">
-        <svg id="barcode" />
-        <p class="mt-4">
-          Esta cotización es válida
-          <strong>{{getProyect.max_days_limit_for_quote}} días</strong> hábiles despues de ser emitida.
-        </p>
-      </div>
-    </vx-card>
-    <br />
+             <h5 class="mt-5 mb-1">
+           <strong>Reserva:</strong>
+          </h5>
+          <p class="valueText">Monto ingresado: Q. {{ ObtenerEngacheEstablecido.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}.00</p>
+          <h5 class="mt-5 mb-1" >
+           <strong>Firma promesa:</strong>
+          </h5>
+          <p v-show="!firmaPromesaCubierta" class="valueText">Monto establecido: Q. {{ firmaPromesa.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</p> 
+          <p v-show="firmaPromesaCubierta" class="valueText">Saldo pendiente: Q. 0.00</p>
+          <p v-show="firmaPromesaCubierta" class="valueText">Saldo pendiente: Q. {{saldoFavorFirmaPromesa.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>  
+          <h5 class="mt-5 mb-1" >
+           <strong>Enganche fraccionado:</strong>
+          </h5>
+          <p v-show="engancheCubierto" class="valueText">Saldo pendiente: Q. 0.00</p> 
+          <p v-show="engancheCubierto" class="valueText">Restante: {{saldoFavorEngancheFraccionado.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>
+          <p v-show="!engancheCubierto" class="valueText">Enganche: {{obtenerResultadoEnganche.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p> 
+          <p v-show="!engancheCubierto" class="valueText">Fraccionamiento: {{obtenerMesesEnganche}} Meses</p>
+          <p v-show="!engancheCubierto" class="valueText">Cuota Nivelada: {{ObtenerCuotaEnganche.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>                                                
+            <h5 class="mt-5 mb-1" >
+           <strong>Financiamiento:</strong>
+          </h5>
+          <p class="valueText">Monto a financiar: Q. {{totalFinanciamiento.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p> 
+          <p class="valueText">Entidad: {{obtenerValoreFinanciamiento.entity}}</p>   
+          <p class="valueText">Tasa de interés: {{obtenerValoreFinanciamiento.interestEntity}}%</p>
+          <p class="valueText">Años: {{obtenerValoreFinanciamiento.yearsFinancingSelected}}</p>
+          <p class="valueText">Cuota Nivelada: {{ObtenerCuotaNivelada.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>    
+             <br />
     <vs-row>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
         <vs-button
           ref="loadableButton"
           id="button-with-loading"
-          class="vs-con-loading__container"
+          class="vs-con-loading__container mt-8 mb-8 quoteBtn"
           @click="openLoadingContained"
-          color="success"
-          icon-pack="fas"
-          icon="fa-save"
-        >Almacenar Cotización</vs-button>
-      </vs-col>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="mt-4">
-        🧐 Fecha límite de aceptación:
-        <strong>{{getLimitDate}}</strong>
+                size="large"
+                text-color="#000"
+                color="#fbdc11"
+        >Guardar Cotización</vs-button>
       </vs-col>
     </vs-row>
+        </vx-card>
   </div>
 </template>
 
@@ -816,5 +592,13 @@ export default {
 }
 .specialDivider{
     width: 40%;
+}
+.quoteBtn {
+  border-radius: 30px;
+  width: 90%;
+  font-weight: 400;
+  -webkit-box-shadow: -1px 10px 33px -4px rgba(0, 0, 0, 0.18);
+  -moz-box-shadow: -1px 10px 33px -4px rgba(0, 0, 0, 0.18);
+  box-shadow: -1px 10px 33px -4px rgba(0, 0, 0, 0.18);
 }
 </style>
