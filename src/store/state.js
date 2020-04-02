@@ -94,16 +94,16 @@ const state = {
     parkings:[],
     warehouses:[],
     depositValues:{
-        depositClient:0,
-        minDeposit:0,
-        monthDeposit:0
+      depositClient:0,
+      minDeposit:0,
+      monthDeposit:0
     },
     financingValues:{
-        entity:'',
-        interestEntity: 0,
-        yearsFinancingSelected: 0,
-        reservePrice:0
-    },
+      entity:'',
+      interestEntity: 0,
+      yearsFinancingSelected: 0,
+      reservePrice:0
+    }
   },
   // Can be used to get current window with
   // Note: Above breakpoint state is for internal use of sidebar & navbar component

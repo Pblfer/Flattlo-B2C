@@ -2,12 +2,12 @@
 <template>
   <div id="pdf">
       <vx-card>
-          <h5 class="mt-2 mb-1">
+          <!-- <h5 class="mt-2 mb-1">
             <strong>No. Cotización:</strong>
           </h5>
           <p
             class="valueText"
-          ># {{getRandomNumber}}</p>
+          ># {{getRandomNumber}}</p> -->
           <h5 class="mt-4 mb-1">
             <strong>Fecha de Solicitud:</strong>
           </h5>
@@ -43,7 +43,7 @@
           <p v-show="!(ObtenerBodegas.length == 0)" class="valueText">Bodegas: Q. {{sumW.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>
           <p class="valueText">Impuestos: Q. {{ getImpuestos.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</p> 
           <p class="valueText"><strong>Total: Q. {{ totalValue.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</strong></p>   
-             <h5 class="mt-5 mb-1">
+             <!-- <h5 class="mt-5 mb-1">
            <strong>Reserva:</strong>
           </h5>
           <p class="valueText">Monto ingresado: Q. {{ ObtenerEngacheEstablecido.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}.00</p>
@@ -69,7 +69,7 @@
           <p class="valueText">Tasa de interés: {{obtenerValoreFinanciamiento.interestEntity}}%</p>
           <p class="valueText">Años: {{obtenerValoreFinanciamiento.yearsFinancingSelected}}</p>
           <p class="valueText">Cuota Nivelada: {{ObtenerCuotaNivelada.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>    
-             <br />
+             <br /> -->
     <vs-row>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
         <vs-button
@@ -80,7 +80,7 @@
                 size="large"
                 text-color="#000"
                 color="#fbdc11"
-        >Guardar Cotización</vs-button>
+        >Generar Cotización</vs-button>
       </vs-col>
     </vs-row>
         </vx-card>
@@ -88,28 +88,28 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import JsBarcode from "jsbarcode";
-import router from "../../router";
+import gql from 'graphql-tag'
+import JsBarcode from 'jsbarcode'
+import router from '../../router'
 
 export default {
-  data() {
+  data () {
     return {
       getDeveloper: [],
       getProyect: [],
       getUser: [],
       getApartament: [],
-      date: "",
-      randomNum: "",
+      date: '',
+      randomNum: '',
       propDataReady: false,
       setMonth: 0,
       firmaPromesaCubierta: false,
       engancheCubierto: false,
       saldoFavorFirmaPromesa: 0,
       saldoFavorEngancheFraccionado: 0,
-      backgroundLoading: "success",
-      colorLoading: "#fff"
-    };
+      backgroundLoading: 'success',
+      colorLoading: '#fff'
+    }
   },
   apollo: {
     getDeveloper: {
@@ -124,10 +124,10 @@ export default {
           }
         }
       `,
-      variables() {
+      variables () {
         return {
           id: '5e7ab6acafe9ae00247ccef1'
-        };
+        }
       },
       pollInterval: 500
     },
@@ -144,10 +144,10 @@ export default {
           }
         }
       `,
-      variables() {
+      variables () {
         return {
           userID: '5e7ab76bafe9ae00247ccef4'
-        };
+        }
       },
       pollInterval: 500
     },
@@ -167,10 +167,10 @@ export default {
           }
         }
       `,
-      variables() {
+      variables () {
         return {
           apartamentID: localStorage.selectedApartament
-        };
+        }
       },
       pollInterval: 500
     },
@@ -184,46 +184,46 @@ export default {
           }
         }
       `,
-      variables() {
+      variables () {
         return {
           proyectID: '5e7aba5eafe9ae00247ccefa'
-        };
+        }
       },
       pollInterval: 300
     }
   },
   computed: {
-    getLimitDate() {
-      let date = this.getDate.getDate();
-      let newdate = new Date(date);
+    getLimitDate () {
+      const date = this.getDate.getDate()
+      const newdate = new Date(date)
 
       newdate.setDate(
         this.getDate.getDate() + this.getProyect.max_days_limit_for_quote
-      );
+      )
 
-      let dd = newdate.getDate();
-      let mm = newdate.getMonth() + 1;
-      let y = this.getDate.getFullYear();
+      const dd = newdate.getDate()
+      const mm = newdate.getMonth() + 1
+      const y = this.getDate.getFullYear()
 
-      const someFormattedDate = dd + "/" + mm + "/" + y;
-      return someFormattedDate;
+      const someFormattedDate = `${dd  }/${  mm  }/${  y}`
+      return someFormattedDate
     },
-    getRequestDate() {
-      let date = this.getDate.getDate();
-      let newdate = new Date(date);
-      newdate.setDate(this.getDate.getDate());
-      let dd = newdate.getDate();
-      let mm = newdate.getMonth();
-      let y = this.getDate.getFullYear();
-      const requestDate = dd + "/" + mm + "/" + y;
-      return requestDate;
+    getRequestDate () {
+      const date = this.getDate.getDate()
+      const newdate = new Date(date)
+      newdate.setDate(this.getDate.getDate())
+      const dd = newdate.getDate()
+      const mm = newdate.getMonth()
+      const y = this.getDate.getFullYear()
+      const requestDate = `${dd  }/${  mm  }/${  y}`
+      return requestDate
     },
-    ObtenerCuotaEnganche() {
-      let valorCuotaFixed =
-        this.obtenerResultadoEnganche / this.obtenerMesesEnganche;
-      return valorCuotaFixed;
+    ObtenerCuotaEnganche () {
+      const valorCuotaFixed =
+        this.obtenerResultadoEnganche / this.obtenerMesesEnganche
+      return valorCuotaFixed
     },
-    ObtenerCuotaNivelada() {
+    ObtenerCuotaNivelada () {
       const cuotaNivelada =
         (this.totalFinanciamiento *
           (this.obtenerValoreFinanciamiento.interestEntity / 1200)) /
@@ -231,63 +231,63 @@ export default {
           Math.pow(
             1 + this.obtenerValoreFinanciamiento.interestEntity / 1200,
             -(this.obtenerValoreFinanciamiento.yearsFinancingSelected * 12)
-          ));
-      return cuotaNivelada;
+          ))
+      return cuotaNivelada
     },
-    getDate() {
-      let time = new Date();
-      return time;
+    getDate () {
+      const time = new Date()
+      return time
     },
-    getRandomNumber() {
-      const d = new Date().getDate().toString();
-      const s = new Date().getSeconds();
-      const ms = new Date().getMilliseconds();
-      const pID = '5e7ab76bafe9ae00247ccef4';
-      return d + s + ms + pID.slice(0, 4);
+    getRandomNumber () {
+      const d = new Date().getDate().toString()
+      const s = new Date().getSeconds()
+      const ms = new Date().getMilliseconds()
+      const pID = '5e7ab76bafe9ae00247ccef4'
+      return d + s + ms + pID.slice(0, 4)
     },
-    obtenerResultadoEnganche() {
+    obtenerResultadoEnganche () {
       const vt =
         ((this.getApartament.price + (this.sumP + this.sumW)) *
           this.getProyect.deposit_percent) /
-        100;
-      const r = this.ObtenerEngacheEstablecido;
-      const fp = this.firmaPromesa;
-      const sf = this.saldoFavorFirmaPromesa;
-      const total = vt - r - fp - sf;
-      this.saldoFavorEnganche(total);
-      return total;
+        100
+      const r = this.ObtenerEngacheEstablecido
+      const fp = this.firmaPromesa
+      const sf = this.saldoFavorFirmaPromesa
+      const total = vt - r - fp - sf
+      this.saldoFavorEnganche(total)
+      return total
     },
-    ObtenerEngacheEstablecido() {
-      return this.$store.state.quote_data.financingValues.reservePrice;
+    ObtenerEngacheEstablecido () {
+      return this.$store.state.quote_data.financingValues.reservePrice
     },
-    ObtenerCliente() {
-      return this.$store.state.quote_data;
+    ObtenerCliente () {
+      return this.$store.state.quote_data
     },
-    ObtenerDescuento() {
-      return this.$store.state.quote_data.discount_amount;
+    ObtenerDescuento () {
+      return this.$store.state.quote_data.discount_amount
     },
-    ObtenerParqueos() {
-      return this.$store.state.quote_data.parkings;
+    ObtenerParqueos () {
+      return this.$store.state.quote_data.parkings
     },
-    ObtenerBodegas() {
-      return this.$store.state.quote_data.warehouses;
+    ObtenerBodegas () {
+      return this.$store.state.quote_data.warehouses
     },
-    sumP() {
-      return this.ObtenerParqueos.reduce((a, i) => a + i.price, 0);
+    sumP () {
+      return this.ObtenerParqueos.reduce((a, i) => a + i.price, 0)
     },
-    sumW() {
-      return this.ObtenerBodegas.reduce((a, i) => a + i.price, 0);
+    sumW () {
+      return this.ObtenerBodegas.reduce((a, i) => a + i.price, 0)
     },
-    getValueStamps() {
-      return (this.getApartament.price + this.sumP + this.sumW) * 0.3 * 0.03;
+    getValueStamps () {
+      return (this.getApartament.price + this.sumP + this.sumW) * 0.3 * 0.03
     },
-    getIva() {
-      return (this.getApartament.price + this.sumP + this.sumW) * 0.7 * 0.12;
+    getIva () {
+      return (this.getApartament.price + this.sumP + this.sumW) * 0.7 * 0.12
     },
-    getImpuestos() {
-      return this.getValueStamps + this.getIva;
+    getImpuestos () {
+      return this.getValueStamps + this.getIva
     },
-    totalValue() {
+    totalValue () {
       return (
         parseInt(this.getApartament.price) +
         this.getValueStamps +
@@ -295,55 +295,55 @@ export default {
         this.ObtenerDescuento +
         this.sumP +
         this.sumW
-      );
+      )
     },
-    obtenerEngancheMinimo() {
+    obtenerEngancheMinimo () {
       return (
         this.$store.state.quote_data.depositValues.minDeposit -
         this.firmaPromesa -
         this.getApartament.reserve_price
-      );
+      )
     },
-    obtenerEngancheCliente() {
-      return this.$store.state.quote_data.depositValues.depositClient;
+    obtenerEngancheCliente () {
+      return this.$store.state.quote_data.depositValues.depositClient
     },
-    obtenerMesesEnganche() {
-      return this.$store.state.quote_data.depositValues.monthDeposit;
+    obtenerMesesEnganche () {
+      return this.$store.state.quote_data.depositValues.monthDeposit
     },
-    equalDataDeposit() {
+    equalDataDeposit () {
       if (this.obtenerEngancheMinimo == this.obtenerEngancheCliente) {
-        return false;
+        return false
       } else {
-        return true;
+        return true
       }
     },
-    firmaPromesa() {
+    firmaPromesa () {
       const value =
         (this.getApartament.price + this.sumP + this.sumW) * 0.03 -
-        this.ObtenerEngacheEstablecido;
-      this.valorFirmaSaldo(value);
-      return value;
+        this.ObtenerEngacheEstablecido
+      this.valorFirmaSaldo(value)
+      return value
     },
-    totalFinanciamiento() {
+    totalFinanciamiento () {
       const vt =
         ((this.getApartament.price + this.sumW + this.sumP) *
           this.getProyect.deposit_percent) /
-        100;
-      const r = this.saldoFavorEngancheFraccionado;
-      return this.totalValue - vt - r;
+        100
+      const r = this.saldoFavorEngancheFraccionado
+      return this.totalValue - vt - r
     },
-    obtenerRestante() {
+    obtenerRestante () {
       return (this.obtenerEngancheCliente - this.obtenerEngancheMinimo)
         .toFixed(2)
         .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
-    obtenerValoreFinanciamiento() {
-      return this.$store.state.quote_data.financingValues;
+    obtenerValoreFinanciamiento () {
+      return this.$store.state.quote_data.financingValues
     }
   },
   methods: {
-    createQuote() {
+    createQuote () {
       this.$apollo
         .mutate({
           mutation: gql`
@@ -445,26 +445,26 @@ export default {
           }
         })
         .then(data => {
-          this.addClientToQuote(data.data.newQuotetoSeller._id);
-          this.addApartamentToQuote(data.data.newQuotetoSeller._id);
-          this.addParkingToQuote(data.data.newQuotetoSeller._id);
-          this.addWarehouseToQuote(data.data.newQuotetoSeller._id);
-          this.$vs.loading.close("#button-with-loading > .con-vs-loading");
+          this.addClientToQuote(data.data.newQuotetoSeller._id)
+          this.addApartamentToQuote(data.data.newQuotetoSeller._id)
+          this.addParkingToQuote(data.data.newQuotetoSeller._id)
+          this.addWarehouseToQuote(data.data.newQuotetoSeller._id)
+          this.$vs.loading.close('#button-with-loading > .con-vs-loading')
           this.$vs.notify({
-            title: "¡Cotización creada!",
-            text: `"La cotización fue almacenada"`,
-            color: "success",
-            iconPack: "feather",
-            icon: "icon-check"
-          });
+            title: '¡Cotización creada!',
+            text: '"La cotización fue almacenada"',
+            color: 'success',
+            iconPack: 'feather',
+            icon: 'icon-check'
+          })
 
-          router.push("/cotizaciones");
+          router.push('/cotizaciones')
         })
         .catch(err => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     },
-    addClientToQuote(quoteID) {
+    addClientToQuote (quoteID) {
       this.$apollo
         .mutate({
           mutation: gql`
@@ -476,14 +476,14 @@ export default {
           `,
           variables: {
             clientID: this.ObtenerCliente.id,
-            quoteID: quoteID
+            quoteID
           }
         })
         .catch(err => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     },
-    addApartamentToQuote(quoteID) {
+    addApartamentToQuote (quoteID) {
       this.$apollo.mutate({
         mutation: gql`
           mutation($quoteID: String!, $apartamentID: String!) {
@@ -496,12 +496,12 @@ export default {
           }
         `,
         variables: {
-          quoteID: quoteID,
+          quoteID,
           apartamentID: localStorage.selectedApartament
         }
-      });
+      })
     },
-    addParkingToQuote(quoteID) {
+    addParkingToQuote (quoteID) {
       this.ObtenerParqueos.forEach(element => {
         this.$apollo.mutate({
           mutation: gql`
@@ -512,13 +512,13 @@ export default {
             }
           `,
           variables: {
-            quoteID: quoteID,
+            quoteID,
             parkingID: element._id
           }
-        });
-      });
+        })
+      })
     },
-    addWarehouseToQuote(quoteID) {
+    addWarehouseToQuote (quoteID) {
       this.ObtenerBodegas.forEach(element => {
         this.$apollo.mutate({
           mutation: gql`
@@ -532,52 +532,52 @@ export default {
             }
           `,
           variables: {
-            quoteID: quoteID,
+            quoteID,
             warehouseID: element._id
           }
-        });
-      });
+        })
+      })
     },
-    openLoadingContained() {
+    openLoadingContained () {
       this.$vs.loading({
         background: this.backgroundLoading,
         color: this.colorLoading,
-        container: "#button-with-loading",
+        container: '#button-with-loading',
         scale: 0.45
-      });
-      this.createQuote();
+      })
+      this.createQuote()
     },
-    valorFirmaSaldo(value) {
+    valorFirmaSaldo (value) {
       if (value <= 0) {
-        this.firmaPromesaCubierta = true;
-        const saldo = value * -1;
-        this.saldoFavorFirmaPromesa = saldo;
+        this.firmaPromesaCubierta = true
+        const saldo = value * -1
+        this.saldoFavorFirmaPromesa = saldo
       } else {
-        this.firmaPromesaCubierta = false;
-        this.saldoFavorFirmaPromesa = 0;
+        this.firmaPromesaCubierta = false
+        this.saldoFavorFirmaPromesa = 0
       }
     },
-    saldoFavorEnganche(value) {
+    saldoFavorEnganche (value) {
       if (value <= 0) {
-        this.engancheCubierto = true;
-        this.saldoFavorEngancheFraccionado = value * -1;
+        this.engancheCubierto = true
+        this.saldoFavorEngancheFraccionado = value * -1
       } else {
-        this.engancheCubierto = false;
-        this.saldoFavorEngancheFraccionado = 0;
+        this.engancheCubierto = false
+        this.saldoFavorEngancheFraccionado = 0
       }
-    },
+    }
 
   },
-  mounted() {
+  mounted () {
     setTimeout(() => {
-      JsBarcode("#barcode", this.getRandomNumber, {
-        lineColor: "#000000",
+      JsBarcode('#barcode', this.getRandomNumber, {
+        lineColor: '#000000',
         height: 26,
         displayValue: false
-      });
-    }, 800);
+      })
+    }, 800)
   }
-};
+}
 </script>
 
 <style lang="scss">

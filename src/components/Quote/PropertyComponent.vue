@@ -1,5 +1,67 @@
 <template>
+
   <div class="w-full sm:w-full p-2 mt-4 mb-6">
+    <div class="mb-8">
+      <h5>📩 Datos de cotización:</h5>
+      <vs-divider></vs-divider>
+      <div>
+        <div class="w-full sm:w-full p-1 mt-4">
+          <vs-input
+            size="large"
+            icon-pack="feather"
+            class="w-full"
+            icon="icon-user"
+            label="Nombre"
+            color="primary"
+            v-model="first_name"
+            type="text"
+            disabled
+          />
+        </div>
+        <div class="w-full sm:w-full p-1 mt-3">
+          <vs-input
+            size="large"
+            icon-pack="feather"
+            class="w-full"
+            icon="icon-users"
+            label="Apellido"
+            color="primary"
+            v-model="last_name"
+            type="text"
+            disabled
+          />
+        </div>
+        <div class="w-full sm:w-full p-1 mt-3">
+          <vs-input
+            size="large"
+            icon-pack="feather"
+            class="w-full"
+            icon="icon-mail"
+            label="E-mail"
+            color="primary"
+            v-model="user_email"
+            type="email"
+            disabled
+          />
+        </div>
+        
+              <div class="w-full sm:w-full p-1 mt-3">
+          <vs-input
+            size="large"
+            icon-pack="feather"
+            class="w-full"
+            icon="icon-phone"
+            label="Teléfono"
+            color="primary"
+            v-model="user_phone"
+            type="tel"
+            disabled
+          />
+        </div>
+      </div>
+      
+      <br/>  
+    </div>
     <div>
       <h5>🏢 Detalles de propiedad:</h5>
       <vs-divider></vs-divider>
@@ -31,13 +93,13 @@
       <h5>📦 Selección de inventario:</h5>
       <vs-divider></vs-divider>
       <vs-row class="p-2 mb-8">
-        <vs-col vs-type="flex flex-wrap" vs-w="12">
+        <vs-col v-show="!getProyect.parkings.length == 0" vs-type="flex flex-wrap" vs-w="12">
           <p>Seleccione un parqueo:</p>
           <v-select multiple label="number" v-model="selectedP" :options="getProyect.parkings"></v-select>
         </vs-col>
-        <vs-col class="mt-6" vs-type="flex flex-wrap" vs-w="12" v-show="true">
+        <vs-col v-show="!getProyect.warehouses.length == 0" class="mt-6" vs-type="flex flex-wrap" vs-w="12" >
           <p>Seleccione una bodega:</p>
-          <v-select multiple label="number"></v-select>
+          <v-select multiple label="number" v-model="selectedW" :options="getProyect.warehouses"></v-select>
         </vs-col>
       </vs-row>
       <br/>
@@ -170,18 +232,18 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import vSelect from "vue-select";
+import gql from 'graphql-tag'
+import vSelect from 'vue-select'
 
 export default {
-  data() {
+  data () {
     return {
-      sale: "0",
-      finType: "",
+      sale: '0',
+      finType: '',
       depositClient: null,
       rClient: null,
       familyRev: null,
-      entity: "",
+      entity: '',
       financingID: null,
       minFamilyRev: 30000,
       confirmDeposit: false,
@@ -193,17 +255,21 @@ export default {
       selectedP: [],
       yearMax: 0,
       monthMax: 0,
-      yearsFinancing: 0
-    };
+      yearsFinancing: 0,
+      first_name: '',
+      last_name: '',
+      user_email: '',
+      user_phone: ''
+    }
   },
   components: {
-    "v-select": vSelect
+    'v-select': vSelect
   },
   computed: {
     getFirstName () {
       return localStorage.firstNameUser
     },
-    totalValue() {
+    totalValue () {
       return (
         parseInt(this.getApartament.price) +
         this.getValueStamps +
@@ -211,100 +277,100 @@ export default {
         parseInt(this.sale) +
         parseInt(this.sumP) +
         parseInt(this.sumW)
-      );
+      )
     },
-    sumP() {
-      return this.selectedP.reduce((a, i) => a + i.price, 0);
+    sumP () {
+      return this.selectedP.reduce((a, i) => a + i.price, 0)
     },
-    sumW() {
-      return this.selectedW.reduce((a, i) => a + i.price, 0);
+    sumW () {
+      return this.selectedW.reduce((a, i) => a + i.price, 0)
     },
-    minPorcent() {
+    minPorcent () {
       return (
         (this.getApartament.price + this.sumW + this.sumP) *
         (this.getProyect.deposit_percent / 100)
-      );
+      )
     },
-    checkData() {
+    checkData () {
       if (this.depositClient >= this.minPorcent) {
-        return false;
+        return false
       } else {
-        return true;
+        return true
       }
     },
-    getValueStamps() {
-      return (this.getApartament.price + this.sumP + this.sumW) * 0.3 * 0.03;
+    getValueStamps () {
+      return (this.getApartament.price + this.sumP + this.sumW) * 0.3 * 0.03
     },
-    getIva() {
-      return (this.getApartament.price + this.sumP + this.sumW) * 0.7 * 0.12;
+    getIva () {
+      return (this.getApartament.price + this.sumP + this.sumW) * 0.7 * 0.12
     }
   },
   watch: {
-    rClient() {
+    rClient () {
       if (this.rClient >= this.getApartament.reserve_price) {
-        const payload = this.rClient;
-        this.confirmReserve = true;
-        this.rClientFixed = this.rClient;
-        this.$store.dispatch("reserva_establecida", payload);
+        const payload = this.rClient
+        this.confirmReserve = true
+        this.rClientFixed = this.rClient
+        this.$store.dispatch('reserva_establecida', payload)
         const engancheFraccionado =
-          this.minPorcent - this.getApartament.reserve_price;
-        this.depositClient = engancheFraccionado;
+          this.minPorcent - this.getApartament.reserve_price
+        this.depositClient = engancheFraccionado
       } else {
-        this.confirmReserve = false;
+        this.confirmReserve = false
       }
     },
-    yearMax() {
+    yearMax () {
       const payload = {
         yearsFinancingSelected: this.yearMax
-      };
-      this.$store.dispatch("Años_Financiamiento_Bancario", payload);
+      }
+      this.$store.dispatch('Años_Financiamiento_Bancario', payload)
     },
-    entity() {
+    entity () {
       const payload = {
         entity: this.entity,
         interestEntity: this.finType,
         yearsFinancingSelected: this.yearsFinancing
-      };
-      this.$store.dispatch("Financiamiento_Bancario", payload);
+      }
+      this.$store.dispatch('Financiamiento_Bancario', payload)
     },
-    monthMax() {
-      const payload = this.monthMax;
-      this.$store.dispatch("Meses_Enganche", payload);
+    monthMax () {
+      const payload = this.monthMax
+      this.$store.dispatch('Meses_Enganche', payload)
     },
-    familyRev() {
+    familyRev () {
       if (parseInt(this.familyRev) <= this.minFamilyRev) {
-        this.confirmRev = false;
+        this.confirmRev = false
       } else {
-        this.confirmRev = true;
+        this.confirmRev = true
       }
     },
-    sale() {
+    sale () {
       const payload = {
         discount_amount: this.sale
-      };
-      this.$store.dispatch("Descuento_seleccionado", payload);
+      }
+      this.$store.dispatch('Descuento_seleccionado', payload)
     },
-    selectedP() {
-      const payload = this.selectedP;
-      this.$store.dispatch("Parqueo_Seleccionado", payload);
+    selectedP () {
+      const payload = this.selectedP
+      this.$store.dispatch('Parqueo_Seleccionado', payload)
     },
-    selectedW() {
-      const payload = this.selectedW;
-      this.$store.dispatch("Bodega_Seleccionada", payload);
+    selectedW () {
+      const payload = this.selectedW
+      this.$store.dispatch('Bodega_Seleccionada', payload)
     },
-    depositClient() {
+    depositClient () {
       if (
         parseInt(this.depositClient) >=
         this.minPorcent - this.getApartament.reserve_price
       ) {
-        this.confirmDeposit = true;
+        this.confirmDeposit = true
         const payload = {
           depositClient: this.depositClient,
           minDeposit: this.minPorcent
-        };
-        this.$store.dispatch("Enganche_Cliente", payload);
+        }
+        this.$store.dispatch('Enganche_Cliente', payload)
       } else {
-        this.confirmDeposit = false;
+        this.confirmDeposit = false
       }
     }
   },
@@ -339,10 +405,10 @@ export default {
           }
         }
       `,
-      variables() {
+      variables () {
         return {
-          proyectID: "5e7aba5eafe9ae00247ccefa"
-        };
+          proyectID: '5e7aba5eafe9ae00247ccefa'
+        }
       },
       pollInterval: 300
     },
@@ -355,15 +421,15 @@ export default {
           }
         }
       `,
-      variables() {
+      variables () {
         return {
           apartamentID: localStorage.selectedApartament
-        };
+        }
       },
       pollInterval: 700
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
@@ -387,5 +453,17 @@ export default {
 }
 .selectorMonth {
   width: 80%;
+}
+.vs-input--label {
+  font-size: 0.9rem !important;
+  color: #000;
+}
+
+.vs-input--icon {
+  color: #000 !important;
+}
+
+.continueButton{
+  border-radius: 30px;
 }
 </style>

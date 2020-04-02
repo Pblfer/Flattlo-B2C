@@ -130,7 +130,7 @@ export default {
   },
   computed:{
     saveApartamentToQuote (apt) {
-      localStorage.selectedApartament = apt
+      return (localStorage.selectedApartament = apt)
     }
   }
 }

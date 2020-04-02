@@ -12,7 +12,7 @@ const mutations = {
   // ////////////////////////////////////////////
   //DATOS A COTIZACION (QUOTE_DATA)
   // ////////////////////////////////////////////
-  CLIENTE_SELECCIONADO(state, payload) {
+  CLIENTE_SELECCIONADO (state, payload) {
     state.quote_data.first_name = payload.first_name
     state.quote_data.last_name = payload.last_name
     state.quote_data.phone = payload.phone
@@ -20,41 +20,40 @@ const mutations = {
     state.quote_data.id = payload.id
   },
 
-  DESCUENTO_SELECCIONADO(state, payload) {
+  DESCUENTO_SELECCIONADO (state, payload) {
     state.quote_data.discount_amount = payload.discount_amount
   },
 
-  PARQUEO_SELECCIONADO(state, payload) {
+  PARQUEO_SELECCIONADO (state, payload) {
     state.quote_data.parkings = payload
   },
 
-  BODEGA_SELECCIONADA(state, payload) {
+  BODEGA_SELECCIONADA (state, payload) {
     state.quote_data.warehouses = payload
   },
 
-  ENGANCHE_CLIENTE(state, payload) {
+  ENGANCHE_CLIENTE (state, payload) {
     state.quote_data.depositValues.depositClient = payload.depositClient
     state.quote_data.depositValues.minDeposit = payload.minDeposit
   },
 
-  MESES_ENGANCHE(state, payload) {
+  MESES_ENGANCHE (state, payload) {
     state.quote_data.depositValues.monthDeposit = payload
   },
 
-  FINANCIAMIENTO_BANCARIO(state, payload) {
+  FINANCIAMIENTO_BANCARIO (state, payload) {
     state.quote_data.financingValues.entity = payload.entity,
-      state.quote_data.financingValues.interestEntity = payload.interestEntity,
-      state.quote_data.financingValues.yearsFinancingSelected = payload.yearsFinancingSelected
-  },
-
-  AÑOS_FINANCIAMIENTO_BANCARIO(state, payload) {
+    state.quote_data.financingValues.interestEntity = payload.interestEntity,
     state.quote_data.financingValues.yearsFinancingSelected = payload.yearsFinancingSelected
   },
 
-  RESERVA_ESTABLECIDA(state, payload) {
-    state.quote_data.financingValues.reservePrice = payload
+  AÑOS_FINANCIAMIENTO_BANCARIO (state, payload) {
+    state.quote_data.financingValues.yearsFinancingSelected = payload.yearsFinancingSelected
   },
 
+  RESERVA_ESTABLECIDA (state, payload) {
+    state.quote_data.financingValues.reservePrice = payload
+  },
 
 
   // /////////////////////////////////////////////
