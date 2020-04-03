@@ -175,7 +175,7 @@ export default {
         router.push(router.currentRoute.query.to || '/level-selection')
         commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
         payload.notify({
-          time: 8500,
+          time: 4500,
           title: `🖐 Hola ${result.user.providerData[0].displayName}🎉🥳`,
           text: 'Cotizar tu apartamento nunca fue tan fácil. 🥳🙌🎉',
           color: 'success'

@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import "firebase/auth";
-import ProperySection from "@/components/Quote/PropertyComponent";
-import Resume from "@/components/Quote/ResumeQuote";
-import NewClient from "@/components/Quote/NewUser";
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import ProperySection from '@/components/Quote/PropertyComponent'
+import Resume from '@/components/Quote/ResumeQuote'
+import NewClient from '@/components/Quote/NewUser'
 
 export default {
   data () {
@@ -48,11 +48,11 @@ export default {
   methods: {
     checkIfUserIsNew () {
       const user = firebase.auth().currentUser
-
+      console.log(user)
       if (user.emailVerified === false) {
         this.showModules = false
       } else {
-        // No user is signed in.
+        this.showModules = true
       }
     }
   },
