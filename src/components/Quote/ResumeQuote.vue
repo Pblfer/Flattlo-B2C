@@ -20,13 +20,13 @@
           <p
             class="valueText"
           >{{getLimitDate}}</p>
-          <h5 class="mt-4 mb-1">
+          <!-- <h5 class="mt-4 mb-1">
             <strong>Tus Datos:</strong>
           </h5>
           <p class="valueText">{{ObtenerCliente.first_name}}</p>
           <p class="valueText">{{ObtenerCliente.last_name}}</p>
           <p class="valueText">{{ObtenerCliente.email}}</p>
-          <p class="valueText">{{ObtenerCliente.phone}}</p>
+          <p class="valueText">{{ObtenerCliente.phone}}</p> -->
           <h5 class="mt-4 mb-1">
             <strong>Detalles de la propiedad:</strong>
           </h5>
@@ -43,7 +43,7 @@
           <p v-show="!(ObtenerBodegas.length == 0)" class="valueText">Bodegas: Q. {{sumW.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>
           <p class="valueText">Impuestos: Q. {{ getImpuestos.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</p> 
           <p class="valueText"><strong>Total: Q. {{ totalValue.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</strong></p>   
-             <!-- <h5 class="mt-5 mb-1">
+             <h5 class="mt-5 mb-1">
            <strong>Reserva:</strong>
           </h5>
           <p class="valueText">Monto ingresado: Q. {{ ObtenerEngacheEstablecido.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}.00</p>
@@ -68,8 +68,8 @@
           <p class="valueText">Entidad: {{obtenerValoreFinanciamiento.entity}}</p>   
           <p class="valueText">Tasa de interés: {{obtenerValoreFinanciamiento.interestEntity}}%</p>
           <p class="valueText">Años: {{obtenerValoreFinanciamiento.yearsFinancingSelected}}</p>
-          <p class="valueText">Cuota Nivelada: {{ObtenerCuotaNivelada.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>    
-             <br /> -->
+          <p class="valueText">Cuota Nivelada: Q. {{ObtenerCuotaNivelada.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>    
+             <br />
     <vs-row>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
         <vs-button

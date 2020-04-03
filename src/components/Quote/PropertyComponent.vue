@@ -13,7 +13,7 @@
             icon="icon-user"
             label="Nombre"
             color="primary"
-            v-model="first_name"
+            v-model="getFlattloAppUser.first_name"
             type="text"
             disabled
           />
@@ -26,7 +26,7 @@
             icon="icon-users"
             label="Apellido"
             color="primary"
-            v-model="last_name"
+            v-model="getFlattloAppUser.last_name"
             type="text"
             disabled
           />
@@ -39,7 +39,7 @@
             icon="icon-mail"
             label="E-mail"
             color="primary"
-            v-model="user_email"
+            v-model="getFlattloAppUser.email"
             type="email"
             disabled
           />
@@ -53,7 +53,7 @@
             icon="icon-phone"
             label="Teléfono"
             color="primary"
-            v-model="user_phone"
+            v-model="getFlattloAppUser.phone"
             type="tel"
             disabled
           />
@@ -234,6 +234,8 @@
 <script>
 import gql from 'graphql-tag'
 import vSelect from 'vue-select'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 export default {
   data () {
@@ -259,7 +261,8 @@ export default {
       first_name: '',
       last_name: '',
       user_email: '',
-      user_phone: ''
+      user_phone: '',
+      getFlattloAppUser: []
     }
   },
   components: {
@@ -424,6 +427,24 @@ export default {
       variables () {
         return {
           apartamentID: localStorage.selectedApartament
+        }
+      },
+      pollInterval: 700
+    },
+    getFlattloAppUser: {
+      query: gql`
+        query($userUID: String!) {
+          getFlattloAppUser(userUID: $userUID) {
+            first_name
+            last_name
+            phone
+            email
+          }
+        }
+      `,
+      variables () {
+        return {
+          userUID: localStorage.userID
         }
       },
       pollInterval: 700

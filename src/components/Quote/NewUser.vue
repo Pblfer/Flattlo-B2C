@@ -1,7 +1,7 @@
 <template>
   <div class="w-full sm:w-full p-3 mt-4 mb-6">
     <div>
-      <h4 class="mb-3">Estas muy cerca de liberar <strong>todos los precios. 😱📋🎉</strong></h4>
+      <h4 class="mb-3">Estas muy cerca de liberar <strong>todos los detalles. 😱📋🎉</strong></h4>
       <h5>Pero antes {{getFirstName}}, necesitamos tus datos actualizados para que puedas generar las cotizaciones que quieras y de una forma fácil. Te toma 30seg. ⏱😉📧</h5>
       <vs-divider></vs-divider>
       <div>
@@ -114,7 +114,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import gql from 'graphql-tag'
-import router from '@/router'
 export default {
   data () {
     return {
@@ -162,7 +161,7 @@ export default {
                       $first_name: String!
                       $last_name: String!
                       $phone: String!
-                      $UID: String!
+                      $userUID: String!
                       
                       ){
                         newClientFlattlo(
@@ -170,7 +169,7 @@ export default {
                           first_name: $first_name,
                           last_name: $last_name,
                           phone: $phone,
-                          UID: $UID
+                          userUID: $userUID
                         ){
                         _id
                       }
@@ -181,16 +180,19 @@ export default {
           first_name: this.first_name,
           last_name: this.last_name,
           phone: this.user_phone,
-          UID: uid
+          userUID: uid
         }
                     
       }).then(() => {
         const user = firebase.auth().currentUser
         user.sendEmailVerification()
         this.emailSend = true
-        setTimeout(() => {
-          router.push({ path: '/login' })
-        }, 2500)
+        const firebaseCurrentUser = firebase.auth().currentUser
+        if (firebaseCurrentUser) {
+          firebase.auth().signOut().then(() => {
+            this.$router.push('/login').catch(() => {})
+          })
+        }
         this.$vs.notify({
           time:8000,
           title:'Revisa tu bandeja de entrada. 📭',

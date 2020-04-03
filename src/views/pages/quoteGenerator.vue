@@ -48,7 +48,7 @@ export default {
   methods: {
     checkIfUserIsNew () {
       const user = firebase.auth().currentUser
-      console.log(user)
+      localStorage.userID = user.uid
       if (user.emailVerified === false) {
         this.showModules = false
       } else {
