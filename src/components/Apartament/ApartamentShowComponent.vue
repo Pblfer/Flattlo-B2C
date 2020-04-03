@@ -8,6 +8,10 @@
       <vs-divider></vs-divider>
     </div>
 
+    <div class="contained-example-container" v-if="!checkData">
+      <div id="div-with-loading" class="vs-con-loading__container mt-4"></div>
+    </div>
+
     <div class="flex flex-wrap sm:full lg:w-full mt-4" v-if="checkData">
       <div
         class="w-full sm:w-1/2 md:w-1/3 lg:w-3/2 xl:w-3/2 mt-3 p-2"

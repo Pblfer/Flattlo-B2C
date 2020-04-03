@@ -1,6 +1,8 @@
 
 <template>
-  <div id="pdf">
+  <div>
+    <h5>🤯 Te dejamos un resumen:</h5>
+      <vs-divider></vs-divider>
       <vx-card>
           <!-- <h5 class="mt-2 mb-1">
             <strong>No. Cotización:</strong>
@@ -43,7 +45,9 @@
           <p v-show="!(ObtenerBodegas.length == 0)" class="valueText">Bodegas: Q. {{sumW.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>
           <p class="valueText">Impuestos: Q. {{ getImpuestos.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</p> 
           <p class="valueText"><strong>Total: Q. {{ totalValue.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</strong></p>   
-             <h5 class="mt-5 mb-1">
+           
+           <h5 class="mt-6">🤓🧾📊Conoce el desgloce de pagos, generado tu cotización.</h5>
+             <!-- <h5 class="mt-5 mb-1">
            <strong>Reserva:</strong>
           </h5>
           <p class="valueText">Monto ingresado: Q. {{ ObtenerEngacheEstablecido.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}.00</p>
@@ -68,8 +72,8 @@
           <p class="valueText">Entidad: {{obtenerValoreFinanciamiento.entity}}</p>   
           <p class="valueText">Tasa de interés: {{obtenerValoreFinanciamiento.interestEntity}}%</p>
           <p class="valueText">Años: {{obtenerValoreFinanciamiento.yearsFinancingSelected}}</p>
-          <p class="valueText">Cuota Nivelada: Q. {{ObtenerCuotaNivelada.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>    
-             <br />
+          <p class="valueText">Cuota Nivelada: Q. {{ObtenerCuotaNivelada.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>     -->
+            
     <vs-row>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
         <vs-button
@@ -194,8 +198,7 @@ export default {
   },
   computed: {
     getLimitDate () {
-      const date = this.getDate.getDate()
-      const newdate = new Date(date)
+      const newdate = new Date()
 
       newdate.setDate(
         this.getDate.getDate() + this.getProyect.max_days_limit_for_quote
@@ -209,14 +212,13 @@ export default {
       return someFormattedDate
     },
     getRequestDate () {
-      const date = this.getDate.getDate()
-      const newdate = new Date(date)
-      newdate.setDate(this.getDate.getDate())
-      const dd = newdate.getDate()
-      const mm = newdate.getMonth()
-      const y = this.getDate.getFullYear()
-      const requestDate = `${dd  }/${  mm  }/${  y}`
-      return requestDate
+      let today = new Date()
+      const dd = today.getDate()
+      const mm = today.getMonth() + 1 
+      const yyyy = today.getFullYear()
+      
+      today = `${dd}/${mm}/${yyyy}`
+      return today
     },
     ObtenerCuotaEnganche () {
       const valorCuotaFixed =

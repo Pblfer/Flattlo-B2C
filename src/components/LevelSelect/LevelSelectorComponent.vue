@@ -22,7 +22,8 @@
     <br />
     <vx-card>
       <div v-if="checkData" class="mt-4">
-        <h5>🧐🏢Disponibilidad de nivel {{numberOfLevel}}:</h5>
+        <h5>🧐🏢Disponibilidad en nivel {{numberOfLevel}}</h5>
+        <h6 class="mt-1">Resumen de unidades disponibles:</h6>
         <vs-divider></vs-divider>
         <div class="mb-8">
           <vs-chip class="m-1" color="danger">{{reservados}}</vs-chip>

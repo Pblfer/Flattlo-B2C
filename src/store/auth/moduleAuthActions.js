@@ -172,6 +172,7 @@ export default {
         localStorage.firstNameUser = result.additionalUserInfo.profile.first_name
         localStorage.lastNameUser = result.additionalUserInfo.profile.last_name
         localStorage.emailUser = result.additionalUserInfo.profile.email
+        localStorage.userID = result.user.uid
         router.push(router.currentRoute.query.to || '/level-selection')
         commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
         payload.notify({

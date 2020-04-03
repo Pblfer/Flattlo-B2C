@@ -63,6 +63,30 @@
       <br/>  
     </div>
     <div>
+      <div v-show="!getProyect.parkings.length == 0">
+        <h5>🚗 Selección de parqueos:</h5>
+      <vs-divider></vs-divider>
+      <vs-row class="p-2 mb-8">
+        <vs-col v-show="!getProyect.parkings.length == 0" vs-type="flex flex-wrap" vs-w="12">
+          <p>Seleccione un parqueo:</p>
+          <v-select multiple label="number" v-model="selectedP" :options="getProyect.parkings"></v-select>
+        </vs-col>
+      </vs-row>
+      </div>
+
+      <div v-show="!getProyect.warehouses.length == 0">
+        <h5>📦 Selección de bodega:</h5>
+      <vs-divider></vs-divider>
+      <vs-row class="p-2 mb-8">
+        <vs-col vs-type="flex flex-wrap" vs-w="12" >
+          <p>Seleccione una bodega:</p>
+          <v-select multiple label="number" v-model="selectedW" :options="getProyect.warehouses"></v-select>
+        </vs-col>
+      </vs-row>
+      </div>
+
+
+      <br/>
       <h5>🏢 Detalles de propiedad:</h5>
       <vs-divider></vs-divider>
       <div class="p-2 mb-8">
@@ -89,19 +113,6 @@
           </p>
         </vx-card>
       </div>
-      <br/>
-      <h5>📦 Selección de inventario:</h5>
-      <vs-divider></vs-divider>
-      <vs-row class="p-2 mb-8">
-        <vs-col v-show="!getProyect.parkings.length == 0" vs-type="flex flex-wrap" vs-w="12">
-          <p>Seleccione un parqueo:</p>
-          <v-select multiple label="number" v-model="selectedP" :options="getProyect.parkings"></v-select>
-        </vs-col>
-        <vs-col v-show="!getProyect.warehouses.length == 0" class="mt-6" vs-type="flex flex-wrap" vs-w="12" >
-          <p>Seleccione una bodega:</p>
-          <v-select multiple label="number" v-model="selectedW" :options="getProyect.warehouses"></v-select>
-        </vs-col>
-      </vs-row>
       <br/>
       <h5>📌 Monto de reserva:</h5>
       <vs-divider></vs-divider>
@@ -224,9 +235,7 @@
       </vs-row>
       
       </div>
-      <br/>
-      <h5>🤯 Te dejamos un resumen:</h5>
-      <vs-divider></vs-divider>
+        <Resume  v-if="isReadyToShowResume"/>
     </div>
   </div>
 </template>
@@ -234,8 +243,7 @@
 <script>
 import gql from 'graphql-tag'
 import vSelect from 'vue-select'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import Resume from '@/components/Quote/ResumeQuote'
 
 export default {
   data () {
@@ -266,9 +274,19 @@ export default {
     }
   },
   components: {
-    'v-select': vSelect
+    'v-select': vSelect,
+    Resume
   },
   computed: {
+    isReadyToShowResume () {
+      
+      if (this.confirmReserve == true ) {
+        return true
+      } else {
+        return false  
+      }
+      
+    },
     getFirstName () {
       return localStorage.firstNameUser
     },
@@ -447,7 +465,7 @@ export default {
           userUID: localStorage.userID
         }
       },
-      pollInterval: 700
+      pollInterval: 350
     }
   }
 }

@@ -15,6 +15,7 @@
     <div class="vx-navbar-wrapper" :class="classObj">
 
       <vs-navbar class="vx-navbar navbar-custom navbar-skelton" :color="navbarColorLocal" :class="textColor">
+         <vs-button :to="{name: 'level-selection'}" color="success" type="flat" icon-pack="feather" size="large" icon="icon-home"></vs-button>
          <vs-button :to="{name: 'quotes'}" color="primary" type="flat" icon-pack="feather" size="large" icon="icon-file-text"></vs-button>
      <vs-button :to="{name: 'favorite-quotes'}" color="danger" type="flat" icon-pack="feather" size="large" icon="icon-heart"></vs-button>
         <vs-spacer />

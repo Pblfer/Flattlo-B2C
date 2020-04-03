@@ -17,7 +17,6 @@
       </vs-row>
     </div>
     <ProperySection v-show="showModules" />
-    <Resume v-show="showModules" />
     <NewClient v-show="!showModules" />
   </div>
 </template>
@@ -26,7 +25,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import ProperySection from '@/components/Quote/PropertyComponent'
-import Resume from '@/components/Quote/ResumeQuote'
 import NewClient from '@/components/Quote/NewUser'
 
 export default {
@@ -42,7 +40,6 @@ export default {
   },
   components: {
     ProperySection,
-    Resume,
     NewClient
   },
   methods: {
