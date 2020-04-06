@@ -1,6 +1,6 @@
 
 <template>
-  <div>
+  <div class="showResumeOnQuote">
     <h5>🤯 Te dejamos un resumen:</h5>
       <vs-divider></vs-divider>
       <vx-card>
@@ -99,7 +99,6 @@ import router from '../../router'
 export default {
   data () {
     return {
-      getDeveloper: [],
       getProyect: [],
       getUser: [],
       getApartament: [],
@@ -602,5 +601,10 @@ export default {
   -webkit-box-shadow: -1px 10px 33px -4px rgba(0, 0, 0, 0.18);
   -moz-box-shadow: -1px 10px 33px -4px rgba(0, 0, 0, 0.18);
   box-shadow: -1px 10px 33px -4px rgba(0, 0, 0, 0.18);
+}
+@media (min-width: 766px) {
+.showResumeOnQuote{
+  display: none;
+  }
 }
 </style>

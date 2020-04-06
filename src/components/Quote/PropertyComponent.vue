@@ -1,6 +1,6 @@
 <template>
-
-  <div class="w-full sm:w-full p-2 mt-4 mb-6">
+    <div class="flex mb-4">
+      <div class="w-full p-2 mt-4 mb-6">
     <div class="mb-8">
       <h5>📩 Datos de cotización:</h5>
       <vs-divider></vs-divider>
@@ -137,7 +137,7 @@
           placeholder="Valor sín decimales"
           val-icon-danger="clear"
           val-icon-success="check"
-          label="Reserva establecido por cliente:"
+          label="Ingresa el monto de reserva:"
           class="fZise"
           v-model="rClient"
           type="number"
@@ -238,6 +238,8 @@
         <Resume  v-if="isReadyToShowResume"/>
     </div>
   </div>
+    </div>
+  
 </template>
 
 <script>
@@ -280,7 +282,7 @@ export default {
   computed: {
     isReadyToShowResume () {
       
-      if (this.confirmReserve == true ) {
+      if (this.confirmReserve === true) {
         return true
       } else {
         return false  
