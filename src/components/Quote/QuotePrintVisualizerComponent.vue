@@ -51,22 +51,21 @@
           </div>
           <br />
           <div class="invoice__company-contact">
-            <vs-avatar size="96px" :src="getDeveloper.sellers_team[0].pic"></vs-avatar>
+            <vs-avatar size="96px" :src="getDeveloper.sellers_team[ObtenerVendedorEstablecido].pic"></vs-avatar>
             <h6>Asesor personal:</h6>
-            <h5 class="mt-1">{{getDeveloper.sellers_team[0].first_name}} {{getDeveloper.sellers_team[0].last_name}}</h5>
+            <h5 class="mt-1">{{getDeveloper.sellers_team[ObtenerVendedorEstablecido].first_name}} {{getDeveloper.sellers_team[ObtenerVendedorEstablecido].last_name}}</h5>
             <p class="flex items-center justify-end my-1">
               <feather-icon icon="MailIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{getDeveloper.sellers_team[0].email}}</span>
+              <span class="ml-2">{{getDeveloper.sellers_team[ObtenerVendedorEstablecido].email}}</span>
             </p>
 
             <p class="flex items-center justify-end">
               <feather-icon icon="PhoneIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{getDeveloper.sellers_team[0].phone}}</span>
+              <span class="ml-2">{{getDeveloper.sellers_team[ObtenerVendedorEstablecido].phone}}</span>
             </p>
           </div>
         </div>
       </div>
-
       <!-- INVOICE CONTENT -->
       <div class="p-base">
      
@@ -288,7 +287,6 @@ export default {
       propDataReady: false,
       setMonth: 0,
       firmaPromesaCubierta: false,
-      engancheCubierto: false,
       saldoFavorFirmaPromesa: 0,
       saldoFavorEngancheFraccionado: 0,
       backgroundLoading: 'success',
@@ -457,6 +455,9 @@ export default {
     },
     ObtenerEngacheEstablecido () {
       return this.$store.state.quote_data.financingValues.reservePrice
+    },
+    ObtenerVendedorEstablecido () {
+      return this.$store.state.quote_data.sellerSected
     },
     ObtenerDescuento () {
       return this.$store.state.quote_data.discount_amount

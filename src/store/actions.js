@@ -49,6 +49,11 @@ const actions = {
     commit('RESERVA_ESTABLECIDA', payload)
   },
 
+  vendedor_seleccionado ({ commit }, payload) {
+    commit('VENDEDOR_ESTABLECIDO', payload)
+  },
+  
+
 
   // /////////////////////////////////////////////
   // COMPONENTS

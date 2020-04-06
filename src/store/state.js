@@ -91,6 +91,7 @@ const state = {
     email: '---',
     id:'---',
     discount_amount:0,
+    sellerSected: 0,
     parkings:[],
     warehouses:[],
     depositValues:{

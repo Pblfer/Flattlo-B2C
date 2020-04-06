@@ -233,7 +233,7 @@
           />
         </vs-col>
       </vs-row>
-      
+        <sellerSwitcher/>
       </div>
         <Resume  v-if="isReadyToShowResume"/>
     </div>
@@ -246,6 +246,7 @@
 import gql from 'graphql-tag'
 import vSelect from 'vue-select'
 import Resume from '@/components/Quote/ResumeQuote'
+import sellerSwitcher from '@/components/Quote/SelerTeamSwitcherComponent'
 
 export default {
   data () {
@@ -277,7 +278,8 @@ export default {
   },
   components: {
     'v-select': vSelect,
-    Resume
+    Resume,
+    sellerSwitcher
   },
   computed: {
     isReadyToShowResume () {
