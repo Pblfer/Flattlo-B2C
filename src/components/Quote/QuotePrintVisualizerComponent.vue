@@ -411,6 +411,7 @@ export default {
     }
   },
   computed:{
+    
     getValueStamps () {
       return (this.getApartament.price + this.sumP + this.sumW) * 0.3 * 0.03
     },

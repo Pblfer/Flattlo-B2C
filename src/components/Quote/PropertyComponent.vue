@@ -242,7 +242,7 @@
           ref="loadableButton"
           id="button-with-loading"
           class="vs-con-loading__container mb-8 quoteBtn"
-          @click="openLoadingContained"
+          @click.native="openLoadingContained"
                 size="large"
                 text-color="#000"
                 color="#fbdc11"
@@ -250,6 +250,35 @@
                 icon="icon-check-circle"
         >Guardar Cotización</vs-button>
       </vs-col>
+            
+           
+            <!-- {{getDeveloper.name}}
+            {{getRandomNumber}}
+            {{getRequestDate}}
+            {{getLimitDate}}
+            {{ObtenerDescuento}}
+            {{ObtenerEngacheEstablecido}}
+            {{firmaPromesa}}
+            {{obtenerResultadoEnganche}}
+            {{obtenerMesesEnganche}}
+            {{ObtenerCuotaEnganche}}
+            {{getApartament.price}}
+            {{sumP}}
+            {{sumW}}
+            {{getImpuestos}}
+            {{totalValue}}
+            {{obtenerValoreFinanciamiento.entity}}
+            {{totalFinanciamiento}}
+            {{obtenerValoreFinanciamiento.interestEntity}}
+            {{obtenerValoreFinanciamiento.yearsFinancingSelected}}
+            {{ObtenerCuotaNivelada}}
+            {{getApartament.proyect_name}}
+            {{getApartament.living_square_mts}}
+            {{getApartament.bedrooms}}
+            {{getApartament.bathrooms}}
+            {{getProyect.lat}}
+            {{getProyect.long}}
+            {{getProyect.quote_logo}} -->
   </div>
     </div>
   
@@ -260,7 +289,8 @@ import gql from 'graphql-tag'
 import vSelect from 'vue-select'
 import Resume from '@/components/Quote/ResumeQuote'
 import sellerSwitcher from '@/components/Quote/SelerTeamSwitcherComponent'
-
+import JsBarcode from 'jsbarcode'
+import router from '@/router'
 export default {
   data () {
     return {
@@ -286,7 +316,20 @@ export default {
       last_name: '',
       user_email: '',
       user_phone: '',
-      getFlattloAppUser: []
+      getFlattloAppUser: [],
+      getProyect:[],
+      getApartament:[],
+      getDeveloper: [],
+      engancheCubierto: false,
+      date: '',
+      randomNum: '',
+      propDataReady: false,
+      setMonth: 0,
+      firmaPromesaCubierta: false,
+      saldoFavorFirmaPromesa: 0,
+      saldoFavorEngancheFraccionado: 0,
+      backgroundLoading: 'success',
+      colorLoading: '#fff'
     }
   },
   components: {
@@ -341,6 +384,128 @@ export default {
     },
     getIva () {
       return (this.getApartament.price + this.sumP + this.sumW) * 0.7 * 0.12
+    },
+    getImpuestos () {
+      return this.getValueStamps + this.getIva;
+    },
+    getDate () {
+      const time = new Date()
+      return time
+    },
+    getLimitDate () {
+      const newdate = new Date()
+
+      newdate.setDate(
+        this.getDate.getDate() + this.getProyect.max_days_limit_for_quote
+      )
+
+      const dd = newdate.getDate()
+      const mm = newdate.getMonth() + 1
+      const y = this.getDate.getFullYear()
+
+      const someFormattedDate = `${dd  }/${  mm  }/${  y}`
+      return someFormattedDate
+    },
+    getRequestDate () {
+      let today = new Date()
+      const dd = today.getDate()
+      const mm = today.getMonth() + 1 
+      const yyyy = today.getFullYear()
+      
+      today = `${dd}/${mm}/${yyyy}`
+      return today
+    },
+    ObtenerEngacheEstablecido() {
+      return this.$store.state.quote_data.financingValues.reservePrice;
+    },
+    
+    firmaPromesa() {
+      const value =
+        (this.getApartament.price + this.sumP + this.sumW) * 0.03 -
+        this.ObtenerEngacheEstablecido;
+      this.valorFirmaSaldo(value);
+      return value;
+    },
+    obtenerResultadoEnganche() {
+      const vt =
+        ((this.getApartament.price + (this.sumP + this.sumW)) *
+          this.getProyect.deposit_percent) /
+        100;
+      const r = this.ObtenerEngacheEstablecido;
+      const fp = this.firmaPromesa;
+      const sf = this.saldoFavorFirmaPromesa;
+      const total = vt - r - fp - sf;
+      this.saldoFavorEnganche(total);
+      return total;
+    },
+    ObtenerVendedorEstablecido () {
+      return this.$store.state.quote_data.sellerSected
+    },
+    ObtenerDescuento () {
+      return this.$store.state.quote_data.discount_amount
+    },
+    obtenerEngancheMinimo () {
+      return (
+        this.$store.state.quote_data.depositValues.minDeposit -
+        this.firmaPromesa -
+        this.getApartament.reserve_price
+      )
+    },
+    ObtenerParqueos () {
+      return this.$store.state.quote_data.parkings
+    },
+    ObtenerBodegas () {
+      return this.$store.state.quote_data.warehouses
+    },
+    getRandomNumber () {
+      const d = new Date().getDate().toString()
+      const s = new Date().getSeconds()
+      const ms = new Date().getMilliseconds()
+      const pID = '5e7ab76bafe9ae00247ccef4'
+      return d + s + ms + pID.slice(0, 4)
+    },
+    ObtenerCuotaEnganche () {
+      const valorCuotaFixed =
+        this.obtenerResultadoEnganche / this.obtenerMesesEnganche
+      return valorCuotaFixed
+    },
+    obtenerMesesEnganche () {
+      return this.$store.state.quote_data.depositValues.monthDeposit
+    },
+    ObtenerCuotaNivelada () {
+      const cuotaNivelada =
+        (this.totalFinanciamiento *
+          (this.obtenerValoreFinanciamiento.interestEntity / 1200)) /
+        (1 -
+          Math.pow(
+            1 + this.obtenerValoreFinanciamiento.interestEntity / 1200,
+            -(this.obtenerValoreFinanciamiento.yearsFinancingSelected * 12)
+          ))
+      return cuotaNivelada
+    },
+    equalDataDeposit () {
+      if (this.obtenerEngancheMinimo == this.obtenerEngancheCliente) {
+        return false
+      } else {
+        return true
+      }
+    },
+    totalFinanciamiento () {
+      const vt =
+        ((this.getApartament.price + this.sumW + this.sumP) *
+          this.getProyect.deposit_percent) /
+        100
+      const r = this.saldoFavorEngancheFraccionado
+      return this.totalValue - vt - r
+    },
+    obtenerRestante () {
+      return (this.obtenerEngancheCliente - this.obtenerEngancheMinimo)
+        .toFixed(2)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
+    obtenerValoreFinanciamiento () {
+      return this.$store.state.quote_data.financingValues
     }
   },
   watch: {
@@ -411,6 +576,7 @@ export default {
         this.confirmDeposit = false
       }
     }
+    
   },
   apollo: {
     getProyect: {
@@ -418,6 +584,10 @@ export default {
         query($proyectID: String!) {
           getProyect(proyectID: $proyectID) {
             fraction_reserved
+            lat
+            long
+            quote_logo
+            max_days_limit_for_quote
             parkings {
               _id
               number
@@ -454,8 +624,15 @@ export default {
       query: gql`
         query($apartamentID: String!) {
           getApartament(apartamentID: $apartamentID) {
+           living_square_mts
+            bedrooms
+            number
+            bathrooms
+            plane_img
             price
             reserve_price
+            proyect_name
+
           }
         }
       `,
@@ -483,7 +660,265 @@ export default {
         }
       },
       pollInterval: 350
+    },
+    getDeveloper: {
+      query: gql`
+        query getDeveloperData($id: ID!) {
+          getDeveloper(id: $id) {
+            name
+            phone
+            email
+            website
+            address
+            sellers_team{
+              first_name
+              last_name
+              phone
+              email
+              pic
+            }
+          }
+        }
+      `,
+      variables () {
+        return {
+          id: '5e7ab6acafe9ae00247ccef1'
+        }
+      },
+      pollInterval: 500
     }
+  },
+  methods:{
+    createQuote () {
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation(
+              $userUID: String!
+              $developerCompanyName: String!
+              $barCode: String!
+              $quote_date_created: String
+              $quote_date_limit: String
+              $discount_mount: Int
+              $reserve_mount: Int
+              $promise_sign_mount: Float
+              $fraction_total_mount: Float
+              $fraction_month_selected: Int
+              $fraction_fee_mount: Float
+              $property_value: Int
+              $parkings_mount: Int
+              $warehouses_mount: Int
+              $taxes_mount: Float
+              $total_mount: Float
+              $financing_name: String
+              $financing_total_mount: Float
+              $financing_interest_rate: Float
+              $financing_years_selected: Int
+              $financing_fee_mount: Float
+              $proyect_name: String
+              $living_square_mts: Float
+              $bedrooms: Int
+              $bathrooms: Int
+              $lat: Float
+              $long: Float
+              $logo_quote_proyect: String
+            ) {
+              newQuotetoFlattloUser(
+                userUID: $userUID
+                developerCompanyName: $developerCompanyName
+                barCode: $barCode
+                quote_date_created: $quote_date_created
+                quote_date_limit: $quote_date_limit
+                discount_mount: $discount_mount
+                reserve_mount: $reserve_mount
+                promise_sign_mount: $promise_sign_mount
+                fraction_total_mount: $fraction_total_mount
+                fraction_month_selected: $fraction_month_selected
+                fraction_fee_mount: $fraction_fee_mount
+                property_value: $property_value
+                parkings_mount: $parkings_mount
+                warehouses_mount: $warehouses_mount
+                taxes_mount: $taxes_mount
+                total_mount: $total_mount
+                financing_name: $financing_name
+                financing_total_mount: $financing_total_mount
+                financing_interest_rate: $financing_interest_rate
+                financing_years_selected: $financing_years_selected
+                financing_fee_mount: $financing_fee_mount
+                proyect_name: $proyect_name
+                living_square_mts: $living_square_mts
+                bedrooms: $bedrooms
+                bathrooms: $bathrooms
+                lat: $lat
+                long: $long
+                logo_quote_proyect: $logo_quote_proyect
+              ) {
+                _id
+              }
+            }
+          `,
+          variables: {
+            userUID: localStorage.userID,
+            developerCompanyName: this.getDeveloper.name,
+            barCode: this.getRandomNumber,
+            quote_date_created: this.getRequestDate,
+            quote_date_limit: this.getLimitDate,
+            discount_mount: this.ObtenerDescuento,
+            reserve_mount: this.ObtenerEngacheEstablecido,
+            promise_sign_mount: this.firmaPromesa,
+            fraction_total_mount: this.obtenerResultadoEnganche,
+            fraction_month_selected: this.obtenerMesesEnganche,
+            fraction_fee_mount: this.ObtenerCuotaEnganche,
+            property_value: this.getApartament.price,
+            parkings_mount: this.sumP,
+            warehouses_mount: this.sumW,
+            taxes_mount: this.getImpuestos,
+            total_mount: this.totalValue,
+            financing_name: this.obtenerValoreFinanciamiento.entity,
+            financing_total_mount: this.totalFinanciamiento,
+            financing_interest_rate: this.obtenerValoreFinanciamiento.interestEntity,
+            financing_years_selected: this.obtenerValoreFinanciamiento.yearsFinancingSelected,
+            financing_fee_mount: this.ObtenerCuotaNivelada,
+            proyect_name: this.getApartament.proyect_name,
+            living_square_mts: this.getApartament.living_square_mts,
+            bedrooms: this.getApartament.bedrooms,
+            bathrooms: this.getApartament.bathrooms,
+            lat: this.getProyect.lat,
+            long: this.getProyect.long,
+            logo_quote_proyect: this.getProyect.quote_logo
+          }
+        })
+        .then(data => {
+          this.addClientToQuote(data.data.newQuotetoFlattloUser._id);
+          this.addApartamentToQuote(data.data.newQuotetoFlattloUser._id);
+          this.addParkingToQuote(data.data.newQuotetoFlattloUser._id);
+          this.addWarehouseToQuote(data.data.newQuotetoFlattloUser._id);
+          this.$vs.loading.close("#button-with-loading > .con-vs-loading");
+          this.$vs.notify({
+            title: "¡Cotización guardada!",
+            text: `"La cotización fue almacenada en tus cotizaciones"`,
+            color: "success",
+            iconPack: "feather",
+            icon: "icon-check"
+          });
+
+          router.push("/quotes");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    addClientToQuote (quoteID) {
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation($userUID: String!, $quoteID: String!) {
+              addQuoteToFlattloUser(userUID: $userUID, quoteID: $quoteID) {
+                _id
+              }
+            }
+          `,
+          variables: {
+            userUID: localStorage.userID,
+            quoteID: quoteID
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    addApartamentToQuote (quoteID) {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($quoteID: String!, $apartamentID: String!) {
+            addApartamentToQuote(
+              quoteID: $quoteID
+              apartamentID: $apartamentID
+            ) {
+              _id
+            }
+          }
+        `,
+        variables: {
+          quoteID: quoteID,
+          apartamentID: localStorage.apartamentID
+        }
+      });
+    },
+    addParkingToQuote (quoteID) {
+      this.ObtenerParqueos.forEach(element => {
+        this.$apollo.mutate({
+          mutation: gql`
+            mutation($quoteID: String!, $parkingID: String!) {
+              addParkingToQuote(quoteID: $quoteID, parkingID: $parkingID) {
+                _id
+              }
+            }
+          `,
+          variables: {
+            quoteID: quoteID,
+            parkingID: element._id
+          }
+        });
+      });
+    },
+    addWarehouseToQuote (quoteID) {
+      this.ObtenerBodegas.forEach(element => {
+        this.$apollo.mutate({
+          mutation: gql`
+            mutation($quoteID: String!, $warehouseID: String!) {
+              addWarehouseToQuote(
+                quoteID: $quoteID
+                warehouseID: $warehouseID
+              ) {
+                _id
+              }
+            }
+          `,
+          variables: {
+            quoteID: quoteID,
+            warehouseID: element._id
+          }
+        });
+      });
+    },
+    openLoadingContained () {
+      this.$vs.loading({
+        background: this.backgroundLoading,
+        color: this.colorLoading,
+        container: "#button-with-loading",
+        scale: 0.45
+      });
+      this.createQuote();
+    },
+    saldoFavorEnganche (value) {
+      if (value <= 0) {
+        this.engancheCubierto = true;
+        this.saldoFavorEngancheFraccionado = value * -1;
+      } else {
+        this.engancheCubierto = false;
+        this.saldoFavorEngancheFraccionado = 0;
+      }
+    },
+    valorFirmaSaldo (value) {
+      if (value <= 0) {
+        this.firmaPromesaCubierta = true
+        const saldo = value * -1
+        this.saldoFavorFirmaPromesa = saldo
+      } else {
+        this.firmaPromesaCubierta = false
+        this.saldoFavorFirmaPromesa = 0
+      }
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      JsBarcode('#barcode', this.getRandomNumber, {
+        lineColor: '#000000',
+        height: 26,
+        displayValue: false
+      })
+    }, 800)
   }
 }
 </script>

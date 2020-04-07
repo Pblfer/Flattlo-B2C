@@ -3,7 +3,7 @@
   <div class="showResumeOnQuote">
     <h5>🤯 Te dejamos un resumen:</h5>
       <vs-divider color="dark"></vs-divider>
-      <vx-card>
+      <vx-card class="mb-6">
           <!-- <h5 class="mt-2 mb-1">
             <strong>No. Cotización:</strong>
           </h5>

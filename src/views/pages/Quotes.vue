@@ -9,13 +9,20 @@
       </vs-col>
     </vs-row>
     <vs-divider></vs-divider>
+    <userQuotes/>
   </div>
     </div>
 </template>
 
 <script>
+import userQuotes from '@/components/Quote/userQuotesComponent'
 export default {
-        
+        data(){
+          
+        },
+        components:{
+          userQuotes
+        }
 }
 </script>
 
