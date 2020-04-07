@@ -2,8 +2,8 @@
     <div class="flex mb-4">
       <div class="w-full p-2 mt-4 mb-6">
     <div class="mb-8">
-      <h5>📩 Datos de cotización:</h5>
-      <vs-divider></vs-divider>
+      <h5>Datos de cotización:</h5>
+      <vs-divider color="dark"></vs-divider>
       <div>
         <div class="w-full sm:w-full p-1 mt-4">
           <vs-input
@@ -64,22 +64,22 @@
     </div>
     <div>
       <div v-show="!getProyect.parkings.length == 0">
-        <h5>🚗 Selección de parqueos:</h5>
-      <vs-divider></vs-divider>
+        <h5>Selección de parqueos:</h5>
+      <vs-divider color="dark"></vs-divider>
       <vs-row class="p-2 mb-8">
         <vs-col v-show="!getProyect.parkings.length == 0" vs-type="flex flex-wrap" vs-w="12">
-          <p>Seleccione un parqueo:</p>
+          <p>Selecciona un parqueo:</p>
           <v-select multiple label="number" v-model="selectedP" :options="getProyect.parkings"></v-select>
         </vs-col>
       </vs-row>
       </div>
 
       <div v-show="!getProyect.warehouses.length == 0">
-        <h5>📦 Selección de bodega:</h5>
+        <h5>Selección de bodega:</h5>
       <vs-divider></vs-divider>
       <vs-row class="p-2 mb-8">
         <vs-col vs-type="flex flex-wrap" vs-w="12" >
-          <p>Seleccione una bodega:</p>
+          <p>Selecciona una bodega:</p>
           <v-select multiple label="number" v-model="selectedW" :options="getProyect.warehouses"></v-select>
         </vs-col>
       </vs-row>
@@ -87,8 +87,8 @@
 
 
       <br/>
-      <h5>🏢 Detalles de propiedad:</h5>
-      <vs-divider></vs-divider>
+      <h5>Detalles de propiedad:</h5>
+      <vs-divider color="dark"></vs-divider>
       <div class="p-2 mb-8">
         <vx-card>
           <h5 class="mt-2 mb-1">
@@ -114,8 +114,8 @@
         </vx-card>
       </div>
       <br/>
-      <h5>📌 Monto de reserva:</h5>
-      <vs-divider></vs-divider>
+      <h5>Monto de reserva:</h5>
+      <vs-divider color="dark"></vs-divider>
       <vs-alert
         v-if="false"
         icon-pack="feather"
@@ -144,8 +144,8 @@
         />
       </div>
       <br/>
-      <h5>🙌 Enganche fraccionado:</h5>
-      <vs-divider></vs-divider>
+      <h5>Enganche fraccionado:</h5>
+      <vs-divider color="dark"></vs-divider>
 
       <vs-input
         :success="reserveField"
@@ -177,8 +177,8 @@
      
       <br/>
       <div class="mb-8">
-        <h5>🧾 Financiamiento:</h5>
-      <vs-divider></vs-divider>
+        <h5>Financiamiento:</h5>
+      <vs-divider color="dark"></vs-divider>
       <ul class="centerx flex flex-wrap">
       <li>
           <vs-radio
@@ -237,6 +237,19 @@
       </div>
         <Resume  v-if="isReadyToShowResume"/>
     </div>
+    <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+        <vs-button
+          ref="loadableButton"
+          id="button-with-loading"
+          class="vs-con-loading__container mb-8 quoteBtn"
+          @click="openLoadingContained"
+                size="large"
+                text-color="#000"
+                color="#fbdc11"
+                icon-pack="feather"
+                icon="icon-check-circle"
+        >Guardar Cotización</vs-button>
+      </vs-col>
   </div>
     </div>
   

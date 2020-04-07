@@ -2,7 +2,7 @@
 <template>
   <div class="showResumeOnQuote">
     <h5>🤯 Te dejamos un resumen:</h5>
-      <vs-divider></vs-divider>
+      <vs-divider color="dark"></vs-divider>
       <vx-card>
           <!-- <h5 class="mt-2 mb-1">
             <strong>No. Cotización:</strong>
@@ -74,19 +74,6 @@
           <p class="valueText">Años: {{obtenerValoreFinanciamiento.yearsFinancingSelected}}</p>
           <p class="valueText">Cuota Nivelada: Q. {{ObtenerCuotaNivelada.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</p>     -->
             
-    <vs-row>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-        <vs-button
-          ref="loadableButton"
-          id="button-with-loading"
-          class="vs-con-loading__container mt-8 mb-8 quoteBtn"
-          @click="openLoadingContained"
-                size="large"
-                text-color="#000"
-                color="#fbdc11"
-        >Generar Cotización</vs-button>
-      </vs-col>
-    </vs-row>
         </vx-card>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="mt-8">
-    <h5>👩‍💼👨‍💼💼 Asesor asignado:</h5>
-    <vs-divider></vs-divider>
+    <h5>Asesor asignado:</h5>
+    <vs-divider color="dark"></vs-divider>
     <vx-card>
       <vs-row>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">

@@ -19,7 +19,7 @@
     <NewClient v-show="!showModules" />
   </div>
   <div class="w-full showMoreOnQuote">
-  <h4 class="p-2">📃 Tu cotización casi lista...</h4>
+  <h4 class="p-2">📑 Tu cotización casi lista...</h4>
   <div class="p-4">
     <PrintedVisualizer/>
   </div>

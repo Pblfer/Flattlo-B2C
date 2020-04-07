@@ -252,17 +252,6 @@
     </vx-card>
     <br />
     <vs-row>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-        <vs-button
-          ref="loadableButton"
-          id="button-with-loading"
-          class="vs-con-loading__container"
-          @click="openLoadingContained"
-          color="success"
-          icon-pack="fas"
-          icon="fa-save"
-        >Almacenar Cotización</vs-button>
-      </vs-col>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="mt-4">
         🧐 Fecha límite de aceptación:
         <strong>{{getLimitDate}}</strong>
