@@ -841,7 +841,7 @@ export default {
         `,
         variables: {
           quoteID: quoteID,
-          apartamentID: localStorage.apartamentID
+          apartamentID: localStorage.selectedApartament
         }
       });
     },
