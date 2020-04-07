@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vx-card>
+    <vx-card class="paddingDesktop">
       <div class="p-4">
         <h5 class="mb-1">{{getFirstName}},</h5>
         <h5>👇Por favor selecciona un nivel:</h5>
@@ -20,7 +20,7 @@
       </div>
     </vx-card>
     <br />
-    <vx-card>
+    <vx-card class="paddingDesktop">
       <div v-if="checkData" class="mt-4">
         <h5>🧐🏢Disponibilidad en nivel {{numberOfLevel}}</h5>
         <h6 class="mt-1">Resumen de unidades disponibles:</h6>
@@ -226,6 +226,10 @@ export default {
   height: 470px;
 }
 
+.text-chip{
+  font-size: 15px !important;
+}
+
 .nextStepButton{
     border-radius: 30px;
     width: 90%;
@@ -249,7 +253,10 @@ box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
 @media (min-width: 760px) and (max-width: 3066px) {
   .nextStepButton{
     width: 36.666%;
-
 }
+  .paddingDesktop{
+    width: 80%;
+    margin: 0 auto;
+  }
 }
 </style>

@@ -5,7 +5,7 @@
     <vx-card>
       <vs-row>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-          <vs-avatar size="98px" :src="getDeveloper.sellers_team[usr].pic"></vs-avatar>
+          <vs-avatar size="90px" :src="getDeveloper.sellers_team[usr].pic"></vs-avatar>
         </vs-col>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="mt-2">
           <h5>{{getDeveloper.sellers_team[usr].first_name}} {{getDeveloper.sellers_team[usr].last_name}}</h5>
@@ -57,14 +57,14 @@ export default {
     },
     methods:{
         switchSeller() {
-           let num = Math.floor (Math.random () * this.getDeveloper.sellers_team.length) + 1
+           let num = Math.floor (Math.random () * this.getDeveloper.sellers_team.length) + 0
            this.usr = num
            const payload = num
            this.$store.dispatch('vendedor_seleccionado', payload)
         }
     },
     mounted(){
-        let num = Math.floor (Math.random () * this.getDeveloper.sellers_team.length) + 1
+        let num = Math.floor (Math.random () * this.getDeveloper.sellers_team.length) + 0
         this.usr = num
         const payload = num
         this.$store.dispatch('vendedor_seleccionado', payload)

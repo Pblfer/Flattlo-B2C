@@ -253,8 +253,8 @@
     <br />
     <vs-row>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12" class="mt-4">
-        🧐 Fecha límite de aceptación:
-        <strong>{{getLimitDate}}</strong>
+        🧐 Fecha límite de aceptación: 
+        <strong> {{ getLimitDate}}</strong>
       </vs-col>
     </vs-row>
   </div>

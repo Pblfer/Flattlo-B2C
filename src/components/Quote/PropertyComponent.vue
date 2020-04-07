@@ -5,7 +5,7 @@
       <h5>Datos de cotización:</h5>
       <vs-divider color="dark"></vs-divider>
       <div>
-        <div class="w-full sm:w-full p-1 mt-4">
+        <div class="w-full sm:w-full p-1 mt-1">
           <vs-input
             size="large"
             icon-pack="feather"
@@ -18,7 +18,7 @@
             disabled
           />
         </div>
-        <div class="w-full sm:w-full p-1 mt-3">
+        <div class="w-full sm:w-full p-1 mt-1">
           <vs-input
             size="large"
             icon-pack="feather"
@@ -31,7 +31,7 @@
             disabled
           />
         </div>
-        <div class="w-full sm:w-full p-1 mt-3">
+        <div class="w-full sm:w-full p-1 mt-1">
           <vs-input
             size="large"
             icon-pack="feather"
@@ -45,7 +45,7 @@
           />
         </div>
         
-              <div class="w-full sm:w-full p-1 mt-3">
+              <div class="w-full sm:w-full p-1 mt-1">
           <vs-input
             size="large"
             icon-pack="feather"
@@ -492,6 +492,11 @@ export default {
 .vs-input-number button {
   min-width: 32px;
   min-height: 32px;
+}
+
+.vs__selected {
+    background-color: #fbdc11;
+    font-weight: 500;
 }
 
 .vs-input-number .vs-input-number--input {

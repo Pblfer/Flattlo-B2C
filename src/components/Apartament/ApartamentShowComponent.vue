@@ -4,7 +4,7 @@
       <h4>🥳 Estas en el nivel: {{getLevel.number_of_level}}</h4>
       <h5
         class="mt-3"
-      >Si deseas conocer más detalle de cada apartamento pulsa en ver más detalles.</h5>
+      >Si deseas conocer más detalle de cada apartamento pulsa en <strong>ver más detalles</strong>.</h5>
       <vs-divider></vs-divider>
     </div>
 
