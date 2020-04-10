@@ -52,7 +52,6 @@ const actions = {
   vendedor_seleccionado ({ commit }, payload) {
     commit('VENDEDOR_ESTABLECIDO', payload)
   },
-  
 
 
   // /////////////////////////////////////////////

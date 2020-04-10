@@ -1,166 +1,116 @@
 <template>
-     <div v-show="true" id="data-list-thumb-view" class="data-list-container">
-      <div class="vx-row">
-      </div>
-       <vs-table
-        ref="table"
-        single
-        v-model="selected"
-        pagination
-        :max-items="itemsPerPage"
-        :data="getFlattloAppUser.quotes"
-        stripe
-        noDataText="🤦‍♂️📃No hay cotizaciones creadas..."
-      >
-        <template slot="thead">
-          <vs-th>ID / Estado</vs-th>
-          <vs-th>Proyecto</vs-th>
-          <vs-th>Apt.</vs-th>
-          <vs-th>Dorm.</vs-th>
-          <vs-th>Baños</vs-th>
-          <vs-th>m2</vs-th>
-          <vs-th sort-key="q.quote_date_created">Fecha</vs-th>
-          <vs-th>Ver</vs-th>
-        </template>
-
-        <template>
-          <tbody>
-           <vs-tr :data="q" :key="index" v-for="(q, index) in getFlattloAppUser.quotes">
-              <vs-td>
-                <vs-chip :color="statusColor(q.quote_date_limit)"></vs-chip>
-              </vs-td>
-
-              <vs-td>
-                <p class="product-category">{{q.proyect_name}}</p>
-              </vs-td>
-
-              <vs-td>
-                <p class="product-category">{{q.apartaments[0].number}}</p>
-              </vs-td>
-
-              <vs-td>
-                <p class="product-category">{{q.bedrooms}}</p>
-              </vs-td>
-
-              <vs-td>
-                <p class="product-category">{{q.bathrooms}}</p>
-              </vs-td>
-
-              <vs-td>
-                <p class="product-category">{{q.living_square_mts}}</p>
-              </vs-td>
-
-              <vs-td>
-                <p class="product-name font-small">{{fechaFormateada(q.quote_date_created)}}</p>
-              </vs-td>
-              <vs-td>
-                <vs-row>
-                  <vx-tooltip color="primary" text="Visualizar" position="bottom">
-                    <vs-button
-                      @click="viewQuote(q._id)"
-                      color="primary"
-                      type="flat"
-                      icon-pack="feather"
-                      icon="icon-eye"
-                      class="p-1"
-                      :to="{ name: 'Visualizador de Cotización'}"
-                    ></vs-button>
-                  </vx-tooltip>
-                </vs-row>
-              </vs-td>
-            </vs-tr>
-          </tbody>
-        </template>
-      </vs-table>
+  <div class="flex flex-wrap sm:full lg:w-full mt-4">
+    <div
+      class="p-4 sm:w-1/2 md:w-1/4 lg:w-3/2 xl:w-3/2 mt-3 p-2"
+      :key="index"
+      v-for="(q, index) in getFlattloAppUser.quotes"
+    >
+      <vx-card>
+        <vs-button radius color="danger" v-if="false" icon-pack="feather" icon="icon-heart"></vs-button>
+        <vs-chip  :color="getColor(q.apartaments[0].actual_state)">{{q.apartaments[0].actual_state}}</vs-chip>
+        <img
+          class="m-2 w-full"
+          :src="q.apartaments[0].plane_img"
+          :alt="`Apartamento de ${q.bedrooms} habitación y ${q.bathrooms} baños.`"
+        />
+        <div class="text-center">
+          <h4>{{q.apartaments[0].number}}</h4>
+          <p class="text-grey">{{q.proyect_name}}</p>
+        </div>
+        <div class="mb-4 mt-base"></div>
+        <div class="flex justify-between flex-wrap">
+          <vs-button
+            class="p-5 mt-4 w-full shadow-lg favorite-btn"
+            icon-pack="feather"
+            icon="icon-heart"
+            color="danger"
+          >Enviar a favoritos</vs-button>
+          <vs-button
+            class="mt-4 w-full"
+            icon-pack="feather"
+            icon="icon-file"
+            type="border"
+            color="primary"
+          >Ver mi cotización</vs-button>
+        </div>
+      </vx-card>
     </div>
+  </div>
 </template>
 
 <script>
-import gql from 'graphql-tag'
-    export default {
-        data(){
-            return{
-                getFlattloAppUser:[],
-                selected:[]
-            }
-        },
-        apollo:{
-            getFlattloAppUser: {
+import gql from "graphql-tag";
+export default {
+  data() {
+    return {
+      getFlattloAppUser: [],
+      selected: []
+    };
+  },
+  apollo: {
+    getFlattloAppUser: {
       query: gql`
-        query($userUID:String!){
-                getFlattloAppUser(userUID:$userUID){
-                        userUID
-                        quotes{
-                            _id
-                            proyect_name
-                            quote_date_limit
-                            barCode
-                            bedrooms
-                            bathrooms
-                            living_square_mts
-                            quote_date_created
-                                apartaments{
-                                    number
-                                }
-                            }
-                    }
-                }
+        query($userUID: String!) {
+          getFlattloAppUser(userUID: $userUID) {
+            userUID
+            quotes {
+              _id
+              proyect_name
+              quote_date_limit
+              barCode
+              bedrooms
+              bathrooms
+              living_square_mts
+              quote_date_created
+              apartaments {
+                number
+                plane_img
+                actual_state
+              }
+            }
+          }
+        }
       `,
-      variables () {
+      variables() {
         return {
           userUID: localStorage.userID
-        }
+        };
       },
       pollInterval: 300
-    },
-        },
-        methods:{
-            statusColor (l) {
-            let newdate = new Date();
-            let d = newdate.getDate();
-            let m = newdate.getMonth()+1;
-            let y = newdate.getFullYear();
-            let datefull = y + "-" + m + "-" + d;
-
-            let fecha1 = l;
-            let fecha2 = datefull;
-                
-                
-
-            let f1 = new Date(fecha1);
-            let f2 = new Date(fecha2);
-
-            
-
-            if (f1 < f2) {
-                return "danger";
-            } else {
-                return "success";
-            }
+    }
+  },
+  methods: {
+    getColor(status) {
+      if (status == "Disponible") return "success";
+      if (status == "Reservado") return "danger";
+      if (status == "Bloqueado") return "dark";
     },
     fechaFormateada(fecha) {
-      let nuevaFecha = new Date(fecha);
+      const nuevaFecha = new Date(fecha);
       let dd = nuevaFecha.getDate();
       let mm = nuevaFecha.getMonth() + 1;
-      let yyy = nuevaFecha.getFullYear();
+      const yyy = nuevaFecha.getFullYear();
 
       if (dd < 10) {
-        dd = "0" + dd;
+        dd = `0${dd}`;
       }
 
       if (mm < 10) {
-        mm = "0" + mm;
+        mm = `0${mm}`;
       }
 
-      let datefull = dd + "/" + mm + "/" + yyy;
+      const datefull = `${dd}/${mm}/${yyy}`;
 
       return datefull;
-    },
-        }
     }
+  }
+}
 </script>
 
 <style lang="scss">
+.favorite-btn {
+  font-size: 16px;
+}
 #data-list-thumb-view {
   .vs-con-table {
     .vs-table--header {

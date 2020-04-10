@@ -55,7 +55,7 @@ const mutations = {
     state.quote_data.financingValues.reservePrice = payload
   },
 
-  VENDEDOR_ESTABLECIDO(state, payload) {
+  VENDEDOR_ESTABLECIDO (state, payload) {
     state.quote_data.sellerSected = payload
   },
 

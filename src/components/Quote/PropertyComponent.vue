@@ -386,7 +386,7 @@ export default {
       return (this.getApartament.price + this.sumP + this.sumW) * 0.7 * 0.12
     },
     getImpuestos () {
-      return this.getValueStamps + this.getIva;
+      return this.getValueStamps + this.getIva
     },
     getDate () {
       const time = new Date()
@@ -415,28 +415,28 @@ export default {
       today = `${dd}/${mm}/${yyyy}`
       return today
     },
-    ObtenerEngacheEstablecido() {
-      return this.$store.state.quote_data.financingValues.reservePrice;
+    ObtenerEngacheEstablecido () {
+      return this.$store.state.quote_data.financingValues.reservePrice
     },
     
-    firmaPromesa() {
+    firmaPromesa () {
       const value =
         (this.getApartament.price + this.sumP + this.sumW) * 0.03 -
-        this.ObtenerEngacheEstablecido;
-      this.valorFirmaSaldo(value);
-      return value;
+        this.ObtenerEngacheEstablecido
+      this.valorFirmaSaldo(value)
+      return value
     },
-    obtenerResultadoEnganche() {
+    obtenerResultadoEnganche () {
       const vt =
         ((this.getApartament.price + (this.sumP + this.sumW)) *
           this.getProyect.deposit_percent) /
-        100;
-      const r = this.ObtenerEngacheEstablecido;
-      const fp = this.firmaPromesa;
-      const sf = this.saldoFavorFirmaPromesa;
-      const total = vt - r - fp - sf;
-      this.saldoFavorEnganche(total);
-      return total;
+        100
+      const r = this.ObtenerEngacheEstablecido
+      const fp = this.firmaPromesa
+      const sf = this.saldoFavorFirmaPromesa
+      const total = vt - r - fp - sf
+      this.saldoFavorEnganche(total)
+      return total
     },
     ObtenerVendedorEstablecido () {
       return this.$store.state.quote_data.sellerSected
@@ -789,24 +789,24 @@ export default {
           }
         })
         .then(data => {
-          this.addClientToQuote(data.data.newQuotetoFlattloUser._id);
-          this.addApartamentToQuote(data.data.newQuotetoFlattloUser._id);
-          this.addParkingToQuote(data.data.newQuotetoFlattloUser._id);
-          this.addWarehouseToQuote(data.data.newQuotetoFlattloUser._id);
-          this.$vs.loading.close("#button-with-loading > .con-vs-loading");
+          this.addClientToQuote(data.data.newQuotetoFlattloUser._id)
+          this.addApartamentToQuote(data.data.newQuotetoFlattloUser._id)
+          this.addParkingToQuote(data.data.newQuotetoFlattloUser._id)
+          this.addWarehouseToQuote(data.data.newQuotetoFlattloUser._id)
+          this.$vs.loading.close('#button-with-loading > .con-vs-loading')
           this.$vs.notify({
-            title: "¡Cotización guardada!",
-            text: `"La cotización fue almacenada en tus cotizaciones"`,
-            color: "success",
-            iconPack: "feather",
-            icon: "icon-check"
-          });
+            title: '¡Cotización guardada!',
+            text: '"La cotización fue almacenada en tus cotizaciones"',
+            color: 'success',
+            iconPack: 'feather',
+            icon: 'icon-check'
+          })
 
-          router.push("/quotes");
+          router.push('/quotes')
         })
         .catch(err => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     },
     addClientToQuote (quoteID) {
       this.$apollo
@@ -820,7 +820,7 @@ export default {
           `,
           variables: {
             userUID: localStorage.userID,
-            quoteID: quoteID
+            quoteID
           }
         })
         .catch(err => {
@@ -840,10 +840,10 @@ export default {
           }
         `,
         variables: {
-          quoteID: quoteID,
+          quoteID,
           apartamentID: localStorage.selectedApartament
         }
-      });
+      })
     },
     addParkingToQuote (quoteID) {
       this.ObtenerParqueos.forEach(element => {
@@ -856,11 +856,11 @@ export default {
             }
           `,
           variables: {
-            quoteID: quoteID,
+            quoteID,
             parkingID: element._id
           }
-        });
-      });
+        })
+      })
     },
     addWarehouseToQuote (quoteID) {
       this.ObtenerBodegas.forEach(element => {
@@ -876,28 +876,28 @@ export default {
             }
           `,
           variables: {
-            quoteID: quoteID,
+            quoteID,
             warehouseID: element._id
           }
-        });
-      });
+        })
+      })
     },
     openLoadingContained () {
       this.$vs.loading({
         background: this.backgroundLoading,
         color: this.colorLoading,
-        container: "#button-with-loading",
+        container: '#button-with-loading',
         scale: 0.45
-      });
-      this.createQuote();
+      })
+      this.createQuote()
     },
     saldoFavorEnganche (value) {
       if (value <= 0) {
-        this.engancheCubierto = true;
-        this.saldoFavorEngancheFraccionado = value * -1;
+        this.engancheCubierto = true
+        this.saldoFavorEngancheFraccionado = value * -1
       } else {
-        this.engancheCubierto = false;
-        this.saldoFavorEngancheFraccionado = 0;
+        this.engancheCubierto = false
+        this.saldoFavorEngancheFraccionado = 0
       }
     },
     valorFirmaSaldo (value) {

@@ -21,14 +21,14 @@
 <script>
 import gql from 'graphql-tag'
 export default {
-    data (){
-        return{
-            getDeveloper:[],
-            usr:0
-        }
-    },
-    apollo:{
-        getDeveloper: {
+  data () {
+    return {
+      getDeveloper:[],
+      usr:0
+    }
+  },
+  apollo:{
+    getDeveloper: {
       query: gql`
         query getDeveloperData($id: ID!) {
           getDeveloper(id: $id) {
@@ -54,22 +54,22 @@ export default {
       },
       pollInterval: 500
     }
-    },
-    methods:{
-        switchSeller() {
-           let num = Math.floor (Math.random () * this.getDeveloper.sellers_team.length) + 0
-           this.usr = num
-           const payload = num
-           this.$store.dispatch('vendedor_seleccionado', payload)
-        }
-    },
-    mounted(){
-        let num = Math.floor (Math.random () * this.getDeveloper.sellers_team.length) + 0
-        this.usr = num
-        const payload = num
-        this.$store.dispatch('vendedor_seleccionado', payload)
+  },
+  methods:{
+    switchSeller () {
+      const num = Math.floor(Math.random() * this.getDeveloper.sellers_team.length) + 0
+      this.usr = num
+      const payload = num
+      this.$store.dispatch('vendedor_seleccionado', payload)
     }
-};
+  },
+  mounted () {
+    const num = Math.floor(Math.random() * this.getDeveloper.sellers_team.length) + 0
+    this.usr = num
+    const payload = num
+    this.$store.dispatch('vendedor_seleccionado', payload)
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -227,7 +227,7 @@ export default {
 }
 
 .text-chip{
-  font-size: 15px !important;
+  font-size: 12px !important;
 }
 
 .nextStepButton{
