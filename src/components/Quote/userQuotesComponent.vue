@@ -6,8 +6,12 @@
       v-for="(q, index) in getFlattloAppUser.quotes"
     >
       <vx-card>
-        <vs-button radius color="danger" v-if="false" icon-pack="feather" icon="icon-heart"></vs-button>
-        <vs-chip  :color="getColor(q.apartaments[0].actual_state)">{{q.apartaments[0].actual_state}}</vs-chip>
+    
+        <vs-row>
+  <vs-col vs-offset="10">
+    <vs-button size="large" class="flatHeartBtn" radius color="danger" type="flat"  icon-pack="feather" icon="icon-heart"></vs-button>
+  </vs-col>
+</vs-row>
         <img
           class="m-2 w-full"
           :src="q.apartaments[0].plane_img"
@@ -19,12 +23,7 @@
         </div>
         <div class="mb-4 mt-base"></div>
         <div class="flex justify-between flex-wrap">
-          <vs-button
-            class="p-5 mt-4 w-full shadow-lg favorite-btn"
-            icon-pack="feather"
-            icon="icon-heart"
-            color="danger"
-          >Enviar a favoritos</vs-button>
+          
           <vs-button
             class="mt-4 w-full"
             icon-pack="feather"
@@ -32,7 +31,14 @@
             type="border"
             color="primary"
           >Ver mi cotización</vs-button>
+          
         </div>
+        <vs-row>
+  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+    <vs-button class="mt-8" type="line" line-position="top" icon-pack="feather" icon="icon-trash" line-origin="right" color="danger">Eliminar</vs-button>
+  </vs-col>
+</vs-row>
+
       </vx-card>
     </div>
   </div>
@@ -108,8 +114,8 @@ export default {
 </script>
 
 <style lang="scss">
-.favorite-btn {
-  font-size: 16px;
+.flatHeartBtn {
+  height: 36px;
 }
 #data-list-thumb-view {
   .vs-con-table {

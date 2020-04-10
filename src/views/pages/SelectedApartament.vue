@@ -72,7 +72,7 @@
           </div>
         </vx-card>
          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-   <vs-button class="mt-8 mb-8 quoteBtn" :to="{name: 'quote-generator'}" icon-pack="feather" size="large"  text-color="#000" color="#fbdc11" >Cotizar</vs-button>
+   <vs-button class="mt-8 mb-8 nextStepButton" :to="{name: 'quote-generator'}" icon-pack="feather" size="large"  text-color="#000" color="#fbdc11" >Cotizar</vs-button>
   </vs-col> 
   <br/> 
   <br/> 
@@ -155,5 +155,11 @@ box-shadow: -1px 10px 33px -4px rgba(0,0,0,0.18);
     width: 100%;
     height: auto;
 }
+}
+@media (min-width: 760px) and (max-width: 3066px) {
+  .nextStepButton{
+    width: 36.666%;
+}
+
 }
 </style>

@@ -4,7 +4,7 @@
     <h4>📑 Cotizaciones genedas</h4>
     <vs-row vs-w="12" class="p-3">
     <h5>En esta sección encontraras todas tus cotizaciones generadas.</h5>
-    <h5 class="mt-1">¿Deseas más informacion de un apartamento? Envia tu mejor opción a tu lista de <strong>favoritos </strong> para ser contactado por tu asesor 👩‍💼👨‍💼.</h5>
+    <h5 class="mt-1">¿Deseas más informacion de un apartamento? Envia las mejores opciónes a tu lista de <strong>favoritos</strong> para ser contactado por tu asesor 👩‍💼👨‍💼.</h5>
     </vs-row>
     <vs-divider></vs-divider>
   </div>

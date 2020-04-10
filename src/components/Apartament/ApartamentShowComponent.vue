@@ -4,7 +4,7 @@
       <h4>🥳 Estas en el nivel: {{getLevel.number_of_level}}</h4>
       <h5
         class="mt-3"
-      >Si deseas conocer más detalle de cada apartamento pulsa en <strong>ver más detalles</strong>.</h5>
+      >Si deseas conocer más detalle de cada apartamento pulsa en <strong>más detalles</strong>.</h5>
       <vs-divider></vs-divider>
     </div>
 
@@ -18,11 +18,12 @@
         v-for="apartament in mostrarDisponibles"
         :key="apartament._id"
       >
-        <vx-card class="mb-base mb-4">
+        <vx-card class="mb-base mb-6">
           <div>
             <img :src="apartament.plane_img" alt="content-img" class="responsive rounded-lg" />
           </div>
           <vs-list-header
+            class="mt-2"
             icon-pack="feather"
             icon="icon-codepen"
             :title="`Apartamento: ${apartament.number}`"
@@ -48,10 +49,11 @@
               <vs-button
                 @click.native="saveApartament(apartament._id)"
                 :to="{name: 'selected-apartament'}"
-                type="flat"
+                type="line"
                 line-origin="left"
                 color="primary"
-              >Ver más detalles</vs-button>
+                line-position="top"
+              >Más detalles</vs-button>
             </vs-col>
           </vs-row>
         </vx-card>
@@ -213,6 +215,9 @@ export default {
 </script>
 
 <style lang="scss">
+.vs-list--title {
+    font-weight: 500 !important;
+}
 .imgPlane {
   display: block;
   margin: 0 auto;
