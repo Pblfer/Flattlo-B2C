@@ -1,5 +1,6 @@
 <template>
     <div>
+        
         <apartamentShowCase/>
     </div>
 </template>
@@ -9,16 +10,13 @@ import apartamentShowCase from '@/components/Apartament/ApartamentShowComponent'
 export default {
   data () {
     return {
-
+      showLoading: true
     }
             
   },
   components:{
     apartamentShowCase
+  
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

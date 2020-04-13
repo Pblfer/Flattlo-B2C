@@ -30,6 +30,7 @@
             icon="icon-file"
             type="border"
             color="primary"
+            @click.native="selectedQuote(q._id)"
           >Ver mi cotización</vs-button>
           
         </div>
@@ -46,6 +47,7 @@
 
 <script>
 import gql from "graphql-tag";
+import router from '../../router';
 export default {
   data() {
     return {
@@ -86,6 +88,10 @@ export default {
     }
   },
   methods: {
+    selectedQuote (id) {
+      localStorage.selectedQuoteID = id
+      router.push(`/quote/${id}`)
+    },
     getColor(status) {
       if (status == "Disponible") return "success";
       if (status == "Reservado") return "danger";

@@ -1,17 +1,12 @@
 <template>
   <div>
-    <div class="p-4">
+    <div class="p-4" v-if="checkData">
       <h4>🥳 Estas en el nivel: {{getLevel.number_of_level}}</h4>
       <h5
         class="mt-3"
       >Si deseas conocer más detalle de cada apartamento pulsa en <strong>más detalles</strong>.</h5>
       <vs-divider></vs-divider>
     </div>
-
-    <div class="contained-example-container" v-if="!checkData">
-      <div id="div-with-loading" class="vs-con-loading__container mt-4"></div>
-    </div>
-
     <div class="flex flex-wrap sm:full lg:w-full mt-4" v-if="checkData">
       <div
         class="w-full sm:w-1/2 md:w-1/4 lg:w-3/2 xl:w-3/2 mt-3 p-2"
@@ -117,19 +112,7 @@ export default {
     saveApartament (apt) {
       localStorage.selectedApartament = apt
     },
-    openLoadingInDiv () {
-      this.$vs.loading({
-        container: '#div-with-loading',
-        scale: 1,
-        type: 'sound',
-        background: 'transparent',
-        color: 'success',
-        text: 'Cargando...'
-      })
-    },
-    getFirstLevel () {
-      this.selectedLevel = this.getProyect.levels[0]._id
-    },
+    
     getSecondLevel () {
       this.selectedLevel = this.getProyect.levels[1]._id
     },
@@ -173,7 +156,7 @@ export default {
       return this.$store.state.ui.level
     },
     checkData () {
-      if (this.getLevel == undefined) {
+      if (this.getLevel === '') {
         return false
       } else {
         return true
@@ -203,13 +186,6 @@ export default {
       )
       return apartamentosDisponibles
     }
-  },
-  mounted () {
-    this.openLoadingInDiv()
-    setTimeout(() => {
-      this.getFirstLevel()
-      this.$vs.loading.close('#div-with-loading > .con-vs-loading')
-    }, 1000)
   }
 }
 </script>

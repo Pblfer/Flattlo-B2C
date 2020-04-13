@@ -65,6 +65,11 @@ const router = new Router({
           component: () => import('@/views/pages/Quotes.vue')
         },
         {
+          path: '/quote/:id',
+          name: 'individual-quote',
+          component: () => import('@/views/pages/IndividualQuote.vue')
+        },
+        {
           path: '',
           redirect: '/login'
         }
