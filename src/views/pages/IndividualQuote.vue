@@ -1,6 +1,6 @@
 <template>
   <div id="invoice-page">
-        <vx-card>
+    <vx-card>
       <!-- INVOICE METADATA -->
       <div class="vx-row leading-loose p-base">
         <div class="vx-col w-full md:w-1/2 mt-base">
@@ -12,7 +12,7 @@
             <p>#{{getFlattloQuoteByID.barCode}}</p>
 
             <h6 class="mt-4">Fecha de solicitud:</h6>
-            <p>{{getFlattloQuoteByID.quote_date_created}}</p>
+            <p>{{getShortDate}}</p>
           </div>
         </div>
         <div class="vx-col w-full md:w-1/2 mt-12">
@@ -62,14 +62,12 @@
               <feather-icon icon="PhoneIcon" svgClasses="h-4 w-4"></feather-icon>
               <span class="ml-2">{{getDeveloper.sellers_team[ObtenerVendedorEstablecido].phone}}</span>
             </p>
-          </div> -->
+          </div>-->
         </div>
       </div>
       <!-- INVOICE CONTENT -->
       <div class="p-base">
-     
         <vs-table data="getApartament">
-        
           <template slot="thead">
             <vs-th>OPCIÓN:</vs-th>
             <vs-th>M2</vs-th>
@@ -85,13 +83,17 @@
               <vs-td>{{getFlattloQuoteByID.apartaments[0].living_square_mts}}m2</vs-td>
               <vs-td>{{getFlattloQuoteByID.apartaments[0].bedrooms}}</vs-td>
               <vs-td>{{getFlattloQuoteByID.apartaments[0].bathrooms}}</vs-td>
-              <vs-td v-show="!(getFlattloQuoteByID.parkings.length == 0)">{{getFlattloQuoteByID.parkings.length}}</vs-td>
-              <vs-td v-show="!(getFlattloQuoteByID.warehouses.length == 0)">{{getFlattloQuoteByID.warehouses.length}}</vs-td>
+              <vs-td
+                v-show="!(getFlattloQuoteByID.parkings.length == 0)"
+              >{{getFlattloQuoteByID.parkings.length}}</vs-td>
+              <vs-td
+                v-show="!(getFlattloQuoteByID.warehouses.length == 0)"
+              >{{getFlattloQuoteByID.warehouses.length}}</vs-td>
             </vs-tr>
           </template>
         </vs-table>
 
-        <vs-table  data="getApartament">
+        <vs-table data="getApartament">
           <vs-tr>
             <vs-th>VALOR PROPIEDAD</vs-th>
             <vs-td>Q. {{ getFlattloQuoteByID.property_value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</vs-td>
@@ -102,7 +104,7 @@
           </vs-tr>
           <vs-tr v-show="!(getFlattloQuoteByID.warehouses.length == 0)">
             <th>BODEGAS</th>
-            <td>Q. {{  getFlattloQuoteByID.warehouses_mount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
+            <td>Q. {{ getFlattloQuoteByID.warehouses_mount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
           </vs-tr>
           <vs-tr>
             <th>IMPUESTOS</th>
@@ -126,19 +128,19 @@
         <svg id="barcode" />
         <p class="mt-4">
           Esta cotización es válida
-          <strong>{{getFlattloQuoteByID.quote_date_limit}} </strong>
+          <strong>{{getFlattloQuoteByID.quote_date_limit}}</strong>
         </p>
       </div>
     </vx-card>
 
     <!---SECOND PAGE--->
-    <br>
-    <br>
-    <br>
+    <br />
+    <br />
+    <br />
     <vx-card>
       <div class="vx-row leading-loose p-base">
         <div class="vx-col w-full md:w-1/2 mt-base">
-          <img class="LogoProyectQuote" :src="getFlattloQuoteByID.logo_quote_proyect" /> 
+          <img class="LogoProyectQuote" :src="getFlattloQuoteByID.logo_quote_proyect" />
         </div>
         <div class="vx-col w-full md:w-1/2 text-right">
           <div class="invoice__invoice-detail mt-6">
@@ -151,7 +153,7 @@
         </div>
       </div>
 
-         <div class="vx-row leading-loose p-base">
+      <div class="vx-row leading-loose p-base">
         <div class="vx-col w-full">
           <vs-chip color="success" class="m-1">Paso 1</vs-chip>
           <h6 class="mt-2">Reserva la unidad:</h6>
@@ -173,13 +175,13 @@
             <vs-th>Monto establecido:</vs-th>
             <vs-td>Q. {{getFlattloQuoteByID.promise_sign_mount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
           </vs-tr>
-          <vs-tr >
+          <vs-tr>
             <vs-th>Saldo pendiente:</vs-th>
             <vs-td>Q. 0.00</vs-td>
           </vs-tr>
-          <vs-tr >
+          <vs-tr>
             <vs-th>Restante:</vs-th>
-            <vs-td>Q. res </vs-td>
+            <vs-td>Q. res</vs-td>
           </vs-tr>
         </vs-table>
         <div class="vx-col w-full mt-base">
@@ -188,30 +190,29 @@
           <vs-divider></vs-divider>
         </div>
         <vs-table class="w-full mt-2" data="getApartament">
-          <vs-tr >
+          <vs-tr>
             <vs-th>Saldo pendiente:</vs-th>
             <vs-td>Q. 0.00</vs-td>
           </vs-tr>
-          <vs-tr >
+          <vs-tr>
             <vs-th>Restante:</vs-th>
-            <vs-td>Q. </vs-td>
+            <vs-td>Q.</vs-td>
           </vs-tr>
-          <vs-tr >
+          <vs-tr>
             <vs-th>Enganche:</vs-th>
             <vs-td>Q. {{getFlattloQuoteByID.fraction_total_mount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</vs-td>
           </vs-tr>
-          <vs-tr >
+          <vs-tr>
             <vs-th>Fraccionamiento:</vs-th>
             <vs-td>{{getFlattloQuoteByID.fraction_month_selected}} Meses</vs-td>
           </vs-tr>
-          <vs-tr >
+          <vs-tr>
             <vs-th>Cuota nivelada:</vs-th>
             <vs-td>
               <strong>Q. {{getFlattloQuoteByID.fraction_fee_mount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</strong>
             </vs-td>
           </vs-tr>
         </vs-table>
-
 
         <div class="vx-col w-full mt-base">
           <vs-chip color="success" class="m-1">Paso 4</vs-chip>
@@ -240,12 +241,11 @@
             <vs-td>
               <strong>Q. {{getFlattloQuoteByID.financing_fee_mount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</strong>
             </vs-td>
-          </vs-tr> 
+          </vs-tr>
         </vs-table>
       </div>
 
       <!-- INVOICE FOOTER -->
-      
     </vx-card>
   </div>
 </template>
@@ -254,7 +254,7 @@
 import gql from "graphql-tag";
 import JsBarcode from "jsbarcode";
 export default {
-  data () {
+  data() {
     return {
       getFlattloQuoteByID: [],
       getDeveloper: []
@@ -312,7 +312,7 @@ export default {
           }
         }
       `,
-      variables () {
+      variables() {
         return {
           quoteID: localStorage.selectedQuoteID
         };
@@ -337,6 +337,13 @@ export default {
         };
       },
       pollInterval: 500
+    }
+  },
+  computed:{
+    getShortDate () {
+      const d = new Date(this.getFlattloQuoteByID.quote_date_created)
+      const n = d.toLocaleDateString('en-US')
+      return n
     }
   },
   methods: {
