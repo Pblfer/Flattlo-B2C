@@ -239,6 +239,7 @@
     </div>
     <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
         <vs-button
+          v-if="isReadyToShowResume"
           ref="loadableButton"
           id="button-with-loading"
           class="vs-con-loading__container mb-8 quoteBtn"
@@ -250,7 +251,7 @@
                 icon="icon-check-circle"
         >Guardar Cotización</vs-button>
       </vs-col>
-            
+
            
             <!-- {{getDeveloper.name}}
             {{getRandomNumber}}
@@ -278,7 +279,9 @@
             {{getApartament.bathrooms}}
             {{getProyect.lat}}
             {{getProyect.long}}
-            {{getProyect.quote_logo}} -->
+            {{getProyect.deposit_percent}}
+            {{getProyect.quote_logo}}
+            {{getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].pic}} -->
   </div>
     </div>
   
@@ -338,6 +341,9 @@ export default {
     sellerSwitcher
   },
   computed: {
+    ObtenerVendedorEstablecido () {
+      return this.$store.state.quote_data.sellerSected
+    },
     isReadyToShowResume () {
       
       if (this.confirmReserve === true) {
@@ -438,9 +444,7 @@ export default {
       this.saldoFavorEnganche(total)
       return total
     },
-    ObtenerVendedorEstablecido () {
-      return this.$store.state.quote_data.sellerSected
-    },
+
     ObtenerDescuento () {
       return this.$store.state.quote_data.discount_amount
     },
@@ -588,6 +592,7 @@ export default {
             long
             quote_logo
             max_days_limit_for_quote
+            deposit_percent
             parkings {
               _id
               number
@@ -609,7 +614,7 @@ export default {
               interest_rate
               years_max
             }
-            deposit_percent
+            
           }
         }
       `,
@@ -722,6 +727,17 @@ export default {
               $lat: Float
               $long: Float
               $logo_quote_proyect: String
+              $deposit_percent: Int!
+              $developer_name: String
+              $developer_phone: String
+              $developer_email: String
+              $developer_website: String
+              $developer_address: String
+              $seller_first_name: String
+              $seller_last_name: String
+              $seller_phone: String
+              $seller_email: String
+              $seller_pic: String
             ) {
               newQuotetoFlattloUser(
                 userUID: $userUID
@@ -752,6 +768,17 @@ export default {
                 lat: $lat
                 long: $long
                 logo_quote_proyect: $logo_quote_proyect
+                deposit_percent: $deposit_percent
+                developer_name: $developer_name
+                developer_phone: $developer_phone
+                developer_email: $developer_email
+                developer_website: $developer_website
+                developer_address: $developer_address
+                seller_first_name: $seller_first_name
+                seller_last_name: $seller_last_name
+                seller_phone: $seller_phone
+                seller_email: $seller_email
+                seller_pic: $seller_pic
               ) {
                 _id
               }
@@ -785,7 +812,18 @@ export default {
             bathrooms: this.getApartament.bathrooms,
             lat: this.getProyect.lat,
             long: this.getProyect.long,
-            logo_quote_proyect: this.getProyect.quote_logo
+            logo_quote_proyect: this.getProyect.quote_logo,
+            deposit_percent: this.getProyect.deposit_percent,
+            developer_name: this.getDeveloper.name,
+            developer_phone: this.getDeveloper.phone,
+            developer_email: this.getDeveloper.email,
+            developer_website: this.getDeveloper.website,
+            developer_address: this.getDeveloper.address,
+            seller_first_name: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].first_name,
+            seller_last_name: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].last_name,
+            seller_phone: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].phone,
+            seller_email: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].email,
+            seller_pic: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].pic
           }
         })
         .then(data => {

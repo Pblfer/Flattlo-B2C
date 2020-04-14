@@ -6,7 +6,7 @@
       v-for="(q, index) in getFlattloAppUser.quotes"
     >
       <vx-card>
-    
+    <vs-chip color="success">Disponible</vs-chip>
         <vs-row>
   <vs-col vs-offset="10">
     <vs-button size="large" class="flatHeartBtn" radius color="danger" type="flat"  icon-pack="feather" icon="icon-heart"></vs-button>
@@ -79,7 +79,7 @@ export default {
           }
         }
       `,
-      variables() {
+      variables () {
         return {
           userUID: localStorage.userID
         };

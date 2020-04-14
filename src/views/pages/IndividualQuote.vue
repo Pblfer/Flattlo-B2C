@@ -33,36 +33,36 @@
           </div>
         </div>
         <div class="vx-col w-full md:w-1/2 mt-base text-right mt-12">
-          <h5>asdf</h5>
+          <h5>{{getFlattloQuoteByID.developer_name}}</h5>
           <div class="invoice__company-info my-2">
             <p class="flex items-center justify-end">
               <feather-icon icon="PhoneIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">asdf</span>
+              <span class="ml-2">{{getFlattloQuoteByID.developer_phone}}</span>
             </p>
             <p class="flex items-center justify-end">
               <feather-icon icon="GlobeIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">asdf</span>
+              <span class="ml-2">{{getFlattloQuoteByID.developer_website}}</span>
             </p>
             <p class="flex items-center justify-end">
               <feather-icon icon="MapPinIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">asdf</span>
+              <span class="ml-2">{{getFlattloQuoteByID.developer_address}}</span>
             </p>
           </div>
           <br />
-          <!-- <div class="invoice__company-contact">
-            <vs-avatar size="96px" :src="getDeveloper.sellers_team[ObtenerVendedorEstablecido].pic"></vs-avatar>
+          <div class="invoice__company-contact">
+            <vs-avatar size="96px" :src="getFlattloQuoteByID.seller_pic"></vs-avatar>
             <h6>Asesor personal:</h6>
-            <h5 class="mt-1">{{getDeveloper.sellers_team[ObtenerVendedorEstablecido].first_name}} {{getDeveloper.sellers_team[ObtenerVendedorEstablecido].last_name}}</h5>
+            <h5 class="mt-1">{{getFlattloQuoteByID.seller_first_name}} {{getFlattloQuoteByID.seller_last_name}}</h5>
             <p class="flex items-center justify-end my-1">
               <feather-icon icon="MailIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{getDeveloper.sellers_team[ObtenerVendedorEstablecido].email}}</span>
+              <span class="ml-2">{{getFlattloQuoteByID.seller_email}}</span>
             </p>
 
             <p class="flex items-center justify-end">
               <feather-icon icon="PhoneIcon" svgClasses="h-4 w-4"></feather-icon>
-              <span class="ml-2">{{getDeveloper.sellers_team[ObtenerVendedorEstablecido].phone}}</span>
+              <span class="ml-2">{{getFlattloQuoteByID.seller_phone}}</span>
             </p>
-          </div>-->
+          </div>
         </div>
       </div>
       <!-- INVOICE CONTENT -->
@@ -127,7 +127,7 @@
       <div class="invoice__footer text-center">
         <svg id="barcode" />
         <p class="mt-4">
-          Esta cotización es válida
+          Fecha máxima para aceptación:
           <strong>{{getFlattloQuoteByID.quote_date_limit}}</strong>
         </p>
       </div>
@@ -148,7 +148,7 @@
             <p>#{{getFlattloQuoteByID.barCode}}</p>
 
             <h6 class="mt-4">Fecha de solicitud:</h6>
-            <p>{{getFlattloQuoteByID.quote_date_created}}</p>
+            <p>{{getShortDate}}</p>
           </div>
         </div>
       </div>
@@ -173,15 +173,15 @@
         <vs-table class="w-full mt-2" data="getApartament">
           <vs-tr v-show="!firmaPromesaCubierta">
             <vs-th>Monto establecido:</vs-th>
-            <vs-td>Q. {{getFlattloQuoteByID.promise_sign_mount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
+            <vs-td>Q. {{firmaPromesa.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
           </vs-tr>
-          <vs-tr>
+          <vs-tr v-show="firmaPromesaCubierta">
             <vs-th>Saldo pendiente:</vs-th>
             <vs-td>Q. 0.00</vs-td>
           </vs-tr>
-          <vs-tr>
+          <vs-tr v-show="firmaPromesaCubierta">
             <vs-th>Restante:</vs-th>
-            <vs-td>Q. res</vs-td>
+            <vs-td>Q. {{saldoFavorFirmaPromesa.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
           </vs-tr>
         </vs-table>
         <div class="vx-col w-full mt-base">
@@ -190,26 +190,26 @@
           <vs-divider></vs-divider>
         </div>
         <vs-table class="w-full mt-2" data="getApartament">
-          <vs-tr>
+          <vs-tr v-show="engancheCubierto">
             <vs-th>Saldo pendiente:</vs-th>
             <vs-td>Q. 0.00</vs-td>
           </vs-tr>
-          <vs-tr>
+          <vs-tr v-show="engancheCubierto">
             <vs-th>Restante:</vs-th>
-            <vs-td>Q.</vs-td>
+            <vs-td>Q. {{saldoFavorEngancheFraccionado.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
           </vs-tr>
-          <vs-tr>
+          <vs-tr v-show="!engancheCubierto">
             <vs-th>Enganche:</vs-th>
-            <vs-td>Q. {{getFlattloQuoteByID.fraction_total_mount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</vs-td>
+            <vs-td>Q. {{obtenerResultadoEnganche.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</vs-td>
           </vs-tr>
-          <vs-tr>
+          <vs-tr v-show="!engancheCubierto">
             <vs-th>Fraccionamiento:</vs-th>
             <vs-td>{{getFlattloQuoteByID.fraction_month_selected}} Meses</vs-td>
           </vs-tr>
-          <vs-tr>
+          <vs-tr v-show="!engancheCubierto">
             <vs-th>Cuota nivelada:</vs-th>
             <vs-td>
-              <strong>Q. {{getFlattloQuoteByID.fraction_fee_mount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</strong>
+              <strong>Q. {{ObtenerCuotaEnganche.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</strong>
             </vs-td>
           </vs-tr>
         </vs-table>
@@ -244,7 +244,13 @@
           </vs-tr>
         </vs-table>
       </div>
-
+       <div class="invoice__footer text-center">
+        <svg id="barcode" />
+        <p class="mt-4">
+          Fecha máxima para aceptación:
+          <strong>{{getFlattloQuoteByID.quote_date_limit}}</strong>
+        </p>
+      </div>
       <!-- INVOICE FOOTER -->
     </vx-card>
   </div>
@@ -254,10 +260,14 @@
 import gql from "graphql-tag";
 import JsBarcode from "jsbarcode";
 export default {
-  data() {
+  data () {
     return {
       getFlattloQuoteByID: [],
-      getDeveloper: []
+      getDeveloper: [],
+      firmaPromesaCubierta: false,
+      saldoFavorFirmaPromesa: 0,
+      engancheCubierto: false,
+      saldoFavorEngancheFraccionado: 0
     };
   },
   apollo: {
@@ -287,6 +297,17 @@ export default {
             financing_fee_mount
             proyect_name
             logo_quote_proyect
+            deposit_percent
+            developer_name
+            developer_phone
+            developer_email
+            developer_website
+            developer_address
+            seller_first_name
+            seller_last_name
+            seller_phone
+            seller_email
+            seller_pic
 
             client {
               first_name
@@ -312,7 +333,7 @@ export default {
           }
         }
       `,
-      variables() {
+      variables () {
         return {
           quoteID: localStorage.selectedQuoteID
         };
@@ -340,6 +361,60 @@ export default {
     }
   },
   computed:{
+    ObtenerCuotaEnganche () {
+      const valorCuotaFixed =
+        this.obtenerResultadoEnganche / this.getFlattloQuoteByID.fraction_month_selected
+      return valorCuotaFixed
+    },
+    ObtenerDescuento () {
+      return this.getFlattloQuoteByID.discount_mount
+    },
+    getValueStamps () {
+      return (this.getFlattloQuoteByID.property_value + this.getFlattloQuoteByID.parkings_mount + this.getFlattloQuoteByID.warehouses_mount) * 0.3 * 0.03
+    },
+    getIva () {
+      return (this.getFlattloQuoteByID.property_value + this.getFlattloQuoteByID.parkings_mount + this.getFlattloQuoteByID.warehouses_mount) * 0.7 * 0.12
+    },
+    getImpuestos () {
+      return this.getValueStamps + this.getIva
+    },
+    totalValue () {
+      return (
+        parseInt(this.getFlattloQuoteByID.property_value) +
+        this.getValueStamps +
+        this.getIva -
+        this.ObtenerDescuento +
+        this.getFlattloQuoteByID.parkings_mount +
+        this.getFlattloQuoteByID.warehouses_mount
+      )
+    },
+    totalFinanciamiento () {
+      const vt =
+        ((this.getFlattloQuoteByID.property_value + this.getFlattloQuoteByID.warehouses_mount + this.getFlattloQuoteByID.parkings_mount) *
+          this.getFlattloQuoteByID.deposit_percent) /
+        100
+      const r = this.saldoFavorEngancheFraccionado
+      return this.totalValue - vt - r
+    },
+    obtenerResultadoEnganche () {
+      const vt =
+        ((this.getFlattloQuoteByID.property_value + (this.getFlattloQuoteByID.parkings_mount + this.getFlattloQuoteByID.warehouses_mount)) *
+          this.getFlattloQuoteByID.deposit_percent) /
+        100
+      const r = this.getFlattloQuoteByID.reserve_mount
+      const fp = this.firmaPromesa
+      const sf = this.saldoFavorFirmaPromesa
+      const total = vt - r - fp - sf
+      this.saldoFavorEnganche(total)
+      return total
+    },
+    firmaPromesa () {
+      const value =
+        (this.getFlattloQuoteByID.property_value + this.getFlattloQuoteByID.parkings_mount + this.getFlattloQuoteByID.warehouses_mount) * 0.03 -
+        this.getFlattloQuoteByID.reserve_mount
+      this.valorFirmaSaldo(value)
+      return value
+    },
     getShortDate () {
       const d = new Date(this.getFlattloQuoteByID.quote_date_created)
       const n = d.toLocaleDateString('en-US')
@@ -347,7 +422,26 @@ export default {
     }
   },
   methods: {
-    printInvoice() {
+    valorFirmaSaldo (value) {
+      if (value <= 0) {
+        this.firmaPromesaCubierta = true
+        const saldo = value * -1
+        this.saldoFavorFirmaPromesa = saldo
+      } else {
+        this.firmaPromesaCubierta = false
+        this.saldoFavorFirmaPromesa = 0
+      }
+    },
+    saldoFavorEnganche (value) {
+      if (value <= 0) {
+        this.engancheCubierto = true
+        this.saldoFavorEngancheFraccionado = value * -1
+      } else {
+        this.engancheCubierto = false
+        this.saldoFavorEngancheFraccionado = 0
+      }
+    },
+    printInvoice () {
       document.title = `${this.getFlattloQuoteByID.barCode +
         "-" +
         this.getFlattloQuoteByID.client[0].first_name +
