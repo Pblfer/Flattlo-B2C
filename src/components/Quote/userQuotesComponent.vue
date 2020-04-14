@@ -6,7 +6,7 @@
       v-for="(q, index) in getFlattloAppUser.quotes"
     >
       <vx-card>
-    <vs-chip color="success">Disponible</vs-chip>
+    <vs-chip :color="getColor(q.apartaments[0].actual_state)">{{q.apartaments[0].actual_state}}</vs-chip>
         <vs-row>
   <vs-col vs-offset="10">
     <vs-button size="large" class="flatHeartBtn" radius color="danger" type="flat"  icon-pack="feather" icon="icon-heart"></vs-button>
@@ -25,6 +25,7 @@
         <div class="flex justify-between flex-wrap">
           
           <vs-button
+            v-if="q.apartaments[0].actual_state === 'Disponible'"
             class="mt-4 w-full"
             icon-pack="feather"
             icon="icon-file"
@@ -32,6 +33,16 @@
             color="primary"
             @click.native="selectedQuote(q._id)"
           >Ver mi cotización</vs-button>
+
+          <vs-button
+            v-if="q.apartaments[0].actual_state === 'Reservado'"
+            class="mt-4 w-full"
+            icon-pack="feather"
+            icon="icon-alert-triangle"
+            color="danger"
+            disabled
+            @click.native="selectedQuote(q._id)"
+          >Apartamento reservado 🤔</vs-button>
           
         </div>
         <vs-row>
@@ -71,6 +82,7 @@ export default {
               living_square_mts
               quote_date_created
               apartaments {
+                actual_state
                 number
                 plane_img
                 actual_state
@@ -92,7 +104,7 @@ export default {
       localStorage.selectedQuoteID = id
       router.push(`/quote/${id}`)
     },
-    getColor(status) {
+    getColor (status) {
       if (status == "Disponible") return "success";
       if (status == "Reservado") return "danger";
       if (status == "Bloqueado") return "dark";
