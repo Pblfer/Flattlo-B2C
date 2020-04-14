@@ -6,12 +6,20 @@
       v-for="(q, index) in getFlattloAppUser.quotes"
     >
       <vx-card>
-    <vs-chip :color="getColor(q.apartaments[0].actual_state)">{{q.apartaments[0].actual_state}}</vs-chip>
+        <vs-chip :color="getColor(q.apartaments[0].actual_state)">{{q.apartaments[0].actual_state}}</vs-chip>
         <vs-row>
-  <vs-col vs-offset="10">
-    <vs-button size="large" class="flatHeartBtn" radius color="danger" type="flat"  icon-pack="feather" icon="icon-heart"></vs-button>
-  </vs-col>
-</vs-row>
+          <vs-col vs-offset="10">
+            <vs-button
+              size="large"
+              class="flatHeartBtn"
+              radius
+              color="danger"
+              type="flat"
+              icon-pack="feather"
+              icon="icon-heart"
+            ></vs-button>
+          </vs-col>
+        </vs-row>
         <img
           class="m-2 w-full"
           :src="q.apartaments[0].plane_img"
@@ -23,7 +31,6 @@
         </div>
         <div class="mb-4 mt-base"></div>
         <div class="flex justify-between flex-wrap">
-          
           <vs-button
             v-if="q.apartaments[0].actual_state === 'Disponible'"
             class="mt-4 w-full"
@@ -43,27 +50,40 @@
             disabled
             @click.native="selectedQuote(q._id)"
           >Apartamento reservado 🤔</vs-button>
-          
         </div>
         <vs-row>
-  <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-    <vs-button class="mt-8" type="line" line-position="top" icon-pack="feather" icon="icon-trash" line-origin="right" color="danger">Eliminar</vs-button>
-  </vs-col>
-</vs-row>
-
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+            <vs-button
+              class="mt-8"
+              type="line"
+              line-position="top"
+              icon-pack="feather"
+              icon="icon-trash"
+              line-origin="right"
+              color="danger"
+              @click.native="popupActive2 = true"
+            >Eliminar</vs-button>
+          </vs-col>
+        </vs-row>
       </vx-card>
+      <vs-popup classContent="popup-example" title="¿Deseas eliminar tu cotización?" :active.sync="popupActive2">
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+      <vs-button @click.native="deleteQuote(q._id)"  color="danger" icon-pack="feather" icon="icon-trash">Sí, eliminar</vs-button>
+      </vs-col>
+    </vs-popup>
     </div>
   </div>
 </template>
 
 <script>
 import gql from "graphql-tag";
-import router from '../../router';
+import router from "../../router";
 export default {
-  data() {
+  data () {
     return {
       getFlattloAppUser: [],
-      selected: []
+      selected: [],
+      popupActive2: false
     };
   },
   apollo: {
@@ -100,9 +120,36 @@ export default {
     }
   },
   methods: {
+    deleteQuote (quoteID) {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($userUID: String!, $quoteID: ID!) {
+            deleteFlattloUserQuote(userUID: $userUID, quoteID: $quoteID) {
+              apartaments {
+                number
+              }
+            }
+          }
+        `,
+        variables:{
+          userUID: localStorage.userID,
+          quoteID
+        }
+      })
+        .then(() => {
+          this.$vs.notify({
+            title: 'Cotización eliminada',
+            text: '"La cotización fue eliminada de tus cotizaciones"',
+            color: 'success',
+            iconPack: 'feather',
+            icon: 'icon-trash'
+          })
+          this.popupActive2 = false
+        })
+    },
     selectedQuote (id) {
-      localStorage.selectedQuoteID = id
-      router.push(`/quote/${id}`)
+      localStorage.selectedQuoteID = id;
+      router.push(`/quote/${id}`);
     },
     getColor (status) {
       if (status == "Disponible") return "success";
@@ -126,12 +173,20 @@ export default {
       const datefull = `${dd}/${mm}/${yyy}`;
 
       return datefull;
+    },
+    getShortDate(value) {
+      const d = new Date(value);
+      const n = d.toLocaleDateString("en-US");
+      return n;
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
+.miniText {
+  font-size: 10px;
+}
 .flatHeartBtn {
   height: 36px;
 }

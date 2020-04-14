@@ -6,21 +6,21 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      colorLoading: '#000',
+      colorLoading: '#000'
     }
   },
   methods: {
-    openLoadingColor() {
+    openLoadingColor () {
       this.$vs.loading({ 
-          color: this.colorLoading,
-          type: 'radius',
-          background: '#52e7d6' })
+        color: this.colorLoading,
+        type: 'radius',
+        background: '#52e7d6' })
     }
   },
-  mounted(){
-      this.openLoadingColor()
+  mounted () {
+    this.openLoadingColor()
   }
 }
 </script>

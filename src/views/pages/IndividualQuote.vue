@@ -257,8 +257,8 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import JsBarcode from "jsbarcode";
+import gql from 'graphql-tag'
+import JsBarcode from 'jsbarcode'
 export default {
   data () {
     return {
@@ -268,7 +268,7 @@ export default {
       saldoFavorFirmaPromesa: 0,
       engancheCubierto: false,
       saldoFavorEngancheFraccionado: 0
-    };
+    }
   },
   apollo: {
     getFlattloQuoteByID: {
@@ -336,7 +336,7 @@ export default {
       variables () {
         return {
           quoteID: localStorage.selectedQuoteID
-        };
+        }
       },
       pollInterval: 700
     },
@@ -352,10 +352,10 @@ export default {
           }
         }
       `,
-      variables() {
+      variables () {
         return {
-          id: "5e7ab6acafe9ae00247ccef1"
-        };
+          id: '5e7ab6acafe9ae00247ccef1'
+        }
       },
       pollInterval: 500
     }
@@ -442,45 +442,45 @@ export default {
       }
     },
     printInvoice () {
-      document.title = `${this.getFlattloQuoteByID.barCode +
-        "-" +
-        this.getFlattloQuoteByID.client[0].first_name +
-        "-" +
-        this.getFlattloQuoteByID.client[0].last_name}`;
-      window.print();
-      window.onafterprint = function(event) {
-        console.log(event);
-      };
+      document.title = `${`${this.getFlattloQuoteByID.barCode 
+      }-${ 
+        this.getFlattloQuoteByID.client[0].first_name 
+      }-${ 
+        this.getFlattloQuoteByID.client[0].last_name}`}`
+      window.print()
+      window.onafterprint = function (event) {
+        console.log(event)
+      }
     },
-    fechaFormateada(fecha) {
-      let fechaFormateada = new Date(fecha);
-      let dd = fechaFormateada.getDate();
-      let mm = fechaFormateada.getMonth() + 1;
-      let y = fechaFormateada.getFullYear();
+    fechaFormateada (fecha) {
+      const fechaFormateada = new Date(fecha)
+      let dd = fechaFormateada.getDate()
+      let mm = fechaFormateada.getMonth() + 1
+      const y = fechaFormateada.getFullYear()
 
       if (dd < 10) {
-        dd = "0" + dd;
+        dd = `0${  dd}`
       }
       if (mm < 10) {
-        mm = "0" + mm;
+        mm = `0${  mm}`
       }
 
-      let fechaFull = dd + "/" + mm + "/" + y;
+      const fechaFull = `${dd  }/${  mm  }/${  y}`
 
-      return fechaFull;
+      return fechaFull
     }
   },
-  mounted() {
-    this.$emit("setAppClasses", "invoice-page");
+  mounted () {
+    this.$emit('setAppClasses', 'invoice-page')
     setTimeout(() => {
-      JsBarcode("#barcode", this.getFlattloQuoteByID.barCode, {
-        lineColor: "#000000",
+      JsBarcode('#barcode', this.getFlattloQuoteByID.barCode, {
+        lineColor: '#000000',
         height: 26,
         displayValue: false
-      });
-    }, 800);
+      })
+    }, 800)
   }
-};
+}
 </script>
 
 <style lang="scss">
