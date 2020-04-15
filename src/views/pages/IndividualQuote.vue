@@ -1,13 +1,27 @@
 <template>
   <div id="invoice-page">
-    <vx-card>
-      <!-- INVOICE METADATA -->
+    <div class="flex flex-wrap items-center justify-between">
+      <div class="flex items-center">
+        <vs-button
+          class="mb-base mr-3"
+          icon-pack="fas"
+          color="danger"
+          icon="fa-file-pdf"
+          type="border"
+          @click="printInvoice"
+        >PDF ó Impresión</vs-button>
+      </div>
+    </div>
+
+    <vx-card id="invoice-container">
+      <div>
+        <!-- INVOICE METADATA -->
       <div class="vx-row leading-loose p-base">
-        <div class="vx-col w-full md:w-1/2 mt-base">
-          <img class="LogoProyectQuote" :src="getFlattloQuoteByID.logo_quote_proyect" />
+        <div class="vx-col w-full md:w-1/2 mt-12 mb-12">
+          <img id="LogoProyectQuote" :src="getFlattloQuoteByID.logo_quote_proyect" />
         </div>
         <div class="vx-col w-full md:w-1/2 text-right">
-          <div class="invoice__invoice-detail mt-6">
+          <div id="QuoteNumber" class="invoice__invoice-detail mt-2">
             <h6>Cotización No.</h6>
             <p>#{{getFlattloQuoteByID.barCode}}</p>
 
@@ -15,7 +29,7 @@
             <p>{{getShortDate}}</p>
           </div>
         </div>
-        <div class="vx-col w-full md:w-1/2 mt-12">
+        <div id="ClientDetail" class="vx-col w-full md:w-1/2 mt-30">
           <h5>Att.</h5>
           <div class="invoice__recipient-info my-2">
             <h6>{{getFlattloQuoteByID.client[0].first_name}} {{getFlattloQuoteByID.client[0].last_name}}</h6>
@@ -29,7 +43,7 @@
               <feather-icon icon="MailIcon" svgClasses="h-4 w-4"></feather-icon>
               <span class="ml-2">{{getFlattloQuoteByID.client[0].email}}</span>
             </p>
-            <img class="planeOnQuote" :src="getFlattloQuoteByID.apartaments[0].plane_img" />
+            <img id="planeOnQuote" :src="getFlattloQuoteByID.apartaments[0].plane_img" />
           </div>
         </div>
         <div class="vx-col w-full md:w-1/2 mt-base text-right mt-12">
@@ -131,18 +145,18 @@
           <strong>{{getFlattloQuoteByID.quote_date_limit}}</strong>
         </p>
       </div>
-    </vx-card>
+    
 
     <!---SECOND PAGE--->
     <br />
     <br />
     <br />
-    <vx-card>
+   
       <div class="vx-row leading-loose p-base">
         <div class="vx-col w-full md:w-1/2 mt-base">
-          <img class="LogoProyectQuote" :src="getFlattloQuoteByID.logo_quote_proyect" />
+          <img id="LogoProyectQuote2" :src="getFlattloQuoteByID.logo_quote_proyect" />
         </div>
-        <div class="vx-col w-full md:w-1/2 text-right">
+        <div id="QuoteNumber2" class="vx-col w-full md:w-1/2 text-right">
           <div class="invoice__invoice-detail mt-6">
             <h6>Cotización No.</h6>
             <p>#{{getFlattloQuoteByID.barCode}}</p>
@@ -153,7 +167,7 @@
         </div>
       </div>
 
-      <div class="vx-row leading-loose p-base">
+      <div id="QuoteTableSteps" class="vx-row leading-loose p-base">
         <div class="vx-col w-full">
           <vs-chip color="success" class="m-1">Paso 1</vs-chip>
           <h6 class="mt-2">Reserva la unidad:</h6>
@@ -252,6 +266,7 @@
         </p>
       </div>
       <!-- INVOICE FOOTER -->
+      </div>
     </vx-card>
   </div>
 </template>
@@ -524,6 +539,7 @@ export default {
       top: 0;
       box-shadow: none;
     }
+
     #planeOnQuote {
       display: block;
       position: absolute;
