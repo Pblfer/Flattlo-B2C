@@ -515,10 +515,11 @@ export default {
   margin-bottom: 25px;
 }
 @page {
-  size: auto; /* auto is the initial value */
-  margin: 0; /* this affects the margin in the printer settings */
+  size: A4; 
+  margin: 0; 
 }
 @media print {
+  
   .invoice-page {
     * {
       visibility: hidden;
