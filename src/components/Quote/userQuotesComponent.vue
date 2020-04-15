@@ -10,17 +10,30 @@
         <vs-row>
           <vs-col vs-offset="10">
             <vs-button
-              v-if="q.favorite_quote === 'false'"
+              v-if="q.favorite_quote === 'false' & q.apartaments[0].actual_state === 'Disponible' "
               size="large"
+              class="flatHeartBtn pulseHearth"
+              radius
+              color="danger"
+              type="flat"
+              icon-pack="feather"
+              icon="icon-heart"
+              @click.native="popupActive3 = true"
+            ></vs-button>
+            <vs-button
+              v-if="q.apartaments[0].actual_state === 'Reservado'"
+              size="large"
+              disabled
               class="flatHeartBtn"
               radius
               color="danger"
               type="flat"
               icon-pack="feather"
               icon="icon-heart"
+              @click.native="popupActive3 = true"
             ></vs-button>
             <vs-button
-              v-if="q.favorite_quote === 'true'"
+              v-if="q.favorite_quote === 'true' "
               size="large"
               class="flatHeartBtn"
               radius
@@ -59,7 +72,7 @@
             color="danger"
             disabled
             @click.native="selectedQuote(q._id)"
-          >Apartamento reservado 🤔</vs-button>
+          >Apartamento reservado 😮</vs-button>
         </div>
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
@@ -81,6 +94,14 @@
       <vs-button @click.native="deleteQuote(q._id)"  color="danger" icon-pack="feather" icon="icon-trash">Sí, eliminar</vs-button>
       </vs-col>
     </vs-popup>
+    <vs-popup classContent="popup-example" title="¿Deseas enviar tu apartamento a favoritos? 👍👩‍💼👨‍💼" :active.sync="popupActive3">
+       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+       <h5 class="mb-4">{{getFirstName}}, deseas enviar tus datos para ser contactado por tu asesor.</h5>
+       </vs-col>
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+      <vs-button @click.native="postToPipedrive(getUserID)" color="success" icon-pack="feather" icon="icon-check-circle">Enviar datos</vs-button>
+      </vs-col>
+    </vs-popup>
     </div>
   </div>
 </template>
@@ -93,8 +114,9 @@ export default {
     return {
       getFlattloAppUser: [],
       selected: [],
-      popupActive2: false
-    };
+      popupActive2: false,
+      popupActive3: false
+    }
   },
   apollo: {
     getFlattloAppUser: {
@@ -125,12 +147,29 @@ export default {
       variables () {
         return {
           userUID: localStorage.userID
-        };
+        }
       },
       pollInterval: 300
     }
   },
   methods: {
+    postToPipedrive (userID) {   
+      const url = 'https://dev.flattlo.com/webhook-test/35/webhook/cuarzo'
+      const request = new Request(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: userID,
+        headers: {
+          'accept': 'application/json;odata=verbose',
+          'contentType': 'text/xml'
+        }
+      })
+
+      fetch(request)
+        .then(res => res.json())
+        .then(res => console.log(res))
+      this.popupActive3 = false
+    },
     deleteQuote (quoteID) {
       this.$apollo.mutate({
         mutation: gql`
@@ -167,7 +206,7 @@ export default {
       if (status == "Reservado") return "danger";
       if (status == "Bloqueado") return "dark";
     },
-    fechaFormateada(fecha) {
+    fechaFormateada (fecha) {
       const nuevaFecha = new Date(fecha);
       let dd = nuevaFecha.getDate();
       let mm = nuevaFecha.getMonth() + 1;
@@ -183,15 +222,23 @@ export default {
 
       const datefull = `${dd}/${mm}/${yyy}`;
 
-      return datefull;
+      return datefull
     },
-    getShortDate(value) {
+    getShortDate (value) {
       const d = new Date(value);
       const n = d.toLocaleDateString("en-US");
       return n;
     }
+  },
+  computed:{
+    getFirstName () {
+      return localStorage.firstNameUser
+    },
+    getUserID () {
+      return localStorage.userID
+    }
   }
-};
+}
 </script>
 
 <style lang="scss">
@@ -200,6 +247,35 @@ export default {
 }
 .flatHeartBtn {
   height: 36px;
+}
+.pulseHearth{
+  animation: pulse 2s infinite;
+  
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(250, 26, 26, 0.4);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.4);
+    box-shadow: 0 0 0 0 rgba(204, 44, 44, 0.6);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+      box-shadow: 0 0 0 10px rgba(204, 44, 44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+      box-shadow: 0 0 0 0 rgba(204, 44, 44, 0);
+  }
 }
 #data-list-thumb-view {
   .vs-con-table {

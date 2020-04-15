@@ -10,6 +10,7 @@
         <vs-row>
           <vs-col vs-offset="10">
             <vs-button
+              
               v-if="q.favorite_quote === 'false'"
               size="large"
               class="flatHeartBtn"
@@ -209,6 +210,7 @@ export default {
 .flatHeartBtn {
   height: 36px;
 }
+
 #data-list-thumb-view {
   .vs-con-table {
     .vs-table--header {
@@ -316,4 +318,6 @@ export default {
     }
   }
 }
+
+
 </style>
