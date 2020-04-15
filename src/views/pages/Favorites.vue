@@ -9,13 +9,22 @@
       </vs-col>
     </vs-row>
     <vs-divider></vs-divider>
+    <favorites/>
   </div>
     </div>
 </template>
 
 <script>
+import favorites from '@/components/Quote/FavoritesQuotesComponent'
 export default {
-        
+        data(){
+          return{
+
+          }
+        },
+        components:{
+          favorites
+        }
 }
 </script>
 

@@ -3,7 +3,7 @@
     <div
       class="p-4 sm:w-1/2 md:w-1/4 lg:w-3/2 xl:w-3/2 mt-3 p-2"
       :key="index"
-      v-for="(q, index) in getFlattloAppUser.quotes"
+      v-for="(q, index) in favorites"
     >
       <vx-card>
         <vs-chip :color="getColor(q.apartaments[0].actual_state)">{{q.apartaments[0].actual_state}}</vs-chip>
@@ -167,7 +167,7 @@ export default {
       if (status == "Reservado") return "danger";
       if (status == "Bloqueado") return "dark";
     },
-    fechaFormateada(fecha) {
+    fechaFormateada (fecha) {
       const nuevaFecha = new Date(fecha);
       let dd = nuevaFecha.getDate();
       let mm = nuevaFecha.getMonth() + 1;
@@ -185,10 +185,18 @@ export default {
 
       return datefull;
     },
-    getShortDate(value) {
+    getShortDate (value) {
       const d = new Date(value);
       const n = d.toLocaleDateString("en-US");
       return n;
+    }
+  },
+  computed:{
+    favorites(){
+      const favoritesQuotes = this.getFlattloAppUser.quotes.filter(
+        item => item.favorite_quote == "true"
+      );
+      return favoritesQuotes
     }
   }
 };
