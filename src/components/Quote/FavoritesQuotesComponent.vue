@@ -9,17 +9,7 @@
         <vs-chip :color="getColor(q.apartaments[0].actual_state)">{{q.apartaments[0].actual_state}}</vs-chip>
         <vs-row>
           <vs-col vs-offset="10">
-            <vs-button
-              
-              v-if="q.favorite_quote === 'false'"
-              size="large"
-              class="flatHeartBtn"
-              radius
-              color="danger"
-              type="flat"
-              icon-pack="feather"
-              icon="icon-heart"
-            ></vs-button>
+            
             <vs-button
               v-if="q.favorite_quote === 'true'"
               size="large"
@@ -28,6 +18,7 @@
               color="danger"
               icon-pack="feather"
               icon="icon-heart"
+              @click.native="changeStatusFavoriteQuote (q._id)"
             ></vs-button>
           </vs-col>
         </vs-row>
@@ -132,6 +123,37 @@ export default {
     }
   },
   methods: {
+    changeStatusFavoriteQuote (quoteID) {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($quoteID: ID!, $favorite_quote: String!){
+          changeStatusFavoriteQuote(
+              favorite_quote: $favorite_quote,
+              quoteID: $quoteID
+            ){
+              _id
+              apartaments{
+                number
+              }
+            } 
+            }
+        `,
+        variables:{
+          favorite_quote: 'false',
+          quoteID
+        }
+      })
+        .then(() => {
+          this.$vs.notify({
+            title: 'Cotización eliminada de favoritos',
+            text: 'Sigue cotizado para encontrar tu vivienda. 🤓',
+            color: 'success',
+            iconPack: 'feather',
+            icon: 'icon-trash'
+          })
+         
+        })
+    },
     deleteQuote (quoteID) {
       this.$apollo.mutate({
         mutation: gql`
@@ -193,7 +215,7 @@ export default {
     }
   },
   computed:{
-    favorites(){
+    favorites (){
       const favoritesQuotes = this.getFlattloAppUser.quotes.filter(
         item => item.favorite_quote == "true"
       );

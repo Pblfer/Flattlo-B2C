@@ -180,7 +180,8 @@ export default {
           'Content-Type': 'application/json'
         }
       }).then(
-        this.popupActive3 = false
+        this.popupActive3 = false,
+        this.changeStatusFavoriteQuote(q_id)
       )
     },
     deleteQuote (quoteID) {
@@ -208,6 +209,37 @@ export default {
             icon: 'icon-trash'
           })
           this.popupActive2 = false
+        })
+    },
+    changeStatusFavoriteQuote (quoteID) {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($quoteID: ID!, $favorite_quote: String!){
+          changeStatusFavoriteQuote(
+              favorite_quote: $favorite_quote,
+              quoteID: $quoteID
+            ){
+              _id
+              apartaments{
+                number
+              }
+            } 
+            }
+        `,
+        variables:{
+          favorite_quote: 'true',
+          quoteID
+        }
+      })
+        .then(() => {
+          this.$vs.notify({
+            title: 'Cotización en favoritos 🙌',
+            text: 'Tu asesor te contratara pronto, para brindarte todos los detalles que necesites.',
+            color: 'success',
+            iconPack: 'feather',
+            icon: 'icon-check'
+          })
+         
         })
     },
     selectedQuote (id) {
