@@ -99,7 +99,7 @@
        <h5 class="mb-4">{{getFirstName}}, deseas enviar tus datos para ser contactado por tu asesor.</h5>
        </vs-col>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-      <vs-button @click.native="postToPipedrive(getUserID)" color="success" icon-pack="feather" icon="icon-check-circle">Enviar datos</vs-button>
+      <vs-button @click.native="postToPipedrive(q.proyect_name, q.apartaments[0].number, q.bedrooms, q.living_square_mts, q.bathrooms, q._id)" color="success" icon-pack="feather" icon="icon-check-circle">Enviar datos</vs-button>
       </vs-col>
     </vs-popup>
     </div>
@@ -124,6 +124,10 @@ export default {
         query($userUID: String!) {
           getFlattloAppUser(userUID: $userUID) {
             userUID
+            first_name
+            last_name
+            email
+            phone
             quotes {
               _id
               proyect_name
@@ -153,22 +157,31 @@ export default {
     }
   },
   methods: {
-    postToPipedrive (userID) {   
+    postToPipedrive (proyect_name, number, bedrooms, sqm, bathrooms, q_id) {   
+      const formData = new FormData()
       const url = 'https://dev.flattlo.com/webhook-test/35/webhook/cuarzo'
-      const request = new Request(url, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: userID,
-        headers: {
-          'accept': 'application/json;odata=verbose',
-          'contentType': 'text/xml'
-        }
-      })
+      formData.append('first_name', this.getFlattloAppUser.first_name)
+      formData.append('last_name', this.getFlattloAppUser.last_name)
+      formData.append('phone', this.getFlattloAppUser.phone)
+      formData.append('email', this.getFlattloAppUser.email)
+      formData.append('quotes_before', (this.getFlattloAppUser.quotes.length - 1))
+      formData.append('apartament_number', number)
+      formData.append('bedrooms', bedrooms)
+      formData.append('living_sqm', sqm)
+      formData.append('bathrooms', bathrooms)
+      formData.append('quote_flattlo_id', q_id)
+      formData.append('proyect_name', proyect_name)
 
-      fetch(request)
-        .then(res => res.json())
-        .then(res => console.log(res))
-      this.popupActive3 = false
+      fetch(url, {
+        method: 'POST', 
+        body: formData,
+        mode: 'no-cors',
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }).then(
+        this.popupActive3 = false
+      )
     },
     deleteQuote (quoteID) {
       this.$apollo.mutate({
@@ -233,9 +246,6 @@ export default {
   computed:{
     getFirstName () {
       return localStorage.firstNameUser
-    },
-    getUserID () {
-      return localStorage.userID
     }
   }
 }
