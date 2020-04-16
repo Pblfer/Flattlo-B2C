@@ -99,7 +99,7 @@
        <h5 class="mb-4">{{getFirstName}}, deseas enviar tus datos para ser contactado por tu asesor.</h5>
        </vs-col>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-      <vs-button @click.native="postToPipedrive(q.proyect_name, q.apartaments[0].number, q.bedrooms, q.living_square_mts, q.bathrooms, q._id)" color="success" icon-pack="feather" icon="icon-check-circle">Enviar datos</vs-button>
+      <vs-button @click.native="postToPipedrive(q.proyect_name, q.apartaments[0].number, q.bedrooms, q.living_square_mts, q.bathrooms, q._id, q.seller[0].pipedrive_id)" color="success" icon-pack="feather" icon="icon-check-circle">Enviar datos</vs-button>
       </vs-col>
     </vs-popup>
     </div>
@@ -144,6 +144,9 @@ export default {
                 plane_img
                 actual_state
               }
+              seller{
+                pipedrive_id
+              }
             }
           }
         }
@@ -157,7 +160,7 @@ export default {
     }
   },
   methods: {
-    postToPipedrive (proyect_name, number, bedrooms, sqm, bathrooms, q_id) {   
+    postToPipedrive (proyect_name, number, bedrooms, sqm, bathrooms, q_id, pipedrive_id) {   
       const formData = new FormData()
       const url = 'https://dev.flattlo.com/webhook-test/35/webhook/cuarzo'
       formData.append('first_name', this.getFlattloAppUser.first_name)
@@ -171,6 +174,7 @@ export default {
       formData.append('bathrooms', bathrooms)
       formData.append('quote_flattlo_id', q_id)
       formData.append('proyect_name', proyect_name)
+      formData.append('seller_pipedrive_id', pipedrive_id )
 
       fetch(url, {
         method: 'POST', 

@@ -676,11 +676,13 @@ export default {
             website
             address
             sellers_team{
+              _id
               first_name
               last_name
               phone
               email
               pic
+              pipedrive_id
             }
           }
         }
@@ -738,6 +740,7 @@ export default {
               $seller_phone: String
               $seller_email: String
               $seller_pic: String
+              $seller_pipedrive_id: String
             ) {
               newQuotetoFlattloUser(
                 userUID: $userUID
@@ -779,6 +782,7 @@ export default {
                 seller_phone: $seller_phone
                 seller_email: $seller_email
                 seller_pic: $seller_pic
+                seller_pipedrive_id: $seller_pipedrive_id
               ) {
                 _id
               }
@@ -823,11 +827,13 @@ export default {
             seller_last_name: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].last_name,
             seller_phone: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].phone,
             seller_email: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].email,
-            seller_pic: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].pic
+            seller_pic: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].pic,
+            seller_pipedrive_id: this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido].pipedrive_id
           }
         })
         .then(data => {
           this.addClientToQuote(data.data.newQuotetoFlattloUser._id)
+          this.addSellerToQuote(data.data.newQuotetoFlattloUser._id)
           this.addApartamentToQuote(data.data.newQuotetoFlattloUser._id)
           this.addParkingToQuote(data.data.newQuotetoFlattloUser._id)
           this.addWarehouseToQuote(data.data.newQuotetoFlattloUser._id)
@@ -864,6 +870,30 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    addSellerToQuote(quoteID) {
+      this.$apollo
+            .mutate({
+              mutation: gql`mutation(
+                      $quoteID: String!,
+                      $sellerID: String!
+                    ){
+                      addSellerToQuote(
+                        quoteID: $quoteID,
+                        sellerID: $sellerID
+                      ){
+                        _id
+                        first_name
+                      }
+                    }`,
+              variables: {
+                quoteID,
+                'sellerID': this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido]._id
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
     },
     addApartamentToQuote (quoteID) {
       this.$apollo.mutate({
