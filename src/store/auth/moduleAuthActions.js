@@ -157,7 +157,7 @@ export default {
     if (state.isUserLoggedIn()) {
       payload.notify({
         title: 'Ya haz iniciado sessión',
-        text: 'Te estamos redireccionado...',
+        text: 'Listo, puedes cotizar ahora 👌.',
         iconPack: 'feather',
         icon: 'icon-alert-circle',
         color: 'success'

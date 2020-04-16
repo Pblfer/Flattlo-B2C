@@ -18,7 +18,7 @@
               color="danger"
               icon-pack="feather"
               icon="icon-heart"
-              @click.native="changeStatusFavoriteQuote (q._id)"
+              @click.native="popupActive2 = true"
             ></vs-button>
           </vs-col>
         </vs-row>
@@ -60,17 +60,17 @@
               type="line"
               line-position="top"
               icon-pack="feather"
-              icon="icon-trash"
+              icon="icon-x"
               line-origin="right"
               color="danger"
-              @click.native="popupActive2 = true"
-            >Eliminar</vs-button>
+              @click.native="popupActive2 = true, selectedToRemove = q._id"
+            >Quitar de Favoritos</vs-button>
           </vs-col>
         </vs-row>
       </vx-card>
-      <vs-popup classContent="popup-example" title="¿Deseas eliminar tu cotización?" :active.sync="popupActive2">
+      <vs-popup classContent="popup-example" title="¿Deseas quitar esta cotización de favoritos?" :active.sync="popupActive2">
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-      <vs-button @click.native="deleteQuote(q._id)"  color="danger" icon-pack="feather" icon="icon-trash">Sí, eliminar</vs-button>
+      <vs-button @click.native="changeStatusFavoriteQuote()"  color="danger" icon-pack="feather" icon="icon-heart">Sí, quitar</vs-button>
       </vs-col>
     </vs-popup>
     </div>
@@ -85,7 +85,8 @@ export default {
     return {
       getFlattloAppUser: [],
       selected: [],
-      popupActive2: false
+      popupActive2: false,
+      selectedToRemove: ''
     };
   },
   apollo: {
@@ -123,7 +124,7 @@ export default {
     }
   },
   methods: {
-    changeStatusFavoriteQuote (quoteID) {
+    changeStatusFavoriteQuote () {
       this.$apollo.mutate({
         mutation: gql`
           mutation($quoteID: ID!, $favorite_quote: String!){
@@ -140,7 +141,7 @@ export default {
         `,
         variables:{
           favorite_quote: 'false',
-          quoteID
+          quoteID: this.selectedToRemove
         }
       })
         .then(() => {
@@ -151,7 +152,7 @@ export default {
             iconPack: 'feather',
             icon: 'icon-trash'
           })
-         
+          this.popupActive2 = false
         })
     },
     deleteQuote (quoteID) {

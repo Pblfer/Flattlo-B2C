@@ -18,7 +18,7 @@
               type="flat"
               icon-pack="feather"
               icon="icon-heart"
-              @click.native="popupActive3 = true"
+              @click.native="popupActive3 = true, selectedCard = q._id"
             ></vs-button>
             <vs-button
               v-if="q.apartaments[0].actual_state === 'Reservado'"
@@ -40,6 +40,7 @@
               color="danger"
               icon-pack="feather"
               icon="icon-heart"
+              @click.native="popupActive4 = true, selectedCard = q._id"
             ></vs-button>
           </vs-col>
         </vs-row>
@@ -84,14 +85,14 @@
               icon="icon-trash"
               line-origin="right"
               color="danger"
-              @click.native="popupActive2 = true"
+              @click.native="popupActive2 = true, selectedToDelete = q._id"
             >Eliminar</vs-button>
           </vs-col>
         </vs-row>
       </vx-card>
       <vs-popup classContent="popup-example" title="¿Deseas eliminar tu cotización?" :active.sync="popupActive2">
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-      <vs-button @click.native="deleteQuote(q._id)"  color="danger" icon-pack="feather" icon="icon-trash">Sí, eliminar</vs-button>
+      <vs-button @click.native="deleteQuote()"  color="danger" icon-pack="feather" icon="icon-trash">Sí, eliminar</vs-button>
       </vs-col>
     </vs-popup>
     <vs-popup classContent="popup-example" title="¿Deseas enviar tu apartamento a favoritos? 👍👩‍💼👨‍💼" :active.sync="popupActive3">
@@ -99,7 +100,12 @@
        <h5 class="mb-4">{{getFirstName}}, deseas enviar tus datos para ser contactado por tu asesor.</h5>
        </vs-col>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
-      <vs-button @click.native="postToPipedrive(q.proyect_name, q.apartaments[0].number, q.bedrooms, q.living_square_mts, q.bathrooms, q._id, q.seller[0].pipedrive_id)" color="success" icon-pack="feather" icon="icon-check-circle">Enviar datos</vs-button>
+      <vs-button @click.native="postToPipedrive(q.proyect_name, q.apartaments[0].number, q.bedrooms, q.living_square_mts, q.bathrooms, q._id, q.seller[0].pipedrive_id, q.seller[0]._id)" color="success" icon-pack="feather" icon="icon-check-circle">Enviar datos</vs-button>
+      </vs-col>
+    </vs-popup>
+    <vs-popup classContent="popup-example" title="¿Deseas quitar esta cotización de favoritos?" :active.sync="popupActive4">
+      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+      <vs-button @click="removeFromFavorites()"  color="danger" icon-pack="feather" icon="icon-heart">Sí, quitar</vs-button>
       </vs-col>
     </vs-popup>
     </div>
@@ -113,9 +119,11 @@ export default {
   data () {
     return {
       getFlattloAppUser: [],
-      selected: [],
+      selectedCard: '',
+      selectedToDelete: '',
       popupActive2: false,
-      popupActive3: false
+      popupActive3: false,
+      popupActive4: false
     }
   },
   apollo: {
@@ -145,6 +153,7 @@ export default {
                 actual_state
               }
               seller{
+                _id
                 pipedrive_id
               }
             }
@@ -160,7 +169,7 @@ export default {
     }
   },
   methods: {
-    postToPipedrive (proyect_name, number, bedrooms, sqm, bathrooms, q_id, pipedrive_id) {   
+    postToPipedrive (proyect_name, number, bedrooms, sqm, bathrooms, q_id, pipedrive_id, seller_id) {   
       const formData = new FormData()
       const url = 'https://dev.flattlo.com/webhook-test/35/webhook/cuarzo'
       formData.append('first_name', this.getFlattloAppUser.first_name)
@@ -174,7 +183,7 @@ export default {
       formData.append('bathrooms', bathrooms)
       formData.append('quote_flattlo_id', q_id)
       formData.append('proyect_name', proyect_name)
-      formData.append('seller_pipedrive_id', pipedrive_id )
+      formData.append('seller_pipedrive_id', pipedrive_id)
 
       fetch(url, {
         method: 'POST', 
@@ -185,10 +194,11 @@ export default {
         }
       }).then(
         this.popupActive3 = false,
-        this.changeStatusFavoriteQuote(q_id)
+        this.changeStatusFavoriteQuote(q_id),
+        this.showHiddenQuoteToSeller(q_id, seller_id)
       )
     },
-    deleteQuote (quoteID) {
+    deleteQuote () {
       this.$apollo.mutate({
         mutation: gql`
           mutation($userUID: String!, $quoteID: ID!) {
@@ -201,7 +211,7 @@ export default {
         `,
         variables:{
           userUID: localStorage.userID,
-          quoteID
+          quoteID: this.selectedToDelete
         }
       })
         .then(() => {
@@ -232,7 +242,7 @@ export default {
         `,
         variables:{
           favorite_quote: 'true',
-          quoteID
+          quoteID: this.selectedCard
         }
       })
         .then(() => {
@@ -245,6 +255,57 @@ export default {
           })
          
         })
+    },
+    removeFromFavorites (){
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($quoteID: ID!, $favorite_quote: String!){
+          changeStatusFavoriteQuote(
+              favorite_quote: $favorite_quote,
+              quoteID: $quoteID
+            ){
+              _id
+              apartaments{
+                number
+              }
+            } 
+            }
+        `,
+        variables:{
+          favorite_quote: 'false',
+          quoteID: this.selectedCard
+        }
+      })
+        .then(() => {
+          this.$vs.notify({
+            title: 'Cotización removida de favoritos.',
+            text: 'Tu cotizacion se ha eliminado de favoritos.',
+            color: 'success',
+            iconPack: 'feather',
+            icon: 'icon-check'
+          })
+          this.popupActive4 = false
+        })
+    },
+    showHiddenQuoteToSeller (quoteID, seller_id) {
+      this.$apollo.mutate({
+        mutation: gql`mutation(
+            $quoteID: String!,
+            $sellerID: String!
+          ){
+            showHiddenQuoteToSeller(
+                quoteID: $quoteID,
+                sellerID: $sellerID
+            ){
+              _id
+            }
+          }
+        `,
+        variables:{
+          sellerID: seller_id,
+          quoteID
+        }
+      })
     },
     selectedQuote (id) {
       localStorage.selectedQuoteID = id;
