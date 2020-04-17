@@ -1,7 +1,10 @@
+
 <template>
-  <div class="h-screen flex w-full items-center justify-center" id="page-login">
+<div>
+  <div id="particles-js">
+  <div class="flex w-full items-center justify-center" id="page-login">
     <div class="sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-1/2 xxl:w-3/4 sm:m-0 m-4">
-      <vx-card class="CardLogin" card-background="#fff">
+      <vx-card class="CardLogin">
         <div slot="no-body">
           <div class="vx-row">
             <div class="hidden vx-col-1 lg:block lg:w-1/2">
@@ -51,6 +54,8 @@
       </vx-card>
     </div>
   </div>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -95,6 +100,119 @@ export default {
     swiperSlide
   },
   methods: {
+    initParticlesJS () {
+      /* eslint-disable */
+      particlesJS('particles-js', {
+        'particles': {
+          'number': {
+            'value': 120,
+            'density': {
+              'enable': false,
+              'value_area': 700
+            }
+          },
+          'color': {
+            'value': '#ffffff'
+          },
+          'shape': {
+            'type': 'circle',
+            'stroke': {
+              'width': 0,
+              'color': '#000000'
+            },
+            'polygon': {
+              'nb_sides': 5
+            },
+            'image': {
+              'src': 'img/github.svg',
+              'width': 100,
+              'height': 100
+            }
+          },
+          'opacity': {
+            'value': 0.4,
+            'random': false,
+            'anim': {
+              'enable': false,
+              'speed': 1,
+              'opacity_min': 0.1,
+              'sync': false
+            }
+          },
+          'size': {
+            'value': 8,
+            'random': true,
+            'anim': {
+              'enable': false,
+              'speed': 40,
+              'size_min': 0.1,
+              'sync': false
+            }
+          },
+          'line_linked': {
+            'enable': true,
+            'distance': 150,
+            'color': '#ffffff',
+            'opacity': 0.5,
+            'width': 2
+          },
+          'move': {
+            'enable': true,
+            'speed': 4,
+            'direction': 'none',
+            'random': false,
+            'straight': false,
+            'out_mode': 'out',
+            'bounce': false,
+            'attract': {
+              'enable': false,
+              'rotateX': 600,
+              'rotateY': 1200
+            }
+          }
+        },
+        'interactivity': {
+          'detect_on': 'canvas',
+          'events': {
+            'onhover': {
+              'enable': false,
+              'mode': 'grab'
+            },
+            'onclick': {
+              'enable': true,
+              'mode': 'push'
+            },
+            'resize': true
+          },
+          'modes': {
+            'grab': {
+              'distance': 800,
+              'line_linked': {
+                'opacity': 1
+              }
+            },
+            'bubble': {
+              'distance': 800,
+              'size': 80,
+              'duration': 2,
+              'opacity': 0.8,
+              'speed': 3
+            },
+            'repulse': {
+              'distance': 400,
+              'duration': 0.4
+            },
+            'push': {
+              'particles_nb': 4
+            },
+            'remove': {
+              'particles_nb': 2
+            }
+          }
+        },
+        'retina_detect': true
+      })
+    },
     openLoadingContained () {
       this.$vs.loading({
         background: this.backgroundLoading,
@@ -171,11 +289,26 @@ export default {
     desabilitarRecuperacion () {
       return this.v_rMail === true
     }
+  },
+  mounted () {
+    require('particles.js')
+    this.$nextTick(() => {
+      this.initParticlesJS()
+    })
   }
 }
 </script>
 
 <style lang="scss">
+.particles-js-canvas-el{
+  margin-top: -60.3333vh;
+}
+#particles-js{
+  z-index: -1;
+  background: -ms-linear-gradient(296deg, #53fdc3 0%, #51ceec 100%); /* ie10+ */
+  background: linear-gradient(154deg, #53fdc3 0%, #51ceec 100%); /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53FDC3', endColorstr='#51CEEC',GradientType=0 ); /* ie6-9 */
+}
 .loginText {
   margin: 35px;
   text-align: center;
@@ -231,10 +364,13 @@ export default {
 }
 
 .CardLogin {
-  -webkit-box-shadow: 10px 10px 52px -18px rgba(36, 36, 36, 1);
-  -moz-box-shadow: 10px 10px 52px -18px rgba(36, 36, 36, 1);
-  box-shadow: 10px 10px 52px -18px rgba(36, 36, 36, 1);
+  margin-top: 18vh;
+  margin-bottom: -15vh;
+  -webkit-box-shadow: 10px 10px 52px -18px rgba(36, 36, 36, 0.4);
+  -moz-box-shadow: 10px 10px 52px -18px rgba(36, 36, 36, 0.4);
+  box-shadow: 10px 10px 52px -18px rgba(36, 36, 36, 0.8);
   border-radius: 6px;
+  z-index: 5;
 }
 [dir] .swiper-pagination-bullet-active {
   background: #fff !important;
@@ -247,6 +383,7 @@ export default {
     color: #000;
     font-weight: 500;
     border-radius: 22px;
+    z-index: 5;
   }
   .logoCustomLogin {
     display: block;
@@ -298,31 +435,11 @@ export default {
     font-size: 11px;
   }
 }
-#page-login {
-  background: -moz-linear-gradient(
-    296deg,
-    #53fdc3 0%,
-    #51ceec 100%
-  ); /* ff3.6+ */
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    color-stop(0%, #53fdc3),
-    color-stop(100%, #51ceec)
-  ); /* safari4+,chrome */
-  background: -webkit-linear-gradient(
-    296deg,
-    #53fdc3 0%,
-    #51ceec 100%
-  ); /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(
-    296deg,
-    #53fdc3 0%,
-    #51ceec 100%
-  ); /* opera 11.10+ */
-  background: -ms-linear-gradient(296deg, #53fdc3 0%, #51ceec 100%); /* ie10+ */
-  background: linear-gradient(154deg, #53fdc3 0%, #51ceec 100%); /* w3c */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53FDC3', endColorstr='#51CEEC',GradientType=0 ); /* ie6-9 */
-}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    .particles-js-canvas-el{
+      margin-top: 1.33vh;
+    } 
+  }
+
 </style>
