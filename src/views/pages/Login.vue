@@ -46,7 +46,7 @@
               </div>
               <vs-divider class="footerDivider"></vs-divider>
               <div class="poweredBy mt-2">
-                <span>🚀 Powered by Flattlo.</span>
+                <span>🚀 Powered by flattlo.</span>
               </div>
             </div>
           </div>
@@ -105,10 +105,10 @@ export default {
       particlesJS('particles-js', {
         'particles': {
           'number': {
-            'value': 120,
+            'value': 90,
             'density': {
-              'enable': false,
-              'value_area': 700
+              'enable': true,
+              'value_area': 500
             }
           },
           'color': {
@@ -144,7 +144,7 @@ export default {
             'random': true,
             'anim': {
               'enable': false,
-              'speed': 40,
+              'speed': 20,
               'size_min': 0.1,
               'sync': false
             }
@@ -158,7 +158,7 @@ export default {
           },
           'move': {
             'enable': true,
-            'speed': 4,
+            'speed': 2,
             'direction': 'none',
             'random': false,
             'straight': false,
@@ -196,7 +196,7 @@ export default {
               'size': 80,
               'duration': 2,
               'opacity': 0.8,
-              'speed': 3
+              'speed': 2
             },
             'repulse': {
               'distance': 400,
@@ -341,7 +341,7 @@ export default {
 }
 
 .fa-facebook {
-  font-size: 18px;
+  font-size: 20px;
   padding: 4px;
 }
 
@@ -438,8 +438,28 @@ export default {
 
 @media (min-width: 320px) and (max-width: 480px) {
     .particles-js-canvas-el{
-      margin-top: 1.33vh;
-    } 
+      margin-top: -10vh;
+    }
+    .CardLogin {
+      display: block;
+      margin: 0 auto;
+      margin-top: 16.777vh;
+      width: 93.4%;
+    }
+    .fbCustom {
+      width: 78%;
+    }
+    .loginText {
+      font-size: 16px;
+    }
+    .fbCustom{
+      margin-top: -10.333px;
+    }
+    .poweredBy {
+    padding: 12px;
+    font-size: 12px;
+  }
+ 
   }
 
 </style>

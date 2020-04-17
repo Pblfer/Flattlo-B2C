@@ -178,7 +178,7 @@ export default {
         payload.notify({
           time: 4500,
           title: `🖐 Hola ${result.user.providerData[0].displayName}🎉🥳`,
-          text: 'Cotizar tu apartamento nunca fue tan fácil. 🥳🙌🎉',
+          text: 'Cotizar vivienda, nunca fue tan fácil. 🙌❤',
           color: 'success'
         })
       }).catch((err) => {

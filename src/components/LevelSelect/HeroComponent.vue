@@ -24,8 +24,13 @@ export default {
       swiperOption: {
         spaceBetween: 30,
         effect: 'fade',
+        autoplay: {
+          delay: 4500,
+          disableOnInteraction: true
+        },
         pagination: {
           el: '.swiper-pagination',
+          type: 'progressbar',
           clickable: true
         },
         navigation: {
@@ -72,4 +77,5 @@ export default {
   width: 100%;
   object-fit: cover;
 }
+
 </style>

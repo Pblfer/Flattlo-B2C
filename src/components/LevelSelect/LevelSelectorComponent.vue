@@ -2,8 +2,8 @@
   <div>
     <vx-card class="paddingDesktop">
       <div class="p-4">
-        <h5 class="mb-1">{{getFirstName}},</h5>
-        <h5>👇Por favor selecciona un nivel:</h5>
+        <h5 class="mb-2">Hola {{getFirstName}},</h5>
+        <h5>👇 Por favor selecciona un nivel:</h5>
 
         <div class="mt-2">
           <vs-divider class="mt-2"></vs-divider>
@@ -22,8 +22,8 @@
     <br />
     <vx-card class="paddingDesktop">
       <div v-if="checkData" class="mt-4">
-        <h5>🧐🏢Disponibilidad en nivel {{numberOfLevel}}</h5>
-        <h6 class="mt-1">Resumen de unidades disponibles:</h6>
+        <h5>🧐🏢 Disponibilidad en <strong>nivel {{numberOfLevel}}</strong></h5>
+        <h5 class="mt-2">Visualiza las unidades disponibles:</h5>
         <vs-divider></vs-divider>
         <div class="mb-8">
           <vs-chip class="m-1" color="danger">{{reservados}}</vs-chip>
