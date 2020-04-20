@@ -52,10 +52,28 @@
             @click.native="selectedQuote(q._id)"
           >Apartamento reservado 🤔</vs-button>
         </div>
+        <vs-divider class="mt-6"></vs-divider>
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
+          <h6 class="p-1">{{getFirstName}}, tu asesor te contactara pronto, no dudes en preguntarle todo lo que necesites. 😉📞✌☕☕⌚</h6>
+          </vs-col>
+        </vs-row>
+        <vs-card class="mt-4">
+         <div class="flex mt-2 mb-8">
+  <div class="w-1/4 h-12">
+  <vs-avatar size="58px" :src="q.seller[0].pic"></vs-avatar>
+  </div>
+   <div class="w-3/4 h-12">
+   <h6 class="mt-4 m-1">{{q.seller[0].first_name}} {{q.seller[0].last_name}}</h6>
+   <p class="mt-0 m-1">{{q.seller[0].email}}</p>
+   </div>
+</div>
+</vs-card>
+     
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
             <vs-button
-              class="mt-8"
+              class="mt-2"
               type="line"
               line-position="top"
               icon-pack="feather"
@@ -109,6 +127,12 @@ export default {
                 number
                 plane_img
                 actual_state
+              }
+              seller{
+                first_name
+                last_name
+                pic
+                email
               }
             }
           }
@@ -220,6 +244,9 @@ export default {
         item => item.favorite_quote == "true"
       );
       return favoritesQuotes
+    },
+    getFirstName () {
+      return localStorage.firstNameUser
     }
   }
 };
