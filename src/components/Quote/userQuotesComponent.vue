@@ -171,7 +171,7 @@ export default {
   methods: {
     postToPipedrive (proyect_name, number, bedrooms, sqm, bathrooms, q_id, pipedrive_id, seller_id) {   
       const formData = new FormData()
-      const url = 'https://dev.flattlo.com/webhook-test/35/webhook/cuarzo'
+      const url = 'https://dev.flattlo.com/webhook/35/webhook/cuarzo'
       formData.append('first_name', this.getFlattloAppUser.first_name)
       formData.append('last_name', this.getFlattloAppUser.last_name)
       formData.append('phone', this.getFlattloAppUser.phone)

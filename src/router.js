@@ -70,6 +70,11 @@ const router = new Router({
           component: () => import('@/views/pages/IndividualQuote.vue')
         },
         {
+          path: '/profile',
+          name: 'profile',
+          component: () => import('@/views/pages/profile.vue')
+        },
+        {
           path: '',
           redirect: '/login'
         }

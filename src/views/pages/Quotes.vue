@@ -3,10 +3,10 @@
         <div>
     <h4>📑 Cotizaciones genedas</h4>
     <vs-row vs-w="12" class="p-3">
-    <h5>En esta sección encontraras todas tus cotizaciones generadas.</h5>
-    <h5 class="mt-1">¿{{getFirstName}} deseas más información de tu apartamento? Envia las mejores opciónes a tu lista de <strong>favoritos</strong> ♥👆 para ser contactado por tu asesor 👩‍💼👨‍💼.</h5>
-    </vs-row>
+    <h5 class="mb-1">En esta sección encontraras todas tus cotizaciones generadas.</h5>
     <vs-divider></vs-divider>
+    <h5 class="mt-1">¿{{getFirstName}}, deseas más información de tu vivienda? Envia las mejores opciónes a tu lista de <strong>favoritos</strong> ♥👆 para ser contactado por tu asesor 👩‍💼👨‍💼.</h5>
+    </vs-row>
   </div>
   <userQuotes/>
     </div>

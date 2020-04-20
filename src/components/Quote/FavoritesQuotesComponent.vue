@@ -18,7 +18,6 @@
               color="danger"
               icon-pack="feather"
               icon="icon-heart"
-              @click.native="popupActive2 = true"
             ></vs-button>
           </vs-col>
         </vs-row>
