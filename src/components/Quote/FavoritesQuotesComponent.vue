@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap sm:full lg:w-full mt-4">
+  <div class="flex flex-wrap sm:full lg:w-full mt-4" v-if="dataReady">
     <div
       class="p-4 sm:w-1/2 md:w-1/4 lg:w-3/2 xl:w-3/2 mt-3 p-2"
       :key="index"
@@ -239,6 +239,13 @@ export default {
     }
   },
   computed:{
+    dataReady(){
+      if (this.getFlattloAppUser.quotes === undefined) {
+        return false
+      } else {
+        return true
+      }
+    },
     favorites (){
       const favoritesQuotes = this.getFlattloAppUser.quotes.filter(
         item => item.favorite_quote == "true"
