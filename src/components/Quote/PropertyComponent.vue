@@ -2,7 +2,7 @@
     <div class="flex mb-4">
       <div class="w-full p-2 mt-4 mb-6">
     <div class="mb-8">
-      <h5>Datos de cotización:</h5>
+      <h5>Confirmación de datos:</h5>
       <vs-divider color="dark"></vs-divider>
       <div>
         <div class="w-full sm:w-full p-1 mt-1">
@@ -45,8 +45,10 @@
           />
         </div>
         
-              <div class="w-full sm:w-full p-1 mt-1">
-          <vs-input
+        <div class="flex mt-2 mb-4">
+            <div class="w-full m-1 ">
+              <vs-input
+            v-if="getFlattloAppUser.phone !== '0000-0000'"
             size="large"
             icon-pack="feather"
             class="w-full"
@@ -54,15 +56,42 @@
             label="Teléfono"
             color="primary"
             v-model="getFlattloAppUser.phone"
-            type="tel"
+            type="number"
             disabled
           />
-        </div>
+              <vs-input
+            v-if="getFlattloAppUser.phone === '0000-0000'"  
+            size="large"
+            icon-pack="feather"
+            class="w-full pulseContactNumber mb-2"
+            icon="icon-phone"
+            label="Teléfono"
+            color="primary"
+            v-model="user_phone"
+            v-validate="'required|digits:8'"
+            name="Teléfono Personal"
+            type="number"
+          />
+         
+            </div>
+            <div class="sm:w-1/10 p-2 flex" v-if="!user_phone == '' & user_phone.length === 8 ">
+              <vs-button
+                class="mt-6 mb-4 vs-con-loading__container"
+                @click.native="updatePhoneUserProfile()"
+                color="success"
+                type="filled"
+                icon-pack="fas"
+                icon="fa-save"
+              ></vs-button>
+            </div>
+          </div>
       </div>
-      
-      <br/>  
+      <vs-card v-if="showBoomCard" class="mt-4 p-4 specialCardBoom">
+            <h4 class="mt-3">🥳 !Completaste tu perfil! 🎉</h4>
+            <h5 class="mt-3">Celebramos con tigo 🎈✨🎊.</h5>
+          </vs-card>
     </div>
-    <div>
+    <div v-if="getFlattloAppUser.phone !== '0000-0000'">
       <div v-show="!getProyect.parkings.length == 0">
         <h5>Selección de parqueos:</h5>
       <vs-divider color="dark"></vs-divider>
@@ -294,9 +323,11 @@ import Resume from '@/components/Quote/ResumeQuote'
 import sellerSwitcher from '@/components/Quote/SelerTeamSwitcherComponent'
 import JsBarcode from 'jsbarcode'
 import router from '@/router'
+
 export default {
   data () {
     return {
+      showBoomCard: false,
       sale: '0',
       finType: '',
       depositClient: null,
@@ -652,6 +683,7 @@ export default {
       query: gql`
         query($userUID: String!) {
           getFlattloAppUser(userUID: $userUID) {
+            _id
             first_name
             last_name
             phone
@@ -659,10 +691,8 @@ export default {
           }
         }
       `,
-      variables () {
-        return {
-          userUID: localStorage.userID
-        }
+      variables: {
+        userUID: localStorage.userID
       },
       pollInterval: 350
     },
@@ -696,6 +726,13 @@ export default {
     }
   },
   methods:{
+    Boom () {
+      this.$confetti.start()
+      this.showBoomCard = true
+      setTimeout(() => {
+        this.$confetti.stop()
+      }, 10000)
+    },
     createQuote () {
       this.$apollo
         .mutate({
@@ -871,10 +908,10 @@ export default {
           console.log(err)
         })
     },
-    addSellerToQuote(quoteID) {
+    addSellerToQuote (quoteID) {
       this.$apollo
-            .mutate({
-              mutation: gql`mutation(
+        .mutate({
+          mutation: gql`mutation(
                       $quoteID: String!,
                       $sellerID: String!
                     ){
@@ -886,14 +923,14 @@ export default {
                         first_name
                       }
                     }`,
-              variables: {
-                quoteID,
-                'sellerID': this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido]._id
-              }
-            })
-            .catch(err => {
-              console.log(err)
-            })
+          variables: {
+            quoteID,
+            'sellerID': this.getDeveloper.sellers_team[this.ObtenerVendedorEstablecido]._id
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     addApartamentToQuote (quoteID) {
       this.$apollo.mutate({
@@ -950,6 +987,37 @@ export default {
         })
       })
     },
+    updatePhoneUserProfile () {
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation(
+              $ID:ID!,
+              $objectField:String!,
+              $value:String!
+            ){
+              updateFlattloProfile(
+                ID:$ID,
+                objectField:$objectField,
+                value:$value
+              ){
+                _id
+              }
+            }
+          `,
+          variables:{
+            ID: this.getFlattloAppUser._id,
+            objectField: 'phone',
+            value: this.user_phone
+          }
+          
+        }).then(() => {
+          this.Boom()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     openLoadingContained () {
       this.$vs.loading({
         background: this.backgroundLoading,
@@ -986,7 +1054,7 @@ export default {
         height: 26,
         displayValue: false
       })
-    }, 800)
+    }, 8000)
   }
 }
 </script>
@@ -1029,5 +1097,35 @@ export default {
 
 .continueButton{
   border-radius: 30px;
+}
+
+.pulseContactNumber{
+  animation: pulse 2s infinite;
+  
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(102, 245, 114, 0.5);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(55, 243, 155, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(44, 204, 111, 0.1);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(72, 197, 82, 0.5);
+    box-shadow: 0 0 0 0 rgba(44, 204, 164, 0.6);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(76, 235, 102, 0);
+      box-shadow: 0 0 0 10px rgba(44, 204, 124, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(83, 248, 125, 0.1);
+      box-shadow: 0 0 0 0 rgba(44, 204, 71, 0);
+  }
 }
 </style>

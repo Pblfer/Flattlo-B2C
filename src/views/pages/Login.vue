@@ -30,16 +30,27 @@
               <div class="loginText">
                 <p>Porque cotizar tu nueva etapa en la vida, nunca fue tan fácil.</p>
               </div>
-
+                
+              
               <vs-button
                 :color="colorx"
                 icon-pack="fab"
-                icon="fa-facebook"
-                @click="loginWithFacebook"
+                icon="fa-google"
+                @click="loginWithGoogle"
                 ref="loadableButton" 
                 id="button-with-loading" 
                 class="vs-con-loading__container fbCustom"
-              >Continuar con Facebook</vs-button>
+              >Iniciar con Google</vs-button>
+
+              <vs-button
+                :color="colory"
+                icon-pack="fab"
+                icon="fa-apple"
+                @click="loginWithFacebook"
+                ref="loadableButton" 
+                id="button-with-loading" 
+                class="vs-con-loading__container msCustom"
+              >Iniciar con Apple</vs-button>
 
               <div class="termsPlatform mt-6 mb-6">
                 <span>Nuestra plataforma no almacena datos de tu perfil, unicamente datos básicos para mejorar tu experiencia.</span>
@@ -62,10 +73,12 @@
 import 'swiper/dist/css/swiper.min.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
+
 export default {
   data () {
     return {
-      colorx: '#1877f2',
+      colorx: '#4285f4',
+      colory: '#000000',
       login: 'Continuar con Facebook',
       FB: {},
       model: {},
@@ -232,6 +245,13 @@ export default {
       this.openLoadingContained()
     },
 
+    loginWithGoogle () {
+      this.$store.dispatch('auth/loginWithGoogle', {
+        notify: this.$vs.notify
+      })
+      this.openLoadingContained()
+    },
+
     
     validarCorreoRecuperacion () {
       if (this.uMail === '') {
@@ -336,23 +356,36 @@ export default {
 .logoDeveloper {
   display: block;
   margin: 0 auto;
-  width: 70%;
-  margin-top: 68px;
+  width: 60%;
+  margin-top: 50px;
 }
 
-.fa-facebook {
-  font-size: 20px;
+.fa-google, .fa-apple {
+  font-size: 18px;
   padding: 4px;
 }
 
 .fbCustom {
   margin: 0 auto;
-  height: 60px;
-  width: 300px;
-  font-size: 16px;
+  height: 48px;
+  width: 80%;
+  font-size: 14px;
   font-weight: 500;
   border-radius: 8px;
-  margin-top: 40px;
+  margin-top: 26px;
+  -webkit-box-shadow: -1px 10px 48px -12px rgba(0, 0, 0, 0.42);
+  -moz-box-shadow: -1px 10px 48px -12px rgba(0, 0, 0, 0.42);
+  box-shadow: -1px 10px 48px -12px rgba(0, 0, 0, 0.42);
+}
+
+.msCustom {
+  margin: 0 auto;
+  height: 48px;
+  width: 80%;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-top: 10px;
   -webkit-box-shadow: -1px 10px 48px -12px rgba(0, 0, 0, 0.42);
   -moz-box-shadow: -1px 10px 48px -12px rgba(0, 0, 0, 0.42);
   box-shadow: -1px 10px 48px -12px rgba(0, 0, 0, 0.42);

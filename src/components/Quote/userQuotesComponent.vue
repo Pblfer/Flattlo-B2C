@@ -113,8 +113,10 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
-import router from "../../router";
+import gql from 'graphql-tag'
+import router from '../../router'
+
+
 export default {
   data () {
     return {
@@ -131,6 +133,7 @@ export default {
       query: gql`
         query($userUID: String!) {
           getFlattloAppUser(userUID: $userUID) {
+            _id
             userUID
             first_name
             last_name
@@ -256,7 +259,7 @@ export default {
          
         })
     },
-    removeFromFavorites (){
+    removeFromFavorites () {
       this.$apollo.mutate({
         mutation: gql`
           mutation($quoteID: ID!, $favorite_quote: String!){
@@ -308,36 +311,36 @@ export default {
       })
     },
     selectedQuote (id) {
-      localStorage.selectedQuoteID = id;
-      router.push(`/quote/${id}`);
+      localStorage.selectedQuoteID = id
+      router.push(`/quote/${id}`)
     },
     getColor (status) {
-      if (status == "Disponible") return "success";
-      if (status == "Reservado") return "danger";
-      if (status == "Bloqueado") return "dark";
+      if (status == 'Disponible') return 'success'
+      if (status == 'Reservado') return 'danger'
+      if (status == 'Bloqueado') return 'dark'
     },
     fechaFormateada (fecha) {
-      const nuevaFecha = new Date(fecha);
-      let dd = nuevaFecha.getDate();
-      let mm = nuevaFecha.getMonth() + 1;
-      const yyy = nuevaFecha.getFullYear();
+      const nuevaFecha = new Date(fecha)
+      let dd = nuevaFecha.getDate()
+      let mm = nuevaFecha.getMonth() + 1
+      const yyy = nuevaFecha.getFullYear()
 
       if (dd < 10) {
-        dd = `0${dd}`;
+        dd = `0${dd}`
       }
 
       if (mm < 10) {
-        mm = `0${mm}`;
+        mm = `0${mm}`
       }
 
-      const datefull = `${dd}/${mm}/${yyy}`;
+      const datefull = `${dd}/${mm}/${yyy}`
 
       return datefull
     },
     getShortDate (value) {
-      const d = new Date(value);
-      const n = d.toLocaleDateString("en-US");
-      return n;
+      const d = new Date(value)
+      const n = d.toLocaleDateString('en-US')
+      return n
     }
   },
   computed:{

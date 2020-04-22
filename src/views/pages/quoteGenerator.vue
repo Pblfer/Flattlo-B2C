@@ -25,7 +25,6 @@
   </div>
   </div>
 </div>
-
   </div>
 </template>
 
@@ -35,6 +34,7 @@ import 'firebase/auth'
 import ProperySection from '@/components/Quote/PropertyComponent'
 import NewClient from '@/components/Quote/NewUser'
 import PrintedVisualizer from '@/components/Quote/QuotePrintVisualizerComponent'
+
 
 export default {
   data () {

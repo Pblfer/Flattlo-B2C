@@ -31,6 +31,9 @@ import './fake-db/index.js'
 // Theme Configurations
 import '../themeConfig.js'
 
+//Confetti
+import VueConfetti from 'vue-confetti'
+Vue.use(VueConfetti)
 
 // Firebase
 import '@/firebase/firebaseConfig'

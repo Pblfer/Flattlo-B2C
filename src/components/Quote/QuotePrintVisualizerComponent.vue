@@ -1,6 +1,11 @@
 
 <template>
-  <div id="pdf">
+  <div>
+    <vx-card class="mt-2 mb-6" v-if="this.getFlattloAppUser.phone === '0000-0000'">
+      <h4>👈😮{{this.getFlattloAppUser.first_name}} necesitamos que confirmes tu número telefónico.</h4>
+    </vx-card>
+
+  <div id="pdf" v-if="this.getFlattloAppUser.phone !== '0000-0000'">
     <vx-card>
       <!-- INVOICE METADATA -->
       <div class="vx-row leading-loose p-base">
@@ -258,6 +263,7 @@
       </vs-col>
     </vs-row>
   </div>
+  </div>
 </template>
 
 <script>
@@ -348,6 +354,7 @@ export default {
       query: gql`
         query($userUID: String!) {
           getFlattloAppUser(userUID: $userUID) {
+            _id
             first_name
             last_name
             phone

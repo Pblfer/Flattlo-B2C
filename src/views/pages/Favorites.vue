@@ -17,14 +17,14 @@
 <script>
 import favorites from '@/components/Quote/FavoritesQuotesComponent'
 export default {
-        data(){
-          return{
+  data () {
+    return {
 
-          }
-        },
-        components:{
-          favorites
-        }
+    }
+  },
+  components:{
+    favorites
+  }
 }
 </script>
 

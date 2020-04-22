@@ -14,6 +14,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import router from '@/router'
 
+
 export default {
   loginAttempt ({ dispatch }, payload) {
 
@@ -132,14 +133,26 @@ export default {
         icon: 'icon-alert-circle',
         color: 'warning'
       })
+
       return false
     }
     const provider = new firebase.auth.GoogleAuthProvider()
 
     firebase.auth().signInWithPopup(provider)
       .then((result) => {
-        router.push(router.currentRoute.query.to || '/')
+        router.push(router.currentRoute.query.to || '/level-selection')
         commit('UPDATE_USER_INFO', result.user.providerData[0], {root: true})
+        localStorage.firstNameUser = result.additionalUserInfo.profile.given_name
+        localStorage.lastNameUser = result.additionalUserInfo.profile.family_name
+        localStorage.emailUser = result.additionalUserInfo.profile.email
+        localStorage.userID = result.user.uid
+        localStorage.isUserNew = result.additionalUserInfo.isNewUser
+        payload.notify({
+          time: 4500,
+          title: `🖐 Hola ${result.user.providerData[0].displayName}🎉🥳`,
+          text: 'Cotizar vivienda, nunca fue tan fácil. 🙌❤',
+          color: 'success'
+        })
       }).catch((err) => {
         payload.notify({
           time: 2500,
