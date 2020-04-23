@@ -22,14 +22,31 @@
     <br />
     <vx-card class="paddingDesktop">
       <div v-if="checkData" class="mt-4">
-        <h5>🧐🏢 Disponibilidad en <strong>nivel {{numberOfLevel}}</strong></h5>
+        <h5>🧐🏢 Previsualización de <strong>nivel {{numberOfLevel}}</strong></h5>
         <h5 class="mt-2">Visualiza las unidades disponibles:</h5>
         <vs-divider></vs-divider>
-        <div class="mb-8">
+        <div class="mb-12">
           <vs-chip class="m-1" color="danger">{{reservados}}</vs-chip>
           <vs-chip class="m-1" color="success">Disponibles: {{disponibles}}</vs-chip>
         </div>
-      </div>
+        <br/>
+       
+        <vs-row vs-w="12">
+          <vs-col v-if="!mostrarApartamentos1Hab.length <= 0" vs-type="flex" vs-justify="center" vs-align="center" vs-lg="3" vs-sm="12" vs-xs="12" >
+            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statistic="`${mostrarApartamentos1Hab.length} Unidades`" statisticTitle="1 Habitación" ></statistics-card-line>
+          </vs-col>
+          <vs-col v-if="!mostrarApartamentos2Hab.length <= 0" vs-type="flex" vs-justify="center" vs-align="center" vs-lg="3" vs-sm="12" vs-xs="12">
+            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statistic="`${mostrarApartamentos2Hab.length} Unidades`" statisticTitle="2 Habitaciónes" ></statistics-card-line>
+          </vs-col>
+          <vs-col v-if="!mostrarApartamentos3Hab.length <= 0" vs-type="flex" vs-justify="center" vs-align="center" vs-lg="3" vs-sm="12" vs-xs="12">
+            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statistic="`${mostrarApartamentos3Hab.length} Unidades`" statisticTitle="3 Habitaciónes" ></statistics-card-line>
+          </vs-col>
+          <vs-col v-if="!mostrarApartamentos4Hab.length <= 0" vs-type="flex" vs-justify="center" vs-align="center" vs-lg="3" vs-sm="12" vs-xs="12">
+            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statistic="`${mostrarApartamentos4Hab.length} Unidades`" statisticTitle="4 Habitaciónes" ></statistics-card-line>
+          </vs-col>
+        </vs-row>
+        </div>
+
       <br />
     </vx-card>
     <vs-row>
@@ -48,6 +65,7 @@
 import gql from 'graphql-tag'
 import vSelect from 'vue-select'
 import router from '../../router'
+import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
 
 export default {
   data () {
@@ -59,7 +77,8 @@ export default {
     }
   },
   components: {
-    'v-select': vSelect
+    'v-select': vSelect,
+    StatisticsCardLine
   },
   apollo: {
     getProyect: {
@@ -205,6 +224,30 @@ export default {
         item => item.actual_state == 'Disponible'
       )
       return apartamentosDisponibles
+    },
+    mostrarApartamentos1Hab () {
+      const apartamento1Hab = this.mostrarDisponibles.filter(
+        item => item.bedrooms === 1, 
+      )
+      return apartamento1Hab
+    },
+    mostrarApartamentos2Hab () {
+      const apartamento2Hab = this.mostrarDisponibles.filter(
+        item => item.bedrooms === 2, 
+      )
+      return apartamento2Hab
+    },
+    mostrarApartamentos3Hab () {
+      const apartamento3Hab = this.mostrarDisponibles.filter(
+        item => item.bedrooms === 3, 
+      )
+      return apartamento3Hab
+    },
+    mostrarApartamentos4Hab () {
+      const apartamento4Hab = this.mostrarDisponibles.filter(
+        item => item.bedrooms === 4, 
+      )
+      return apartamento4Hab
     }
   },
   mounted () {
@@ -218,6 +261,13 @@ export default {
 </script>
 
 <style lang="scss">
+.filterCard{
+  border: solid 1px #acb0b1;
+  box-shadow: none !important;
+}
+.font-bold {
+    font-size: 18px;
+}
 .imgPlane {
   display: block;
   margin: 0 auto;

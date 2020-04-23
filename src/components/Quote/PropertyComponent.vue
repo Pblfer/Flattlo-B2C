@@ -93,7 +93,7 @@
     </div>
     <div v-if="getFlattloAppUser.phone !== '0000-0000'">
       <div v-show="!getProyect.parkings.length == 0">
-        <h5>1. Opciones adicionales:</h5>
+        <h5>Opciones adicionales:</h5>
       <vs-divider color="dark"></vs-divider>
       <vs-row class="p-2 mb-8">
         <vs-col v-show="!getProyect.parkings.length == 0" vs-type="flex flex-wrap" vs-w="12">
@@ -116,7 +116,7 @@
 
 
       <br/>
-      <h5>2. Detalles de propiedad:</h5>
+      <h5>Detalles de tu propiedad:</h5>
       <vs-divider color="dark"></vs-divider>
       <div class="p-2 mb-8">
         <vx-card>
@@ -143,7 +143,7 @@
         </vx-card>
       </div>
       <br/>
-      <h5>3. Monto de reserva:</h5>
+      <h5>Monto de reserva:</h5>
       <vs-divider color="dark"></vs-divider>
       <vs-alert
         v-if="false"
@@ -173,7 +173,7 @@
         />
       </div>
       <br/>
-      <h5>4. Enganche fraccionado:</h5>
+      <h5>Enganche fraccionado:</h5>
       <vs-divider color="dark"></vs-divider>
 
       <!-- <vs-input
@@ -213,7 +213,7 @@
      
       <br/>
       <div class="mb-8">
-        <h5>5. Financiamiento:</h5>
+        <h5>Financiamiento:</h5>
       <vs-divider color="dark"></vs-divider>
       <ul class="centerx flex flex-wrap">
       <li>
