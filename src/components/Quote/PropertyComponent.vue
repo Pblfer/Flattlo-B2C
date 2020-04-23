@@ -93,22 +93,22 @@
     </div>
     <div v-if="getFlattloAppUser.phone !== '0000-0000'">
       <div v-show="!getProyect.parkings.length == 0">
-        <h5>Selección de parqueos:</h5>
+        <h5>1. Opciones adicionales:</h5>
       <vs-divider color="dark"></vs-divider>
       <vs-row class="p-2 mb-8">
         <vs-col v-show="!getProyect.parkings.length == 0" vs-type="flex flex-wrap" vs-w="12">
-          <p>Selecciona un parqueo:</p>
+          <p>Selecciona parqueos:</p>
           <v-select multiple label="number" v-model="selectedP" :options="getProyect.parkings"></v-select>
         </vs-col>
       </vs-row>
       </div>
 
       <div v-show="!getProyect.warehouses.length == 0">
-        <h5>Selección de bodega:</h5>
+        <h5>Selección de bodegas:</h5>
       <vs-divider></vs-divider>
       <vs-row class="p-2 mb-8">
         <vs-col vs-type="flex flex-wrap" vs-w="12" >
-          <p>Selecciona una bodega:</p>
+          <p>Selecciona bodegas:</p>
           <v-select multiple label="number" v-model="selectedW" :options="getProyect.warehouses"></v-select>
         </vs-col>
       </vs-row>
@@ -116,7 +116,7 @@
 
 
       <br/>
-      <h5>Detalles de propiedad:</h5>
+      <h5>2. Detalles de propiedad:</h5>
       <vs-divider color="dark"></vs-divider>
       <div class="p-2 mb-8">
         <vx-card>
@@ -143,7 +143,7 @@
         </vx-card>
       </div>
       <br/>
-      <h5>Monto de reserva:</h5>
+      <h5>3. Monto de reserva:</h5>
       <vs-divider color="dark"></vs-divider>
       <vs-alert
         v-if="false"
@@ -173,10 +173,10 @@
         />
       </div>
       <br/>
-      <h5>Enganche fraccionado:</h5>
+      <h5>4. Enganche fraccionado:</h5>
       <vs-divider color="dark"></vs-divider>
 
-      <vs-input
+      <!-- <vs-input
         :success="reserveField"
         :success-text="`El enganche establecido es de: Q.${(minPorcent - getApartament.reserve_price).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`"
         val-icon-danger="clear"
@@ -186,7 +186,13 @@
         aria-placeholder
         class="fZise p-2 mb-6"
         v-model="depositClient"
-      />
+      /> -->
+
+      <vs-alert icon-pack="feather" color="primary" icon="icon-check-circle" class="mt-2 mb-0">
+        Tu enganche es de:
+        <strong>Q. {{(minPorcent - getApartament.reserve_price).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}}</strong>.
+      </vs-alert>
+
       <vs-alert icon-pack="feather" color="primary" icon="icon-calendar" class="mt-2 mb-4">
         La cantidad máxima de meses de enganche fraccionado es de:
         <strong>{{getProyect.fraction_reserved}} meses</strong>.
@@ -202,11 +208,12 @@
             v-model="monthMax"
           />
         </vs-col>
+       
       </vs-row>
      
       <br/>
       <div class="mb-8">
-        <h5>Financiamiento:</h5>
+        <h5>5. Financiamiento:</h5>
       <vs-divider color="dark"></vs-divider>
       <ul class="centerx flex flex-wrap">
       <li>

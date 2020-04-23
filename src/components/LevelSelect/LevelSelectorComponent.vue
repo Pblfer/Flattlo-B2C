@@ -3,7 +3,7 @@
     <vx-card class="paddingDesktop">
       <div class="p-4">
         <h5 class="mb-2">Hola {{getFirstName}},</h5>
-        <h5>👇 Por favor selecciona un nivel donde deseas vivir:</h5>
+        <h5>👇 Por favor selecciona el nivel donde deseas vivir:</h5>
 
         <div class="mt-2">
           <vs-divider class="mt-2"></vs-divider>
