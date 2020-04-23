@@ -46,7 +46,7 @@
                 :color="colory"
                 icon-pack="fab"
                 icon="fa-apple"
-                @click="loginWithFacebook"
+                
                 ref="loadableButton" 
                 id="button-with-loading" 
                 class="vs-con-loading__container msCustom"

@@ -80,8 +80,8 @@
                 @click.native="updatePhoneUserProfile()"
                 color="success"
                 type="filled"
-                icon-pack="fas"
-                icon="fa-save"
+                icon-pack="feather"
+                icon="icon-save"
               ></vs-button>
             </div>
           </div>
@@ -1100,10 +1100,10 @@ export default {
 }
 
 .pulseContactNumber{
-  animation: pulse 2s infinite;
+  animation: showMe 2s infinite;
   
 }
-@-webkit-keyframes pulse {
+@-webkit-keyframes showMe {
   0% {
     -webkit-box-shadow: 0 0 0 0 rgba(102, 245, 114, 0.5);
   }
@@ -1114,7 +1114,7 @@ export default {
       -webkit-box-shadow: 0 0 0 0 rgba(44, 204, 111, 0.1);
   }
 }
-@keyframes pulse {
+@keyframes showMe {
   0% {
     -moz-box-shadow: 0 0 0 0 rgba(72, 197, 82, 0.5);
     box-shadow: 0 0 0 0 rgba(44, 204, 164, 0.6);
