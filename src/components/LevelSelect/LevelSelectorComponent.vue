@@ -33,16 +33,16 @@
        
         <vs-row vs-w="12">
           <vs-col v-if="!mostrarApartamentos1Hab.length <= 0" vs-type="flex" vs-justify="center" vs-align="center" vs-lg="3" vs-sm="12" vs-xs="12" >
-            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statistic="`${mostrarApartamentos1Hab.length} Unidades`" statisticTitle="1 Habitación" ></statistics-card-line>
+            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statisticTitle="`${mostrarApartamentos1Hab.length} Unidades`" statistic="1 Habitación" ></statistics-card-line>
           </vs-col>
           <vs-col v-if="!mostrarApartamentos2Hab.length <= 0" vs-type="flex" vs-justify="center" vs-align="center" vs-lg="3" vs-sm="12" vs-xs="12">
-            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statistic="`${mostrarApartamentos2Hab.length} Unidades`" statisticTitle="2 Habitaciónes" ></statistics-card-line>
+            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statisticTitle="`${mostrarApartamentos2Hab.length} Unidades`" statistic="2 Habitaciónes" ></statistics-card-line>
           </vs-col>
           <vs-col v-if="!mostrarApartamentos3Hab.length <= 0" vs-type="flex" vs-justify="center" vs-align="center" vs-lg="3" vs-sm="12" vs-xs="12">
-            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statistic="`${mostrarApartamentos3Hab.length} Unidades`" statisticTitle="3 Habitaciónes" ></statistics-card-line>
+            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statisticTitle="`${mostrarApartamentos3Hab.length} Unidades`" statistic="3 Habitaciónes" ></statistics-card-line>
           </vs-col>
           <vs-col v-if="!mostrarApartamentos4Hab.length <= 0" vs-type="flex" vs-justify="center" vs-align="center" vs-lg="3" vs-sm="12" vs-xs="12">
-            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statistic="`${mostrarApartamentos4Hab.length} Unidades`" statisticTitle="4 Habitaciónes" ></statistics-card-line>
+            <statistics-card-line hideChart class="p-1 m-2 filterCard" color="success" icon="CodepenIcon"  :statisticTitle="`${mostrarApartamentos4Hab.length} Unidades`" statistic="4 Habitaciónes" ></statistics-card-line>
           </vs-col>
         </vs-row>
         </div>
