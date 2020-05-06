@@ -17,7 +17,7 @@
               radius
               color="danger"
               icon-pack="feather"
-              icon="icon-heart"
+              icon="icon-flag"
             ></vs-button>
           </vs-col>
         </vs-row>
@@ -81,11 +81,11 @@
               line-origin="right"
               color="danger"
               @click.native="popupActive2 = true, selectedToRemove = q._id"
-            >Quitar de Favoritos</vs-button>
+            >Eliminar</vs-button>
           </vs-col>
         </vs-row>
       </vx-card>
-      <vs-popup classContent="popup-example" title="¿Deseas quitar esta cotización de favoritos?" :active.sync="popupActive2">
+      <vs-popup classContent="popup-example" title="¿Deseas quitar esta cotización del listado de solicitud?" :active.sync="popupActive2">
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
       <vs-button @click.native="changeStatusFavoriteQuote()"  color="danger" icon-pack="feather" icon="icon-heart">Sí, quitar</vs-button>
       </vs-col>

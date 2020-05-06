@@ -31,8 +31,8 @@
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="$router.push('/favorite-quotes').catch(() => {})">
-            <feather-icon icon="HeartIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Favoritos</span>
+            <feather-icon icon="FlagIcon" svgClasses="w-4 h-4" />
+            <span class="ml-2">Informacion solicitada</span>
           </li>
 
           <vs-divider class="m-1" />

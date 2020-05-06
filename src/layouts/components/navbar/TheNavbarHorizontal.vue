@@ -20,7 +20,7 @@
       >   
           <vs-button :to="{name: 'level-selection'}" color="success" type="flat" icon-pack="feather" size="large" icon="icon-home"></vs-button>
          <vs-button :to="{name: 'quotes'}" color="primary" type="flat" icon-pack="feather" size="large" icon="icon-file-text"></vs-button>
-         <vs-button :to="{name: 'favorite-quotes'}" color="danger" type="flat" icon-pack="feather" size="large" icon="icon-heart"></vs-button>
+         <vs-button :to="{name: 'favorite-quotes'}" color="danger" type="flat" icon-pack="feather" size="large" icon="icon-flag"></vs-button>
 
         <router-link tag="div" to="/" class="vx-logo cursor-pointer mx-auto flex items-center">
           <span class="vx-logo-text" color="dark">{{getProyect.name}}</span>

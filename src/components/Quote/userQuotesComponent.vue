@@ -17,7 +17,7 @@
               color="danger"
               type="flat"
               icon-pack="feather"
-              icon="icon-heart"
+              icon="icon-flag"
               @click.native="popupActive3 = true, selectedCard = q._id"
             ></vs-button>
             <vs-button
@@ -29,7 +29,7 @@
               color="danger"
               type="flat"
               icon-pack="feather"
-              icon="icon-heart"
+              icon="icon-flag"
               @click.native="popupActive3 = true"
             ></vs-button>
             <vs-button
@@ -39,7 +39,7 @@
               radius
               color="danger"
               icon-pack="feather"
-              icon="icon-heart"
+              icon="icon-flag"
               @click.native="popupActive4 = true, selectedCard = q._id"
             ></vs-button>
           </vs-col>
@@ -95,7 +95,7 @@
       <vs-button @click.native="deleteQuote()"  color="danger" icon-pack="feather" icon="icon-trash">Sí, eliminar</vs-button>
       </vs-col>
     </vs-popup>
-    <vs-popup classContent="popup-example" title="¿Deseas enviar tu apartamento a favoritos? 👍👩‍💼👨‍💼" :active.sync="popupActive3">
+    <vs-popup classContent="popup-example" title="¿Deseas obtener información? 👍👩‍💼👨‍💼" :active.sync="popupActive3">
        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="12">
        <h5 class="mb-4">{{getFirstName}}, deseas enviar tus datos para ser contactado por tu asesor.</h5>
        </vs-col>

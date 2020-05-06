@@ -10,7 +10,7 @@
           vs-justify="center"
           vs-align="center"
         >
-          <h5>Cotiza cuantas veces necesites, ningún vendedor te contactara por el momento, hasta que tú envíes la cotización a favoritos. 👆❤.</h5>
+          <h5>Cotiza cuantas veces necesites, ningún vendedor te contactara por el momento, hasta que tú lo decidas. 👆🚩.</h5>
           <br />
         </vs-col>
       </vs-row>
